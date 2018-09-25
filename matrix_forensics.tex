@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{book}
 
 %Post to: https://stats.stackexchange.com/questions/21346/reference-book-for-linear-algebra-applied-to-statistics
 
@@ -9,12 +9,15 @@
 \usepackage{amsfonts, amsmath}
 \usepackage{parskip}
 \usepackage{marginnote}
+\usepackage{titlesec}
+\usepackage{xcolor}
 
 \usepackage[numbers,sort&compress]{natbib}
 \bibliographystyle{unsrtnat}
 
-\title{Matrix Forensics}
-\author{Richard Barnes}
+%Make equations be numbered continuously through book
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
 
 \newcommand{\mA}{\mathbf{A}}
 \newcommand{\mB}{\mathbf{B}}
@@ -63,20 +66,45 @@
 \newcommand{\range}{\mathcal{R}}
 
 
-\newcommand{\subsubsubsection}{\paragraph}
-
 \newcommand{\eqcite}[1]{\marginnote{\citep{#1}}}
 
+%Adjust chapter formatting
+\newcommand{\hsp}{\hspace{20pt}}
+\definecolor{gray75}{gray}{0.75}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{$|$}\hsp}{0pt}{\Huge\bfseries}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt} %? BEFORE AFTER
 
-
+%Ensure chapters start on the same page
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{\clearpage}{}{}
+\makeatother
 
 
 \begin{document}
-\maketitle
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+  \raggedleft % Right align the title page
+  
+  \rule{1pt}{\textheight} % Vertical line
+  \hspace{0.05\textwidth} % Whitespace between the vertical line and title page text
+  \parbox[b]{0.75\textwidth}{ % Paragraph box for holding the title page text, adjust the width to move the title page left or right on the page
+    
+    {\Huge\bfseries Matrix Forensics \\[\baselineskip]} % Title
+    {\large\textit{A brief guide to efficient linear algebra}}\\[4\baselineskip] % Subtitle or further description
+    {\Large\textsc{richard barnes}} % Author name, lower case for consistent small caps
+    
+    \vspace{0.6\textheight} % Whitespace between the title block and the publisher
+    
+    %{\noindent The Publisher~~\plogo}\\[\baselineskip] % Publisher and logo
+  }
+
+\end{titlepage}
+
 
 \tableofcontents
 
-\section{Nomenclature}
+\chapter{Nomenclature}
 
 \begin{tabular}{cl}
 $\mA$                   & Matrix.                                                   \\
@@ -101,7 +129,8 @@ $\mI_n$                 & Identity matrix with $n$ rows and $n$ columns.        
 $\{0\}$                 & The empty set
 \end{tabular}
 
-\section{Derivatives}
+\chapter{Derivatives}
+
 For general $\mA$ and $\mX$ (no special structure):
 \begin{align}
 \partial\mA           &= 0~~\textrm{where $\mA$ is a constant} \\
@@ -121,9 +150,9 @@ For general $\mA$ and $\mX$ (no special structure):
 
 
 
-\section{Rogue Gallery}
+\chapter{Matrix Rogue Gallery}
 
-\subsection{Non-Singular vs.\ Singular Matrices}
+\section{Non-Singular vs.\ Singular Matrices}
 For $\mA\in\sRnn$ (initially drawn from \citep[p.\ 574]{Strang2016}):
 \begin{center}
 \begin{tabular}{ll}
@@ -145,7 +174,11 @@ $\mA$ has $n$ positive singular values          & $\mA$ has $r<n$ singular value
 \end{tabular}
 \end{center}
 
-\subsection{Diagonal Matrix}
+\section{Diagonal Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_diagonal.pdf}
+\end{center}
 
 \begin{equation}
 A=\diag(a_1,\ldots,a_n)=
@@ -160,7 +193,7 @@ Square matrix. Entries above diagonal are equal to entries below diagonal.
 
 Number of ``free entries": $\frac{n(n+1)}{2}$.
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 
 \begin{equation}
 \eig(A)={a_1,\ldots,a_n}
@@ -182,14 +215,18 @@ A^{-1}=
 
 
 
-\subsection{Dyads}
+\section{Dyads}
+
+\begin{center}
+\includegraphics[width=2in]{imgs/rg_dyad.pdf}
+\end{center}
 
 $\mA\in\sRmn$ is a dyad if it can be written as
 \begin{equation}
 \mA=\vu\vv^T~~~\vu\in\sRm, \vv\in\sRn
 \end{equation}
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 \begin{itemize}
 \item The columns of $\mA$ are copies of $\vu$ scaled by the values of $\vv$.
 \item The rows of $\mA$ are copies of $\vu^T$ scaled by the values of $\vv$.
@@ -203,7 +240,7 @@ $\mA\in\sRmn$ is a dyad if it can be written as
 
 
 
-\subsection{Hermitian Matrix}
+\section{Hermitian Matrix}
 $\mH\in\sCmn$ is Hermitian iff
 \begin{equation}
 \mH=\mH^H
@@ -212,7 +249,7 @@ where $\mH^H$ is the conjugate transpose of $\mH$.
 
 For $\mH\in\sRmn$, Hermitian and symmetric matrices are equivalent.
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 \begin{align}
 \mH_{ii} &\in \sR      \\
 \mH\mH^H &=   \mH^H\mH \\
@@ -228,13 +265,13 @@ For $\mH\in\sRmn$, Hermitian and symmetric matrices are equivalent.
 
 
 
-\subsection{Idempotent Matrix}
+\section{Idempotent Matrix}
 A matrix $\mA$ is idempotent iff
 \begin{equation}
 \mA\mA=\mA
 \end{equation}
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 \begin{align}
 \mA^n        &=A~~\forall n              \\
 \mI-\mA      &~~\textrm{is idempotent}   \\
@@ -253,7 +290,7 @@ $\mA-\mI$ may not be idempotent.
 
 
 
-\subsection{Orthogonal Matrix}
+\section{Orthogonal Matrix}
 
 
 \begin{equation}
@@ -278,7 +315,7 @@ Square matrix. The columns form an orthonormal basis of $\mathbb{R}^n$.
 
 
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 
 \begin{itemize}
 \item The eigenvalues of $\mU$ are placed on the unit circle.
@@ -307,7 +344,7 @@ Orthogonal matrices preserve the lengths and angles of the vectors they operator
 
 
 
-\subsection{Positive Definite}
+\section{Positive Definite}
 
 $\mA\in\sSn$ is positive definite (denoted $\mA\ispd0$) if any of the following are true:
 \begin{itemize}
@@ -316,7 +353,7 @@ $\mA\in\sSn$ is positive definite (denoted $\mA\ispd0$) if any of the following 
 \end{itemize}
 
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 
 \begin{itemize}
 \item If $\mA$ is PD and invertible, $\mA^{-1}$ is also PD.
@@ -328,7 +365,7 @@ $\mA\in\sSn$ is positive definite (denoted $\mA\ispd0$) if any of the following 
 \item $\mP\ispd0$ defines a full-dimensional, bounded ellipsoid centered at the origin and defined by the set $\mathcal{E}=\{\vx\in\sRn: x^T\mP^{-1}x\le1\}$. The eigenvalues $\lambda_i$ and eigenvectors $u_i$ of $\mP$ define the orientation and shape of the ellipsoid. $u_i$ are the semi-axes while the lengths of the semi-axes are given by $\sqrt{\lambda_i}$. Using the Cholesky decomposition, $\mP^{-1}=\mA^T\mA$, an equivalent definition of the ellipsoid is $\mathcal{E}=\{\vx\in\sRn: \norm{\mA\vx}_2\le1\}$.
 \end{itemize}
 
-\subsection{Positive Semi-Definite}
+\section{Positive Semi-Definite}
 
 $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following are true:
 \begin{itemize}
@@ -336,7 +373,7 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 \item $\eig(\mA)\ge0$
 \end{itemize}
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 \begin{itemize}
 \item For $\mA\in\sRmn$, $\mA^T\mA\ispsd0$
 \item For $\mA\in\sRmn$, $\mA\mA^T\ispsd0$
@@ -352,7 +389,7 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 
 
 
-\subsection{Projection Matrix}
+\section{Projection Matrix}
 A square matrix $\mP$ is a projection matrix that projects onto a vector space $\mathcal{S}$ iff
 \begin{align}
 \mP&~\textrm{is idempotent} \\
@@ -364,13 +401,17 @@ A square matrix $\mP$ is a projection matrix that projects onto a vector space $
 
 
 
-\subsection{Singular Matrix}
+\section{Singular Matrix}
 A square matrix that is not invertible.
 
 $\mA\in\sRnn$ is singular iff $\det \mA=0$ iff $\mathcal{N}(A)\ne\{0\}$.
 
 
-\subsection{Symmetric Matrix}
+\section{Symmetric Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_symmetric_matrix.pdf}
+\end{center}
 
 $\mA\in\sSn$ is a symmetric matrix if $\mA=\mA^T$ (entries above diagonal are equal to entries below diagonal).
 
@@ -386,7 +427,7 @@ f & p & r & t & u & k \\
 \end{equation}
 
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 
 \begin{equation}
 \mA=\mA^T
@@ -400,7 +441,7 @@ For a real, symmetric matrix with non-negative eignevalues, the eigenvalues and 
 
 
 
-\subsection{Skew-Hermitian}
+\section{Skew-Hermitian}
 A matrix $\mH\in\sCmn$ is Skew-Hermitian iff
 \begin{equation}
 \mH=-\mH^H
@@ -408,7 +449,7 @@ A matrix $\mH\in\sCmn$ is Skew-Hermitian iff
 
 
 
-\subsection{Toeplitz Matrix, General Form}
+\section{Toeplitz Matrix, General Form}
 
 Constant values on descending diagonals.
 
@@ -424,7 +465,7 @@ a_{n-1} & \ldots & \ldots & a_{2}   & a_{1}  & a_{0}
 \end{equation}
 
 
-\subsection{Toeplitz Matrix, Discrete Convolution}
+\section{Toeplitz Matrix, Discrete Convolution}
 
 Constant values on main and subdiagonals.
 
@@ -442,8 +483,11 @@ Constant values on main and subdiagonals.
 \end{equation}
 
 
-\subsection{Triangular Matrix}
+\section{Triangular Matrix}
 
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_lower_triangular.pdf}~\includegraphics[width=1.5in]{imgs/rg_upper_triangular.pdf}
+\end{center}
 
 \begin{equation}
 \begin{bmatrix}
@@ -471,7 +515,7 @@ Square matrices in which all elements either above or below the main diagonal ar
 For an upper triangular matrix $A_{ij}=0$ whenever $i>j$; for a lower triangular matrix $A_{ij}=0$ whenever $i<j$.
 
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 
 \begin{equation}
 \eig(A)=\diag(A) 
@@ -488,7 +532,7 @@ The inverse of a nonsingular upper (lower) triangular matrix is still upper (low
 
 
 
-\subsection{Vandermonde Matrix}
+\section{Vandermonde Matrix}
 \begin{equation}
 V=
 \begin{bmatrix}
@@ -504,10 +548,10 @@ Alternatively,
 V_{i,j} = \alpha_i^{j-1}
 \end{equation}
 
-\subsubsection*{Uses}
+\subsection*{Uses}
 Polynomial interpolation of data.
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 \begin{itemize}
 \item $\det(V)=\prod_{1\le i < j \le n} (x_j-x_i)$
 \end{itemize}
@@ -525,16 +569,16 @@ Polynomial interpolation of data.
 
 
 
-\section{Matrix Decompositions}
+\chapter{Matrix Decompositions}
 
-\subsection{LLT/UTU: Cholesky Decomposition} %TODO: Add UU to TOC
+\section{LLT/UTU: Cholesky Decomposition} %TODO: Add UU to TOC
 If $\mA$ is symmetric, positive definite, square, then
 \begin{equation}
 \mA=\mU^T\mU=\mL\mL^T
 \end{equation}
 where $\mU$ is a unique upper triangular matrix and $\mL$ is a unique lower-triangular matrix.
 
-\subsection{LDLT}
+\section{LDLT}
 
 If $\mA$ is a non-singular symmetric definite square matrix, then
 \begin{equation}
@@ -552,7 +596,7 @@ where $\mL$ is a unit lower triangular matrix and $\mD$ is a diagonal matrix. If
 % For $\mA\ispsd0$, we can use the spectral factorization $\mA=\mU\mD\mU^T$ and take $\mD^{1/2}=\diag(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n})$ to get $\mB=\mU\mD^{1/2}\mU^T$.
 
 
-\subsection{PCA: Principle Components Analysis}
+\section{PCA: Principle Components Analysis}
 Find normalized directions in data space such that the variance of the projections of the centered data points is maximal. For centered data $\tilde \mX$, the mean-square variation of data along a vector $\vx$ is $\vx^T \tilde \mX \tilde \mX^T \vx$.
 \begin{equation}
 \max_{\vx\in\sRn,~\norm{\vx}_2=1} \vx^T \tilde \mX \tilde \mX^T \vx
@@ -562,18 +606,32 @@ Taking an SVD of $\tilde \mX \tilde \mX^T$ gives $H=\mU_r\mD^2\mU^T$, which is m
 
 
 
-\subsection{QR: Orthogonal-triangular}
+\section{QR: Orthogonal-triangular}
 
 For $\mA\in\sRnn$, $\mA=\mQ\mR$ where $\mQ$ is orthogonal and $\mR$ is an upper triangular matrix. If $\mA$ is non-singular, then $\mQ$ and $\mR$ are uniquely defined if $\diag(\mR)$ are imposed to be positive.
 
-\subsubsection*{Algorithms}
+\subsection*{Algorithms}
 
 Gram-Schmidt.
 
 
 
 
-\subsection{SVD: Singular Value Decomposition}
+\section{SVD: Singular Value Decomposition}
+
+\begin{center}
+\includegraphics[height=1in]{imgs/decomp_svd_a.pdf}
+\includegraphics[height=1in]{imgs/decomp_svd_u.pdf}
+\includegraphics[height=1in]{imgs/decomp_svd_s.pdf}
+\includegraphics[height=1in]{imgs/decomp_svd_v.pdf}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.5in]{imgs/decomp_svd_a_compact.pdf}
+\includegraphics[width=0.5in]{imgs/decomp_svd_u_compact.pdf}
+\includegraphics[width=0.5in]{imgs/decomp_svd_s_compact.pdf}
+\includegraphics[width=0.5in]{imgs/decomp_svd_v_compact.pdf}
+\end{center}
 
 Any matrix $\mA\in\sRmn$ can be written as
 \begin{equation}
@@ -616,7 +674,7 @@ The \textbf{condition number} $\kappa$ of an invertible matrix $\mA\in\sRnn$ is 
 \kappa(\mA)=\frac{\sigma_1}{\sigma_n}=\norm{A}_2 \cdot \norm{A^{-1}}_2
 \end{equation}
 
-\subsubsection*{Low-Rank Approximation}
+\subsection*{Low-Rank Approximation}
 Approximating $\mA\in\sRmn$ by a matrix $\mA_k$ of rank $k>0$ can be formulated as the optimization probem
 \begin{equation}
 \min_{\mA_k\in\sRmn} \norm{\mA-\mA_k}_F^2: \rank{\mA_k}=k, 1\le k \le \rank(\mA)
@@ -632,7 +690,7 @@ where
 \end{align}
 is the fraction of the total variance in $\mA$ explained by the approximation $\mA_k$.
 
-\subsubsection*{Range and Nullspace}
+\subsection*{Range and Nullspace}
 \begin{align}
 \ns(\mA) &= \range(\mV_{nr})                      \\
 \ns(\mA)^\perp \equiv\range(\mA^T)&=\range(\mV_r) \\
@@ -642,7 +700,7 @@ is the fraction of the total variance in $\mA$ explained by the approximation $\
 where $\mV_r$ is the first $r$ columns of $V$ and $V_nr$ are the last $[r+1,n]$ columns; similarly for $\mU$.
 
 
-\subsubsection*{Projectors}
+\subsection*{Projectors}
 The projection of $\vx$ onto $\ns(\mA)$ is $(\mV_{nr}\mV_{nr}^T)\vx$. Since $\mI_n=\mV_r\mV_r^T+\mV_{nr}\mV_{nr}^T$, $(\mI_n-\mV_{r}\mV_{r}^T)\vx$ also works. The projection of $\vx$ onto $\range(\mA)$ is $(\mU_r\mU_r^T)\vx$.
 
 If $\mA\in\sRmn$ is full row rank ($\mA\mA^T\ispd0$), then the minimum distance to an affine set $\{x:\mA\vx=\vb\}, \vb\in\sRm$ is given by $\vx^*=\mA^T(\mA\mA^T)^{-1}\vb$. %TODO
@@ -650,12 +708,12 @@ If $\mA\in\sRmn$ is full row rank ($\mA\mA^T\ispd0$), then the minimum distance 
 If $\mA\in\sRmn$ is full column rank ($\mA^T\mA\ispd0$), then the minimum distance to an affine set $\{x:\mA\vx=\vb\}, \vb\in\sRm$ is given by $\vx^*=\mA(\mA^T\mA)^{-1}\mA^T\vb$. %TODO
 
 
-\subsubsection*{Computational Notes}
+\subsection*{Computational Notes}
 Since $\sigma\approx0$, a \textit{numerical rank} can be estimated for the matrix as the largest $k$ such that $\sigma_k>\epsilon \sigma_1$ for $\epsilon\ge0$.
 
 
 
-\subsection{Eigenvalue Decomposition for Diagonalizable Matrices}
+\section{Eigenvalue Decomposition for Diagonalizable Matrices}
 
 For a square, diagonalizable matrix $\mA\in\mathbb{R}^{n,n}$ 
 \begin{equation}
@@ -668,7 +726,7 @@ The columns $\vu_1,\ldots,\vu_n$ satisfy
 \mA \vu_i=\lambda_i \vu_i~~i=1,\ldots,n
 \end{equation}
 
-\subsection{Eigenvalue (Spectral) Decomposition for Symmetric Matrices}
+\section{Eigenvalue (Spectral) Decomposition for Symmetric Matrices}
 
 A symmetric matrix $\mA\in\mathbb{R}^{n,n}$ can be factored as
 \begin{equation}
@@ -682,7 +740,7 @@ The columns $\vu_1,\ldots,\vu_n$ satisfy
 \end{equation}
 
 
-\subsection{Schur Complements}
+\section{Schur Complements}
 
 For $\mA\in\sSn$, $\mB\in\sSn$, $\mX\in\sRnm$ with $\mB\ispd0$ and the block matrix
 \begin{equation}
@@ -717,7 +775,7 @@ Then
 
 
 
-\section{Matrix Properties}
+\chapter{Matrix Properties}
 
 \begin{equation}
 \mA(\mB+\mC)=\mA\mB+\mA\mC~~\textrm{(left distributivity)}
@@ -735,7 +793,7 @@ Then
 (\mA\mB)\mC=\mA(\mB\mC)~~(\textrm{associativity})
 \end{equation}
 
-\section{Transpose Properties}
+\chapter{Transpose Properties}
 
 \begin{equation}
 (\mA\mB)^T=\mB^T\mA^T
@@ -750,7 +808,7 @@ Then
 \end{equation}
 
 
-\section{Determinant Properties}
+\chapter{Determinant Properties}
 
 Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicates the volume after the transformation.
 
@@ -765,7 +823,7 @@ Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicat
 \end{align}
 
 
-\section{Trace Properties}
+\chapter{Trace Properties}
 For $\mA\in\sRnn$
 \begin{equation}
 \trace(\mA)=\sum_{i=1}^n \mA_{ii}
@@ -790,7 +848,7 @@ For $\mA,\mB,\mC,\mD$ of compatible dimensions,
 
 
 
-\section{Inverse Properties}
+\chapter{Inverse Properties}
 The inverse of $\mA\in\sCnn$ is denoted $\mA^{-1}$ and defined such that
 \begin{equation}
 \mA\mA^{-1}=\mA^{-1}\mA=\mI_n
@@ -814,7 +872,7 @@ more generally
 
 
 
-\section{Pseudo-Inverse Properties}
+\chapter{Pseudo-Inverse Properties}
 For $\mA\in\sRmn$, a pseudoinverse satisfies:
 \begin{align}
 \mA\mA\pinv\mA      &= \mA         \\
@@ -823,13 +881,13 @@ For $\mA\in\sRmn$, a pseudoinverse satisfies:
 (\mA\pinv\mA)^T     &= \mA\pinv\mA
 \end{align}
 
-\subsection{Moore-Penrose Pseudoinverse}
+\section{Moore-Penrose Pseudoinverse}
 \begin{equation}
 \mA\pinv = \mV \mD^{-1} \mU^T
 \end{equation}
 where the foregoing comes from a singular-value decomposition and $\mD^{-1}=\diag(\frac{1}{\sigma_1},\ldots,\frac{1}{\sigma_r})$
 
-\subsubsection*{Special Properties}
+\subsection*{Special Properties}
 \begin{itemize}
 \item $\mA\pinv=\mA^{-1}$ if $\mA\in\sRnn$ and $\mA$ is square and nonsingular.
 \item $\mA\pinv=(\mA^T\mA)^{-1}\mA^T$, if $\mA\in\sRmn$ is full column rank ($r=n\le m$). $\mA\pinv$ is a left inverse of $\mA$, so $\mA\pinv\mA=\mV_r\mV_r^T=\mV\mV^T=\mI_n$.
@@ -838,7 +896,7 @@ where the foregoing comes from a singular-value decomposition and $\mD^{-1}=\dia
 
 
 
-\section{Hadamard Identities}
+\chapter{Hadamard Identities}
 
 \begin{align}
 (\mA\circ\mB)_{ij}    &= A_{ij}B_{ij}~\forall~i,j                            \\
@@ -852,7 +910,7 @@ a(\mA\circ\mB)        &= (a\mA)\circ\mB =\mA\circ(a\mB) \eqcite{million2007} \\
 \end{align}
 
 
-\section{Eigenvalue Properties}
+\chapter{Eigenvalue Properties}
 
 $\lambda\in\mathbb{C}$ is an eigenvalue of $\mA\in\sRnn$ and $u\in\mathbb{C}^n$ is a corresponding eigenvector if $\mA\vu=\lambda\vu$ and $\vu\ne0$. Equivalantly, $(\lambda \mI_n-\mA)\vu=0$ and $\vu\ne0$. Eigenvalues satisfy the equation $\det(\lambda\mI_n-\mA)=0$.
 
@@ -867,7 +925,7 @@ Any matrix $\mA\in\sRnn$ has $n$ eigenvalues, though some may be repeated. $\lam
 \eig(\mA^T\mA)\ge0
 \end{equation}
 
-\subsection*{Computation}
+\section*{Computation}
 
 TODO: eigsh, small eigen value extraction, top-k
 
@@ -877,9 +935,9 @@ TODO: eigsh, small eigen value extraction, top-k
 
 
 
-\section{Norms}
+\chapter{Norms}
 
-\subsection{Matrices}
+\section{Matrices}
 Matrix norms satisfy some properties:
 \begin{align}
 f(\mA)    &\ge 0             \\
@@ -889,14 +947,14 @@ f(\mA+\mB)&\le f(\mA)+f(\mB)
 \end{align}
 Many popular matrix norms also satisfy ``sub-multiplicativity": $f(\mA\mB)\le f(\mA)f(\mB)$.
 
-\subsubsection{Frobenius norm}
+\subsection{Frobenius norm}
 \begin{align}
 \norm{\mA}_F &= \sqrt{\trace\mA\mA^H}                           \\
              &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |\mA_{ij}|^2 }  \\
              &= \sqrt{\sum_{i=1}^m \eig(A^H A)_i }
 \end{align}
 
-\subsubsubsection{Special Properties}
+\subsubsection{Special Properties}
 \begin{equation}
 \norm{\mA\vx}_2 \le \norm{\mA}_F \norm{\vx}_2~~~\vx\in\sRn
 \end{equation}
@@ -905,7 +963,7 @@ Many popular matrix norms also satisfy ``sub-multiplicativity": $f(\mA\mB)\le f(
 \norm{\mA\mB}_F\le \norm{\mA}_F \norm{\mB}_F
 \end{equation}
 
-\subsubsection{Operator Norms}
+\subsection{Operator Norms}
 For $p=1,2,\infty$ or other values, an operator norm indicates the maximum input-output gain of the matrix.
 \begin{equation}
 \norm{\mA}_p=\max_{\norm{\vu}_p=1} \norm{\mA\vu}_p
@@ -935,35 +993,35 @@ For $p=1,2,\infty$ or other values, an operator norm indicates the maximum input
 
 
 
-\subsubsubsection{Special Properties}
+\subsubsection{Special Properties}
 \begin{align}
 \norm{\mA\vu}_p &\le \norm{\mA}_p \norm{\vu}_p \\
 \norm{\mA\mB}_p &\le \norm{\mA}_p \norm{\mB}_p \\
 \end{align}
 
-\subsubsection{Spectral Radius}
+\subsection{Spectral Radius}
 Not a proper norm.
 \begin{equation}
 \rho(\mA)=\textrm{spectral radius}(\mA)=\max_{i=1,\ldots,n} | \eig(\mA)_i |
 \end{equation}
 
-\subsubsubsection{Special Properties}
+\subsubsection{Special Properties}
 \begin{align}
 \rho(\mA) &\le \norm{\mA}_p \\
 \rho(\mA) &\le \min(~\norm{\mA}_1, \norm{\mA}_\infty) \\
 \end{align}
 
 
-\subsection{Vectors}
+\section{Vectors}
 
 P-norm:
 \begin{equation}
 \norm{\vx}_p = (\sum_i |\vx_i|^p)^{1/p}
 \end{equation}
 
-\section{Bounds}
+\chapter{Bounds}
 
-\subsection{Matrix Gain}
+\section{Matrix Gain}
 \begin{equation}
 \lambda_\textrm{min}(\mA^T\mA)\le \frac{\norm{\mA\vx}_2^2}{\norm{\vx}_2^2}\le\lambda_\textrm{max}(\mA^T\mA)
 \end{equation}
@@ -977,7 +1035,7 @@ P-norm:
 \end{equation}
 
 
-\subsection{Norms}
+\section{Norms}
 
 For $\vx\in\mathbb{R}^n$
 \begin{equation}
@@ -992,7 +1050,7 @@ For $\vx\in\mathbb{R}^n$
 
 For any $0<p<q$ we have that $\norm{\vx}_q\le\norm{\vx}_p$.
 
-\subsection{Rayleigh quotients}
+\section{Rayleigh quotients}
 The Rayleigh quotient of $\mA\in\sSn$ is given by
 \begin{equation}
 \frac{\vx^T \mA \vx}{\vx^T\vx}~~\vx\ne0
@@ -1014,7 +1072,7 @@ where $u_1$ and $u_n$ are the eigenvectors associated with $\lambda_\textrm{max}
 
 
 
-\section{Linear Equations}
+\chapter{Linear Equations}
 The linear equation $\mA\vx=\vy$ with $\mA\in\sRmn$ admits a solution iff $\rank([\mA \vy])=\rank(\mA)$. If this is satisfied, the set of all solutions is an affine set $\mathcal{S}=\{\vx=\bar \vx+z: z\in\ns(\mA)\}$ where $\bar \vx$ is any vector such that $\mA\bar\vx=\vy$. The solution is unique if $\ns(\mA)=\{0\}$.
 
 $\mA\vx=\vy$ is \textit{overdetermined} if it is tall/skinny ($m>n$); that is, if there are more equations than unknowns. If $\rank(\mA)=n$ then $\dim\ns(\mA)=0$, so there is either no solution or one solution. Overdetermined systems often have no solution ($\vy\notin\range(\mA)$), so an approximate solution is necessary.
@@ -1023,7 +1081,7 @@ $\mA\vx=\vy$ is \textit{underdetermined} if it is short/wide ($n>m$); that is, i
 
 $\mA\vx=\vy$ is \textit{square} if $n=m$. If $\mA$ is invertible, then the equations have the unique solution $\vx=\mA^{-1}\vy$.
 
-\subsection{Least-Squares}
+\section{Least-Squares}
 For an overdetermined system we wish to find:
 \begin{equation}
 \min_\vx \norm{\mA\vx-\vy}_2^2
@@ -1033,7 +1091,7 @@ Since $\mA\vx\in\range(\mA)$, we need a point $\tilde \vy = \mA\vx^*\in\range(\m
 \vx^*=(\mA^T\mA)^{-1}\mA^T\vy
 \end{equation} %TODO: Check
 
-\subsection{Minimum Norm Solutions}
+\section{Minimum Norm Solutions}
 For undertermined systems in which $\mA\in\sRmn$ with $m<n$. We wish to find
 \begin{equation}
 \min_{\vx: \mA\vx=\vy} \norm{\vx}_2
@@ -1057,7 +1115,7 @@ The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)
 
 
 
-\section{$\mathbf{1}_r^T \mA \mathbf{1}_c$}
+\chapter{$\mathbf{1}_r^T \mA \mathbf{1}_c$}
 
 \textbf{Reduces to:} Scalar
 
@@ -1071,7 +1129,7 @@ The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)
 
 
 
-\section{$\vx^T \mA \vx$}
+\chapter{$\vx^T \mA \vx$}
 
 \textbf{Reduces to}: Scalar
 
@@ -1087,9 +1145,9 @@ The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)
 
 
 
-\section{Algorithms}
+\chapter{Algorithms}
 
-\subsection{Gram-Schmidt}
+\section{Gram-Schmidt}
 TODO
 % Consider the [[Gram–Schmidt process]] applied to the columns of the full column rank matrix <math>A=[\mathbf{a}_1, \cdots, \mathbf{a}_n]</math>, with [[inner product]] <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^\top \mathbf{w}</math> (or <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^* \mathbf{w}</math> for the complex case).
 
@@ -1174,3 +1232,6 @@ TODO: Strang 2016, p. 583, List of symbols and computer codes
 
 TODO: Add Gram-Schmidt procedure
 TODO: Add computational efficiency notes for QR
+
+
+Highlighting matrix example: http://www.texample.net/tikz/examples/highlighting-matrix/
