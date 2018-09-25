@@ -1,0 +1,1176 @@
+\documentclass{article}
+
+%Post to: https://stats.stackexchange.com/questions/21346/reference-book-for-linear-algebra-applied-to-statistics
+
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage{amsfonts, amsmath}
+\usepackage{parskip}
+\usepackage{marginnote}
+
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+
+\title{Matrix Forensics}
+\author{Richard Barnes}
+
+\newcommand{\mA}{\mathbf{A}}
+\newcommand{\mB}{\mathbf{B}}
+\newcommand{\mC}{\mathbf{C}}
+\newcommand{\mD}{\mathbf{D}}
+\newcommand{\mH}{\mathbf{H}}
+\newcommand{\mI}{\mathbf{I}}
+\newcommand{\mL}{\mathbf{L}}
+\newcommand{\mM}{\mathbf{M}}
+\newcommand{\mP}{\mathbf{P}}
+\newcommand{\mQ}{\mathbf{Q}}
+\newcommand{\mR}{\mathbf{R}}
+\newcommand{\mU}{\mathbf{U}}
+\newcommand{\mV}{\mathbf{V}}
+\newcommand{\mX}{\mathbf{X}}
+\newcommand{\mY}{\mathbf{Y}}
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\vb}{\mathbf{b}}
+\newcommand{\vp}{\mathbf{p}}
+\newcommand{\vq}{\mathbf{q}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\eig}{eig}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\rank}{rank}
+\newcommand{\sPSD}{\mathbb{S}^n_+}
+\newcommand{\sC}{\mathbb{C}}
+\newcommand{\sCmn}{\mathbb{C}^{m,n}}
+\newcommand{\sCnn}{\mathbb{C}^{n,n}}
+\newcommand{\sR}{\mathbb{R}}
+\newcommand{\sRm}{\mathbb{R}^{m}}
+\newcommand{\sRn}{\mathbb{R}^{n}}
+\newcommand{\sRnm}{\mathbb{R}^{n,m}}
+\newcommand{\sRmn}{\mathbb{R}^{m,n}}
+\newcommand{\sRnn}{\mathbb{R}^{n,n}}
+\newcommand{\sRmm}{\mathbb{R}^{m,m}}
+\newcommand{\sSn}{\mathbb{S}^{n}}
+\newcommand{\ispsd}{\succeq}
+\newcommand{\ispd}{\succ}
+\newcommand{\pinv}{\!^+}
+\newcommand{\ns}{\mathcal{N}}
+\newcommand{\range}{\mathcal{R}}
+
+
+\newcommand{\subsubsubsection}{\paragraph}
+
+\newcommand{\eqcite}[1]{\marginnote{\citep{#1}}}
+
+
+
+
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Nomenclature}
+
+\begin{tabular}{cl}
+$\mA$                   & Matrix.                                                   \\
+$\va$                   & (Column) vector.                                          \\
+$a$                     & Scalar.                                                   \\
+& \\
+$\mA_{ij}$              & Matrix indexed. Returns $i$th row and $j$th column.       \\
+$\mA\circ \mB$          & Hadamard (element-wise) product of matrices A and B.      \\
+$\ns(\mA)$              & Nullspace of the matrix $\mA$.                            \\
+$\range(\mA)$           & Range of the matrix $\mA$.                                \\
+$\det(\mA)$             & Determinant of the matrix $\mA$.                          \\
+$\eig(\mA)$             & Eigenvalues of the matrix $\mA$.                          \\
+$\mA^H$                 & Conjugate transpose of the matrix $\mA$.                  \\
+$\mA^T$                 & Transpose of the matrix $\mA$.                            \\
+$\mA\pinv$              & Pseudoinverse of the matrix $\mA$.                        \\
+$\vx\in\sRn$            & The entries of the $n$-vector $\vx$ are all real numbers. \\
+$\mA\in\sRmn$           & The entries of the matrix $\mA$ with $m$ rows and $n$ columns are all real numbers. \\
+$\mA\in\sSn$            & The matrix $\mA$ is symmetric and has $n$ rows and $n$ columns. \\
+& \\
+$\mI_n$                 & Identity matrix with $n$ rows and $n$ columns.            \\
+& \\
+$\{0\}$                 & The empty set
+\end{tabular}
+
+\section{Derivatives}
+For general $\mA$ and $\mX$ (no special structure):
+\begin{align}
+\partial\mA           &= 0~~\textrm{where $\mA$ is a constant} \\
+\partial(c\mX)        &= c\partial\mX                          \\
+\partial(\mX+\mY)     &= \partial\mX+\partial\mY               \\
+\partial(\trace(\mX)) &= \trace(\partial(\mX))                 \\
+\partial(\mX\mY)      &= (\partial\mX)\mY + \mX(\partial\mY)   \\
+\partial(\mX\circ\mY) &= (\partial\mX)\circ\mY + \mX\circ(\partial\mY) \\
+%TODO Kronecker x in circle equation 39 Matrix Cookbook
+\partial(\mX^{-1})    &= -\mX^{-1}(\partial\mX)\mX^{-1}        \\
+\partial(\det(\mX))   &= \trace(\textrm{adj}(\mX)\partial\mX)  \\
+\partial(\det(\mX))   &= \det(\mX)\trace(\mX^{-1}\partial\mX)  \\
+\partial(\ln(\det(\mX))) &= \trace(\mX^{-1}\partial\mX)        \\
+\partial(\mX^T)       &= (\partial\mX)^T                       \\
+\partial(\mX^H)       &= (\partial\mX)^H                       
+\end{align}
+
+
+
+\section{Rogue Gallery}
+
+\subsection{Non-Singular vs.\ Singular Matrices}
+For $\mA\in\sRnn$ (initially drawn from \citep[p.\ 574]{Strang2016}):
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Non-Singular}                           & \textbf{Singular}                        \\
+$\mA$ is invertible                             & $\mA$ is not invertible                  \\
+The columns are independent                     & The columns are dependent                \\
+The rows are independent                        & The rows are dependent                   \\
+$\det(\mA)\ne0$                                 & $\det(\mA)=0$                            \\
+$\mA\vx=0$ has one solution: $\vx=0$            & $\mA\vx=0$ has infinitely many solutions \\
+$\mA\vx=\vb$ has one solution: $\vx=\mA^{-1}\vb$& $\mA\vx=\vb$ has either no or infinitely many solutions \\
+$\mA$ has $n$ nonzero pivots                    & $\mA$ has $r<n$ pivots                   \\
+$\mA$ has full rank $r=n$                       & $\mA$ has rank $r<n$                     \\
+The reduced row echelon form is $\mR=\mI$       & $\mR$ has at least one zero row          \\
+The column space is all of $\sRn$               & The column space has dimension $r<n$     \\
+The row space is all of $\sRn$                  & The row space has dimension $r<n$        \\
+All eigenvalues are nonzero                     & Zero is an eigenvalue of $\mA$           \\
+$\mA^T\mA$ is symmetric positive definite       & $\mA^T\mA$ is only semidefinite          \\
+$\mA$ has $n$ positive singular values          & $\mA$ has $r<n$ singular values        
+\end{tabular}
+\end{center}
+
+\subsection{Diagonal Matrix}
+
+\begin{equation}
+A=\diag(a_1,\ldots,a_n)=
+\begin{bmatrix}
+a_1  &        &  \\
+     & \ddots &  \\
+     &        & a_n 
+\end{bmatrix}
+\end{equation}
+
+Square matrix. Entries above diagonal are equal to entries below diagonal.
+
+Number of ``free entries": $\frac{n(n+1)}{2}$.
+
+\subsubsection*{Special Properties}
+
+\begin{equation}
+\eig(A)={a_1,\ldots,a_n}
+\end{equation}
+
+\begin{equation}
+\det(A)=\prod_i a_i 
+\end{equation}
+
+\begin{equation}
+A^{-1}=
+\begin{bmatrix}
+\frac{1}{a_1} &        &               \\
+              & \ddots &               \\
+              &        & \frac{1}{a_n}
+\end{bmatrix}
+\end{equation}
+
+
+
+
+\subsection{Dyads}
+
+$\mA\in\sRmn$ is a dyad if it can be written as
+\begin{equation}
+\mA=\vu\vv^T~~~\vu\in\sRm, \vv\in\sRn
+\end{equation}
+
+\subsubsection*{Special Properties}
+\begin{itemize}
+\item The columns of $\mA$ are copies of $\vu$ scaled by the values of $\vv$.
+\item The rows of $\mA$ are copies of $\vu^T$ scaled by the values of $\vv$.
+\item If $\mA$ is a dyad, it acts on a vector $\vx$ as $\mA\vx=(\vu\vv^T)\vx=(\vv^T\vu)\vx$.
+\item $\mA\vx=c\vu$ ($\mA$ scales $\vx$ and points it along $\vu$).
+\item $\mA_{ij}=\vu_i\vv_j$.
+\item If $\vu,\vv\ne0$, then $\rank(\mA)=1$.
+\item If $m=n$, $\mA$ has one eigenvalue $\lambda=\vv^T\vu$ and eigenvector $\vu$.
+\item A dyad can always be written in a normalized form $c\tilde\vu\tilde\vv^T$.
+\end{itemize}
+
+
+
+\subsection{Hermitian Matrix}
+$\mH\in\sCmn$ is Hermitian iff
+\begin{equation}
+\mH=\mH^H
+\end{equation}
+where $\mH^H$ is the conjugate transpose of $\mH$.
+
+For $\mH\in\sRmn$, Hermitian and symmetric matrices are equivalent.
+
+\subsubsection*{Special Properties}
+\begin{align}
+\mH_{ii} &\in \sR      \\
+\mH\mH^H &=   \mH^H\mH \\
+\vx^H\mH\vx &\in \sR~~\forall\vx\in\sC \\
+\mH_1+\mH_2 &= \textrm{Hermitian} \\
+\mH^{-1}    &= \textrm{Hermitian} \\
+\mA+\mA^H   &= \textrm{Hermitian} \\
+\mA-\mA^H   &= \textrm{Skew-Hermitian} \\
+\mA\mB      &= \textrm{Hermitian iff $\mA\mB=\mB\mA$} \\
+\det(\mH)   &\in \sR \\
+\eig(\mH)   &\in \sR
+\end{align}
+
+
+
+\subsection{Idempotent Matrix}
+A matrix $\mA$ is idempotent iff
+\begin{equation}
+\mA\mA=\mA
+\end{equation}
+
+\subsubsection*{Special Properties}
+\begin{align}
+\mA^n        &=A~~\forall n              \\
+\mI-\mA      &~~\textrm{is idempotent}   \\
+\mA^H        &~~\textrm{is idempotent}   \\
+\mI-\mA^H    &~~\textrm{is idempotent}   \\
+\rank(\mA)   &= \trace(\mA)              \\
+\mA(I-\mA)   &= 0                        \\
+\mA\pinv     &= \mA                      \\
+f(s\mI+t\mA) &= (\mI-\mA)f(s)+\mA f(s+t) \\
+\mA\mB=\mB\mA&\implies \mA\mB~\textrm{is idempotent} \\
+\eig(\mA)_i  &\in \{0,1\} \\
+\mA & \textrm{~is always diagonalizable}
+\end{align}
+$\mA-\mI$ may not be idempotent.
+
+
+
+
+\subsection{Orthogonal Matrix}
+
+
+\begin{equation}
+U=
+\begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+\end{bmatrix}
+\end{equation}
+
+A matrix $\mU$ is orthogonal iff:
+
+\begin{equation}
+\mU^T \mU = \mU \mU^T = I
+\end{equation}
+
+Square matrix. The columns form an orthonormal basis of $\mathbb{R}^n$.
+
+
+
+\subsubsection*{Special Properties}
+
+\begin{itemize}
+\item The eigenvalues of $\mU$ are placed on the unit circle.
+\item The eigenvectors of $\mU$ are unitary (have length one).
+\item $\mU^{-1}$ is orthogonal.
+\end{itemize}
+
+\begin{align}
+\mU^T     &= \mU^{-1} \\
+\mU^{-T}  &= \mU      \\
+\mU^T\mU  &= \mI      \\
+\mU\mU^T  &= \mI      \\
+\det(\mU) &= \pm1
+\end{align}
+
+
+
+Orthogonal matrices preserve the lengths and angles of the vectors they operator on. The converse is true: any matrix which preserves lengths and angles is orthogonal.
+\begin{equation}
+\norm{\mU \vx}^2_2=(\mU\vx)^T(\mU\vx)=\vx^T\mU^T\mU\vx=\vx^T\vx=\norm{\vx}^2_2~~\forall \vx
+\end{equation}
+
+\begin{equation}
+\norm{\mU \mA \mV}_F=\norm{\mA}_F~~\forall \mA,\mU,\mV~\textrm{with}~U,V orthogonal
+\end{equation}
+
+
+
+\subsection{Positive Definite}
+
+$\mA\in\sSn$ is positive definite (denoted $\mA\ispd0$) if any of the following are true:
+\begin{itemize}
+\item $\vx^T\mA\vx>0,\forall\vx\in\sRn$.
+\item $\eig(\mA)>0$
+\end{itemize}
+
+
+\subsubsection*{Special Properties}
+
+\begin{itemize}
+\item If $\mA$ is PD and invertible, $\mA^{-1}$ is also PD.
+\item If $\mA$ is PD and $c\in\sR$ then $c\mA$ is PD.
+\item The diagonal entries $\mA_{ii}$ are real and non-negative, so $\trace(\mA)\ge0$. %TODO: Shouldn't this be >0?
+\item $\det(\mA)>0$
+\item For $\mA\in\sRmn$, $\mA^T\mA\ispd0\iff \mA$ is full-column rank ($\rank(\mA)=n$)
+\item For $\mA\in\sRmn$, $\mA\mA^T\ispd0\iff \mA$ is full-row rank ($\rank(\mA)=m$)
+\item $\mP\ispd0$ defines a full-dimensional, bounded ellipsoid centered at the origin and defined by the set $\mathcal{E}=\{\vx\in\sRn: x^T\mP^{-1}x\le1\}$. The eigenvalues $\lambda_i$ and eigenvectors $u_i$ of $\mP$ define the orientation and shape of the ellipsoid. $u_i$ are the semi-axes while the lengths of the semi-axes are given by $\sqrt{\lambda_i}$. Using the Cholesky decomposition, $\mP^{-1}=\mA^T\mA$, an equivalent definition of the ellipsoid is $\mathcal{E}=\{\vx\in\sRn: \norm{\mA\vx}_2\le1\}$.
+\end{itemize}
+
+\subsection{Positive Semi-Definite}
+
+$\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following are true:
+\begin{itemize}
+\item $\vx^T\mA\vx\ge0,\forall\vx\in\sRn$.
+\item $\eig(\mA)\ge0$
+\end{itemize}
+
+\subsubsection*{Special Properties}
+\begin{itemize}
+\item For $\mA\in\sRmn$, $\mA^T\mA\ispsd0$
+\item For $\mA\in\sRmn$, $\mA\mA^T\ispsd0$
+\item The positive semi-definite matrices $\sPSD$ form a convex cone. For any two PSD matrices $\mA,\mB\in\sPSD$ and some $\alpha\in[0,1]$:
+\begin{equation}
+\vx^T(\alpha\mA+(1-\alpha)\mB)\vx=\alpha \vx^T\mA\vx+(1-\alpha)\vx^T\mB\vx\ge0~~\forall\vx
+\end{equation}
+\begin{equation}
+\alpha\mA+(1-\alpha)\mB\in\sPSD
+\end{equation}
+\item For $\mA\in\sPSD$ and $\alpha\ge0$, $\alpha\mA\ispsd0$, so $\sPSD$ is a cone.
+\end{itemize}
+
+
+
+\subsection{Projection Matrix}
+A square matrix $\mP$ is a projection matrix that projects onto a vector space $\mathcal{S}$ iff
+\begin{align}
+\mP&~\textrm{is idempotent} \\
+\mP\vx&\in\mathcal{S}~~\forall\vx \\
+\mP\vz&=\vz~~\forall\vz\in\mathcal{S}
+\end{align}
+
+
+
+
+
+\subsection{Singular Matrix}
+A square matrix that is not invertible.
+
+$\mA\in\sRnn$ is singular iff $\det \mA=0$ iff $\mathcal{N}(A)\ne\{0\}$.
+
+
+\subsection{Symmetric Matrix}
+
+$\mA\in\sSn$ is a symmetric matrix if $\mA=\mA^T$ (entries above diagonal are equal to entries below diagonal).
+
+\begin{equation}
+\begin{bmatrix}
+a & b & c & d & e & f \\
+b & g & l & m & o & p \\
+c & l & h & n & q & r \\
+d & m & n & i & s & t \\
+e & o & q & s & j & u \\
+f & p & r & t & u & k \\
+\end{bmatrix}
+\end{equation}
+
+
+\subsubsection*{Special Properties}
+
+\begin{equation}
+\mA=\mA^T
+\end{equation}
+
+Number of ``free entries": $\frac{n(n+1)}{2}$.
+
+If $\mA$ is real, it can be decomposed into $\mA=\mQ^T\mD\mQ$ where $\mQ$ is a real orthogonal matrix (the columns of which are eigenvectors of $\mA$) and $\mD$ is real and diagonal containing the eigenvalues of $\mA$.
+
+For a real, symmetric matrix with non-negative eignevalues, the eigenvalues and singular values coincide.
+
+
+
+\subsection{Skew-Hermitian}
+A matrix $\mH\in\sCmn$ is Skew-Hermitian iff
+\begin{equation}
+\mH=-\mH^H
+\end{equation}
+
+
+
+\subsection{Toeplitz Matrix, General Form}
+
+Constant values on descending diagonals.
+
+\begin{equation}
+\begin{bmatrix}
+  a_{0} & a_{-1} & a_{-2} & \ldots  & \ldots & a_{-(n-1)}  \\
+  a_{1} & a_0    & a_{-1} & \ddots  &        & \vdots \\
+  a_{2} & a_{1}  & \ddots & \ddots  & \ddots & \vdots \\ 
+ \vdots & \ddots & \ddots & \ddots  & a_{-1} & a_{-2}\\
+ \vdots &        & \ddots & a_{1}   & a_{0}  & a_{-1} \\
+a_{n-1} & \ldots & \ldots & a_{2}   & a_{1}  & a_{0}
+\end{bmatrix}
+\end{equation}
+
+
+\subsection{Toeplitz Matrix, Discrete Convolution}
+
+Constant values on main and subdiagonals.
+
+\begin{equation}
+\begin{bmatrix}
+  h_m &   0 &   0 &      \hdots &   0 &   0 \\
+  \vdots & h_m &   0 &   \hdots &   0 &   0 \\
+  h_1 & \vdots & h_m &   \hdots &   0 &   0 \\
+    0 & h_1 & \ddots & \ddots &   0 &   0 \\
+    0 &   0 & h_1 &    \ddots & h_m &   0 \\
+    0 &   0 &   0 &    \ddots & \vdots & h_m \\
+    0 &   0 &   0 &      \hdots & h_1 & \vdots \\
+    0 &   0 &   0 &      \hdots &   0 & h_1 
+\end{bmatrix}
+\end{equation}
+
+
+\subsection{Triangular Matrix}
+
+
+\begin{equation}
+\begin{bmatrix}
+a & b & c & d & e & f \\
+  & g & h & i & j & k \\
+  &   & l & m & n & o \\
+  &   &   & p & q & r \\
+  &   &   &   & s & t \\
+  &   &   &   &   & u \\
+\end{bmatrix}
+~
+~
+\begin{bmatrix}
+a &   &   &   &   &   \\
+b & g &   &   &   &   \\
+c & h & l &   &   &   \\
+d & i & m & p &   &   \\
+e & j & n & q & s &   \\
+f & k & o & r & t & u \\
+\end{bmatrix}
+\end{equation}
+
+Square matrices in which all elements either above or below the main diagonal are zero. An upper (left) and a lower (right) triangular matrix are shown above.
+
+For an upper triangular matrix $A_{ij}=0$ whenever $i>j$; for a lower triangular matrix $A_{ij}=0$ whenever $i<j$.
+
+
+\subsubsection*{Special Properties}
+
+\begin{equation}
+\eig(A)=\diag(A) 
+\end{equation}
+
+\begin{equation}
+\det(A)=\prod_i \diag(A)_i
+\end{equation}
+
+The product of two upper (lower) triangular matrices is still upper (lower) triangular.
+
+The inverse of a nonsingular upper (lower) triangular matrix is still upper (lower) triangular.
+
+
+
+
+\subsection{Vandermonde Matrix}
+\begin{equation}
+V=
+\begin{bmatrix}
+1      & \alpha_1 & \alpha_1^2 & \dots  & \alpha_1^{n-1} \\
+1      & \alpha_2 & \alpha_2^2 & \dots  & \alpha_2^{n-1} \\
+1      & \alpha_3 & \alpha_3^2 & \dots  & \alpha_3^{n-1} \\
+\vdots & \vdots   & \vdots     & \ddots & \vdots         \\
+1      & \alpha_m & \alpha_m^2 & \dots  & \alpha_m^{n-1}
+\end{bmatrix}
+\end{equation}
+Alternatively,
+\begin{equation}
+V_{i,j} = \alpha_i^{j-1}
+\end{equation}
+
+\subsubsection*{Uses}
+Polynomial interpolation of data.
+
+\subsubsection*{Special Properties}
+\begin{itemize}
+\item $\det(V)=\prod_{1\le i < j \le n} (x_j-x_i)$
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Matrix Decompositions}
+
+\subsection{LLT/UTU: Cholesky Decomposition} %TODO: Add UU to TOC
+If $\mA$ is symmetric, positive definite, square, then
+\begin{equation}
+\mA=\mU^T\mU=\mL\mL^T
+\end{equation}
+where $\mU$ is a unique upper triangular matrix and $\mL$ is a unique lower-triangular matrix.
+
+\subsection{LDLT}
+
+If $\mA$ is a non-singular symmetric definite square matrix, then
+\begin{equation}
+\mA=\mL\mD\mL^T=\mL^T\mD\mL
+\end{equation}
+where $\mL$ is a unit lower triangular matrix and $\mD$ is a diagonal matrix. If $\mA\ispd0$, then $\mD_{ii}>0$.
+
+% For $\mA\in\sRnn$,
+% \begin{align}
+% \mA&\ispsd0\iff \exists\mB\ispsd0: \mA=\mB^2 \\
+% \mA&\ispd0 \iff \exists\mB\ispd 0: \mA=\mB^2
+% \end{align}
+% where $\mB$ is called the ``matrix square-root" of $\mA$.
+
+% For $\mA\ispsd0$, we can use the spectral factorization $\mA=\mU\mD\mU^T$ and take $\mD^{1/2}=\diag(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n})$ to get $\mB=\mU\mD^{1/2}\mU^T$.
+
+
+\subsection{PCA: Principle Components Analysis}
+Find normalized directions in data space such that the variance of the projections of the centered data points is maximal. For centered data $\tilde \mX$, the mean-square variation of data along a vector $\vx$ is $\vx^T \tilde \mX \tilde \mX^T \vx$.
+\begin{equation}
+\max_{\vx\in\sRn,~\norm{\vx}_2=1} \vx^T \tilde \mX \tilde \mX^T \vx
+\end{equation}
+Taking an SVD of $\tilde \mX \tilde \mX^T$ gives $H=\mU_r\mD^2\mU^T$, which is maximized by taking $\vx=\vu_1$. By repeatedly removing the first principal components and recalculating, all the principal axes can be found.
+
+
+
+
+\subsection{QR: Orthogonal-triangular}
+
+For $\mA\in\sRnn$, $\mA=\mQ\mR$ where $\mQ$ is orthogonal and $\mR$ is an upper triangular matrix. If $\mA$ is non-singular, then $\mQ$ and $\mR$ are uniquely defined if $\diag(\mR)$ are imposed to be positive.
+
+\subsubsection*{Algorithms}
+
+Gram-Schmidt.
+
+
+
+
+\subsection{SVD: Singular Value Decomposition}
+
+Any matrix $\mA\in\sRmn$ can be written as
+\begin{equation}
+\mA=\mU \mD \mV^T=\sum_{i=1}^r \sigma_i u_i v_i^T
+\end{equation}
+where
+\begin{align}
+U&=\textrm{eigenvectors of~}\mA\mA^T & \sRmm \\
+D&=\diag(\sigma_i)=\sqrt{\diag(\eig(\mA\mA^T))}      & \sRnm \\
+V&=\textrm{eigenvectors of~}\mA^T\mA & \sRnn
+\end{align}
+Let $\sigma_i$ be the non-zero singular values for $i=1,\ldots,r$ where $r$ is the rank of $\mA$; $\sigma_1\ge\ldots\ge\sigma_r$.
+
+We also have that
+\begin{align}
+\mA   \vv_i &= \sigma_i \vu_i \\
+\mA^T \vu_i &= \sigma_i \vv_i \\
+\mU^T\mU &= \mI \\
+\mV^T\mV &= \mI
+\end{align}
+
+$\mD$ can be written in an expanded form:
+\begin{equation}
+\tilde \mD=
+\begin{bmatrix}
+\mD       & 0_{r,n-r}   \\
+0_{m-r,r} & 0_{m-r,n-r}
+\end{bmatrix}
+\end{equation}
+The final $n-r$ columns of $\mV$ give an orthonormal basis spanning $\ns(\mA)$. An orthonormal basis spanning the range of $\mA$ is given by the first $r$ columns of $\mU$.
+
+\begin{align}
+\norm{\mA}^2_F&=\textrm{Frobenius norm} =\trace(\mA^T\mA)=\sum_{i=1}^r \sigma_i^2 \\
+\norm{\mA}^2_2&=\sigma_1^2 \\
+\norm{\mA}_* &= \textrm{nuclear norm}=\sum_{i=1}^r \sigma_i
+\end{align}
+
+The \textbf{condition number} $\kappa$ of an invertible matrix $\mA\in\sRnn$ is the ratio of the largest and smallest singular value. Matrices with large condition numbers are closer to being singular and more sensitive to changes.
+\begin{equation}
+\kappa(\mA)=\frac{\sigma_1}{\sigma_n}=\norm{A}_2 \cdot \norm{A^{-1}}_2
+\end{equation}
+
+\subsubsection*{Low-Rank Approximation}
+Approximating $\mA\in\sRmn$ by a matrix $\mA_k$ of rank $k>0$ can be formulated as the optimization probem
+\begin{equation}
+\min_{\mA_k\in\sRmn} \norm{\mA-\mA_k}_F^2: \rank{\mA_k}=k, 1\le k \le \rank(\mA)
+\end{equation}
+The optimal solution of this problem is given by
+\begin{equation}
+\mA_k=\sum_{i=1}^k \sigma_i \vu_i \vv_i^T
+\end{equation}
+where
+\begin{align}
+\frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_1^2+\ldots+\sigma_k^2}{\sigma_1^2+\ldots+\sigma_r^2} \\
+1-\frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_{k+1}^2+\ldots+\sigma_r^2}{\sigma_1^2+\ldots+\sigma_r^2} 
+\end{align}
+is the fraction of the total variance in $\mA$ explained by the approximation $\mA_k$.
+
+\subsubsection*{Range and Nullspace}
+\begin{align}
+\ns(\mA) &= \range(\mV_{nr})                      \\
+\ns(\mA)^\perp \equiv\range(\mA^T)&=\range(\mV_r) \\
+\range(\mA)&=\range(\mU_r)                        \\
+\range(\mA)^\perp\equiv\ns(\mA^T)&=\range(\mU_{nr})
+\end{align}
+where $\mV_r$ is the first $r$ columns of $V$ and $V_nr$ are the last $[r+1,n]$ columns; similarly for $\mU$.
+
+
+\subsubsection*{Projectors}
+The projection of $\vx$ onto $\ns(\mA)$ is $(\mV_{nr}\mV_{nr}^T)\vx$. Since $\mI_n=\mV_r\mV_r^T+\mV_{nr}\mV_{nr}^T$, $(\mI_n-\mV_{r}\mV_{r}^T)\vx$ also works. The projection of $\vx$ onto $\range(\mA)$ is $(\mU_r\mU_r^T)\vx$.
+
+If $\mA\in\sRmn$ is full row rank ($\mA\mA^T\ispd0$), then the minimum distance to an affine set $\{x:\mA\vx=\vb\}, \vb\in\sRm$ is given by $\vx^*=\mA^T(\mA\mA^T)^{-1}\vb$. %TODO
+
+If $\mA\in\sRmn$ is full column rank ($\mA^T\mA\ispd0$), then the minimum distance to an affine set $\{x:\mA\vx=\vb\}, \vb\in\sRm$ is given by $\vx^*=\mA(\mA^T\mA)^{-1}\mA^T\vb$. %TODO
+
+
+\subsubsection*{Computational Notes}
+Since $\sigma\approx0$, a \textit{numerical rank} can be estimated for the matrix as the largest $k$ such that $\sigma_k>\epsilon \sigma_1$ for $\epsilon\ge0$.
+
+
+
+\subsection{Eigenvalue Decomposition for Diagonalizable Matrices}
+
+For a square, diagonalizable matrix $\mA\in\mathbb{R}^{n,n}$ 
+\begin{equation}
+\mA=U\Lambda U^{-1}
+\end{equation}
+where $U\in\mathbb{C}^{n,n}$ is an invertible matrix whose columns are the eigenvectors of $\mA$ and $\Lambda$ is a diagonal matrix containing the eigenvalues $\lambda_1,\ldots,\lambda_n$ of $\mA$ in the diagonal.
+
+The columns $\vu_1,\ldots,\vu_n$ satisfy
+\begin{equation}
+\mA \vu_i=\lambda_i \vu_i~~i=1,\ldots,n
+\end{equation}
+
+\subsection{Eigenvalue (Spectral) Decomposition for Symmetric Matrices}
+
+A symmetric matrix $\mA\in\mathbb{R}^{n,n}$ can be factored as
+\begin{equation}
+\mA=U\Lambda U^T=\sum_i^n \lambda_i \vu_i \vu_i^T
+\end{equation}
+where $U\in\mathbb{R}^{n,n}$ is an orthogonal matrix whose columns $\vu_i$ are the eigenvectors of $\mA$ and $\Lambda$ is a diagonal matrix containing the eigenvalues $\lambda_1\ge\ldots\ge\lambda_n$ of $\mA$ in the diagonal. These eigenvalues are always real. The eigenvectors can always be chosen to be real and to form an orthonormal basis.
+
+The columns $\vu_1,\ldots,\vu_n$ satisfy
+\begin{equation}
+\mA \vu_i=\lambda_i \vu_i~~i=1,\ldots,n
+\end{equation}
+
+
+\subsection{Schur Complements}
+
+For $\mA\in\sSn$, $\mB\in\sSn$, $\mX\in\sRnm$ with $\mB\ispd0$ and the block matrix
+\begin{equation}
+\mM=
+\begin{bmatrix}
+\mA & \mX \\
+\mX^T & \mB
+\end{bmatrix}
+\end{equation}
+and the Schur complement of $\mA$ in $\mM$
+\begin{equation}
+S=\mA-\mX\mB^{-1}\mX^T
+\end{equation}
+Then
+\begin{align}
+\mM\ispsd0&\iff S\ispsd0 \\
+\mM\ispd0 &\iff S\ispd0 
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Matrix Properties}
+
+\begin{equation}
+\mA(\mB+\mC)=\mA\mB+\mA\mC~~\textrm{(left distributivity)}
+\end{equation}
+
+\begin{equation}
+(\mB+\mC)\mA=\mB\mA+\mC\mA~~\textrm{(right distributivity)}
+\end{equation}
+
+\begin{equation}
+\mA\mB\ne\mB\mA~~(\textrm{in general})
+\end{equation}
+
+\begin{equation}
+(\mA\mB)\mC=\mA(\mB\mC)~~(\textrm{associativity})
+\end{equation}
+
+\section{Transpose Properties}
+
+\begin{equation}
+(\mA\mB)^T=\mB^T\mA^T
+\end{equation}
+
+\begin{equation}
+(\mA+\mB)^T=\mA^T+\mB^T
+\end{equation}
+
+\begin{equation}
+(\mA^{-1})^T=(\mA^T)^{-1}
+\end{equation}
+
+
+\section{Determinant Properties}
+
+Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicates the volume after the transformation.
+
+\begin{align}
+\det(I_n)     &= 1                                  \\
+\det(\mA^T)   &= \det(\mA)                          \\
+\det(\mA^{-1})&= \frac{1}{\det(\mA)}=\det(\mA)^{-1} \\
+\det(AB)      &= \det(BA)                           \\
+\det(AB)      &= \det(A)\det(B)~~\mA,\mB\in\sRnn    \\
+\det(c\mA)    &= c^n\det(\mA)~~\mA\in\sRnn          \\
+\det(\mA)     &= \prod \eig(\mA)                    
+\end{align}
+
+
+\section{Trace Properties}
+For $\mA\in\sRnn$
+\begin{equation}
+\trace(\mA)=\sum_{i=1}^n \mA_{ii}
+\end{equation}
+
+\begin{align}
+\trace(\mA+\mB)&=\trace(\mA)+\trace(\mB) \\
+\trace(c\mA)   &=c\trace(\mA)            \\
+\trace(\mA)    &=\trace(\mA^T)
+\end{align}
+
+For $\mA,\mB,\mC,\mD$ of compatible dimensions,
+
+\begin{equation}
+\trace(\mA^T\mB)=\trace(\mA\mB^T)=\trace(\mB^T\mA)=\trace(\mB\mA^T)
+\end{equation}
+
+\begin{equation}
+\trace(\mA\mB\mC\mD)=\trace(\mB\mC\mD\mA)=\trace(\mC\mD\mA\mB)=\trace(\mD\mA\mB\mC)
+\end{equation}
+(Invariant under cyclic permutations)
+
+
+
+\section{Inverse Properties}
+The inverse of $\mA\in\sCnn$ is denoted $\mA^{-1}$ and defined such that
+\begin{equation}
+\mA\mA^{-1}=\mA^{-1}\mA=\mI_n
+\end{equation}
+where $\mI_n$ is the $n \times n$ identity matrix. $\mA$ is nonsingular if $\mA^{-1}$ exists; otherwise, $\mA$ is singular.
+
+
+If individual inverses exist
+\begin{equation}
+(\mA\mB)^{-1}=\mB^{-1}\mA^{-1}
+\end{equation}
+more generally
+\begin{equation}
+(\mA_1\mA_2\ldots\mA_n)^{-1}=\mA_n^{-1}\ldots\mA_2^{-1}\mA_1^{-1}
+\end{equation}
+
+\begin{equation}
+(\mA^{-1})^T=(\mA^T)^{-1}
+\end{equation}
+
+
+
+
+\section{Pseudo-Inverse Properties}
+For $\mA\in\sRmn$, a pseudoinverse satisfies:
+\begin{align}
+\mA\mA\pinv\mA      &= \mA         \\
+\mA\pinv\mA\mA\pinv &= \mA\pinv    \\
+(\mA\mA\pinv)^T     &= \mA\mA\pinv \\
+(\mA\pinv\mA)^T     &= \mA\pinv\mA
+\end{align}
+
+\subsection{Moore-Penrose Pseudoinverse}
+\begin{equation}
+\mA\pinv = \mV \mD^{-1} \mU^T
+\end{equation}
+where the foregoing comes from a singular-value decomposition and $\mD^{-1}=\diag(\frac{1}{\sigma_1},\ldots,\frac{1}{\sigma_r})$
+
+\subsubsection*{Special Properties}
+\begin{itemize}
+\item $\mA\pinv=\mA^{-1}$ if $\mA\in\sRnn$ and $\mA$ is square and nonsingular.
+\item $\mA\pinv=(\mA^T\mA)^{-1}\mA^T$, if $\mA\in\sRmn$ is full column rank ($r=n\le m$). $\mA\pinv$ is a left inverse of $\mA$, so $\mA\pinv\mA=\mV_r\mV_r^T=\mV\mV^T=\mI_n$.
+\item $\mA\pinv=\mA^T(\mA\mA^T)^{-1}$, if $\mA\in\sRmn$ is full row rank ($r=m\le n$). $\mA\pinv$ is a right inverse of $\mA$, so $\mA\mA\pinv=\mU_r\mU_r^T=\mU\mU^T=\mI_m$.
+\end{itemize} %TODO: Check these
+
+
+
+\section{Hadamard Identities}
+
+\begin{align}
+(\mA\circ\mB)_{ij}    &= A_{ij}B_{ij}~\forall~i,j                            \\
+\mA\circ\mB           &= \mB\circ\mA                    \eqcite{million2007} \\
+\mA\circ(\mB\circ\mC) &= (\mA\circ\mB)\circ\mC                               \\
+\mA\circ(\mB+\mC)     &= \mA\circ\mB+\mA\circ\mC        \eqcite{million2007} \\
+a(\mA\circ\mB)        &= (a\mA)\circ\mB =\mA\circ(a\mB) \eqcite{million2007} \\
+(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                     \\
+(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                     \\
+(x^T \mA x)           &= \sum_{i,j}\big((x x^T)\circ\mA\big)
+\end{align}
+
+
+\section{Eigenvalue Properties}
+
+$\lambda\in\mathbb{C}$ is an eigenvalue of $\mA\in\sRnn$ and $u\in\mathbb{C}^n$ is a corresponding eigenvector if $\mA\vu=\lambda\vu$ and $\vu\ne0$. Equivalantly, $(\lambda \mI_n-\mA)\vu=0$ and $\vu\ne0$. Eigenvalues satisfy the equation $\det(\lambda\mI_n-\mA)=0$.
+
+Any matrix $\mA\in\sRnn$ has $n$ eigenvalues, though some may be repeated. $\lambda_1$ is the largest eigenvalue and $\lambda_n$ the smallest.
+
+\begin{equation}
+\eig(\mA\mA^T)=\eig(\mA^T\mA)
+\end{equation}
+(Note that the number of entries in $\mA\mA^T$ and $\mA^T\mA$ may differ significantly leading to different compute times.)
+
+\begin{equation}
+\eig(\mA^T\mA)\ge0
+\end{equation}
+
+\subsection*{Computation}
+
+TODO: eigsh, small eigen value extraction, top-k
+
+
+
+
+
+
+
+\section{Norms}
+
+\subsection{Matrices}
+Matrix norms satisfy some properties:
+\begin{align}
+f(\mA)    &\ge 0             \\
+f(\mA)    &=   0  \iff \mA=0 \\
+f(c\mA)   &=   |c|f(\mA)     \\
+f(\mA+\mB)&\le f(\mA)+f(\mB)
+\end{align}
+Many popular matrix norms also satisfy ``sub-multiplicativity": $f(\mA\mB)\le f(\mA)f(\mB)$.
+
+\subsubsection{Frobenius norm}
+\begin{align}
+\norm{\mA}_F &= \sqrt{\trace\mA\mA^H}                           \\
+             &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |\mA_{ij}|^2 }  \\
+             &= \sqrt{\sum_{i=1}^m \eig(A^H A)_i }
+\end{align}
+
+\subsubsubsection{Special Properties}
+\begin{equation}
+\norm{\mA\vx}_2 \le \norm{\mA}_F \norm{\vx}_2~~~\vx\in\sRn
+\end{equation}
+
+\begin{equation}
+\norm{\mA\mB}_F\le \norm{\mA}_F \norm{\mB}_F
+\end{equation}
+
+\subsubsection{Operator Norms}
+For $p=1,2,\infty$ or other values, an operator norm indicates the maximum input-output gain of the matrix.
+\begin{equation}
+\norm{\mA}_p=\max_{\norm{\vu}_p=1} \norm{\mA\vu}_p
+\end{equation}
+
+\begin{align}
+\norm{\mA}_1
+  &=\max_{\norm{\vu}_1=1} \norm{\mA\vu}_1       \\
+  &=\max_{j=1,\ldots,n} \sum_{i=1}^m |\mA_{ij}| \\
+  &=\textrm{Largest absolute column sum}
+\end{align}
+
+\begin{align}
+\norm{\mA}_\infty
+  &=\max_{\norm{\vu}_\infty=1} \norm{\mA\vu}_\infty  \\
+  &=\max_{j=1,\ldots,m} \sum_{i=1}^n |\mA_{ij}| \\
+  &=\textrm{Largest absolute row sum}
+\end{align}
+
+\begin{align}
+\norm{\mA}_2
+  &=\textrm{``spectral norm"}                   \\
+  &=\max_{\norm{\vu}_2=1} \norm{\mA\vu}_2       \\
+  &=\sqrt{\max(\eig(\mA^T\mA))} \\
+  &=\textrm{Square root of largest eigenvalue of~}\mA^T\mA
+\end{align}
+
+
+
+\subsubsubsection{Special Properties}
+\begin{align}
+\norm{\mA\vu}_p &\le \norm{\mA}_p \norm{\vu}_p \\
+\norm{\mA\mB}_p &\le \norm{\mA}_p \norm{\mB}_p \\
+\end{align}
+
+\subsubsection{Spectral Radius}
+Not a proper norm.
+\begin{equation}
+\rho(\mA)=\textrm{spectral radius}(\mA)=\max_{i=1,\ldots,n} | \eig(\mA)_i |
+\end{equation}
+
+\subsubsubsection{Special Properties}
+\begin{align}
+\rho(\mA) &\le \norm{\mA}_p \\
+\rho(\mA) &\le \min(~\norm{\mA}_1, \norm{\mA}_\infty) \\
+\end{align}
+
+
+\subsection{Vectors}
+
+P-norm:
+\begin{equation}
+\norm{\vx}_p = (\sum_i |\vx_i|^p)^{1/p}
+\end{equation}
+
+\section{Bounds}
+
+\subsection{Matrix Gain}
+\begin{equation}
+\lambda_\textrm{min}(\mA^T\mA)\le \frac{\norm{\mA\vx}_2^2}{\norm{\vx}_2^2}\le\lambda_\textrm{max}(\mA^T\mA)
+\end{equation}
+
+\begin{equation}
+\max_{\vx\ne0} \frac{\norm{\mA\vx}_2}{\norm{\vx}_2}=\norm{\mA}_2=\sqrt{\lambda_\textrm{max}(\mA^T\mA)}\implies\vx=u_1
+\end{equation}
+
+\begin{equation}
+\min_{\vx\ne0} \frac{\norm{\mA\vx}_2}{\norm{\vx}_2}=\sqrt{\lambda_\textrm{min}(\mA^T\mA)}\implies\vx=u_n
+\end{equation}
+
+
+\subsection{Norms}
+
+For $\vx\in\mathbb{R}^n$
+\begin{equation}
+\frac{1}{\sqrt{n}}\norm{\vx}_2
+\le\norm{\vx}_\infty
+\le\norm{\vx}_2
+\le\norm{\vx}_1
+\le\sqrt{\textrm{card}(\vx)}\norm{\vx}_2
+\le\sqrt{n}\norm{\vx}_2
+\le n \norm{\vx}_\infty
+\end{equation}
+
+For any $0<p<q$ we have that $\norm{\vx}_q\le\norm{\vx}_p$.
+
+\subsection{Rayleigh quotients}
+The Rayleigh quotient of $\mA\in\sSn$ is given by
+\begin{equation}
+\frac{\vx^T \mA \vx}{\vx^T\vx}~~\vx\ne0
+\end{equation}
+
+\begin{equation}
+\lambda_\textrm{min}(\mA)\le \frac{\vx^T \mA \vx}{\vx^T\vx} \le \lambda_\textrm{max}(\mA)~~\vx\ne0
+\end{equation}
+
+\begin{align}
+\lambda_\textrm{max}(A)&=\max_{\vx: \norm{\vx}_2=1} \vx^T\mA\vx=u_1 \\
+\lambda_\textrm{min}(A)&=\min_{\vx: \norm{\vx}_2=1} \vx^T\mA\vx=u_n
+\end{align}
+where $u_1$ and $u_n$ are the eigenvectors associated with $\lambda_\textrm{max}$ and $\lambda_\textrm{min}$, respectively.
+
+
+
+
+
+
+
+\section{Linear Equations}
+The linear equation $\mA\vx=\vy$ with $\mA\in\sRmn$ admits a solution iff $\rank([\mA \vy])=\rank(\mA)$. If this is satisfied, the set of all solutions is an affine set $\mathcal{S}=\{\vx=\bar \vx+z: z\in\ns(\mA)\}$ where $\bar \vx$ is any vector such that $\mA\bar\vx=\vy$. The solution is unique if $\ns(\mA)=\{0\}$.
+
+$\mA\vx=\vy$ is \textit{overdetermined} if it is tall/skinny ($m>n$); that is, if there are more equations than unknowns. If $\rank(\mA)=n$ then $\dim\ns(\mA)=0$, so there is either no solution or one solution. Overdetermined systems often have no solution ($\vy\notin\range(\mA)$), so an approximate solution is necessary.
+
+$\mA\vx=\vy$ is \textit{underdetermined} if it is short/wide ($n>m$); that is, if has more unknowns than equations. If $\rank(\mA)=m$ then $\range(\mA)=\sRm$, so $\dim\ns(\mA)=n-m>0$, so the set of solutions is infinite. Therefore, finding a single solution that optimizes some quantity is of interest.
+
+$\mA\vx=\vy$ is \textit{square} if $n=m$. If $\mA$ is invertible, then the equations have the unique solution $\vx=\mA^{-1}\vy$.
+
+\subsection{Least-Squares}
+For an overdetermined system we wish to find:
+\begin{equation}
+\min_\vx \norm{\mA\vx-\vy}_2^2
+\end{equation}
+Since $\mA\vx\in\range(\mA)$, we need a point $\tilde \vy = \mA\vx^*\in\range(\mA)$ closest to $\vy$. This point lies in the nullspace of $\mA^T$, so we have $\mA^T(\vy-\mA\vx^*)=0$. There is always a solution to this problem and, if $\rank(\mA)=n$, it is unique.
+\begin{equation}
+\vx^*=(\mA^T\mA)^{-1}\mA^T\vy
+\end{equation} %TODO: Check
+
+\subsection{Minimum Norm Solutions}
+For undertermined systems in which $\mA\in\sRmn$ with $m<n$. We wish to find
+\begin{equation}
+\min_{\vx: \mA\vx=\vy} \norm{\vx}_2
+\end{equation}
+The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)$, so $\vx^*=\mA^Tc$ for some $c$, so $\mA \mA^T c=\vy$, therefore:
+\begin{equation}
+\vx^*=\mA^T(\mA\mA^T)^{-1}\vy
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{$\mathbf{1}_r^T \mA \mathbf{1}_c$}
+
+\textbf{Reduces to:} Scalar
+
+\textbf{Notation:} For $\mA \in \mathbb{R}^{r\times c}$, $\mathbf{1}_r$ is in $\mathbb{R}^{r \times 1}$ and $\mathbf{1}_c$ is in $\mathbb{R}^{c \times 1}$.
+
+\textbf{Plain English:} The sum of the elements of the matrix.
+
+\textbf{Algorithm:} Traverse all the element of the matrix in order keeping track of the sum. For applications where accuracy is important and the matrices have a large dynamic range, Kahan summation or a similar technique should be used.
+
+\textbf{Update Algorithm:} If an entry changes, subtract its old value from the sum and add its new value to the sum.
+
+
+
+\section{$\vx^T \mA \vx$}
+
+\textbf{Reduces to}: Scalar
+
+\textbf{Notation:} $\mA$ must be in $\mathbb{R}^{i\times i}$. $\vx$ is in $\mathbb{R}^{i \times 1}$.
+
+\textbf{Plain English:} TODO
+
+\textbf{Algorithm:} TODO
+
+\textbf{Update Algorithm:} We make use of the identity $(\vx^T \mA \vx)=\sum_{i,j}\big((\vx \vx^T)\circ\mA\big)$. If an entry $\mA_{i,j}$ in the matrix changes subtract its old value $\vx_i \vx_j \mA_{ij}$ and add the new value $\vx_i \vx_j \mA_{ij}'$. If an entry $\vx_i$ changes TODO.
+
+
+
+
+
+\section{Algorithms}
+
+\subsection{Gram-Schmidt}
+TODO
+% Consider the [[Gram–Schmidt process]] applied to the columns of the full column rank matrix <math>A=[\mathbf{a}_1, \cdots, \mathbf{a}_n]</math>, with [[inner product]] <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^\top \mathbf{w}</math> (or <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^* \mathbf{w}</math> for the complex case).
+
+% Define the [[Vector projection|projection]]:
+% :<math>\mathrm{proj}_{\mathbf{u}}\mathbf{a}
+% = \frac{\left\langle\mathbf{u},\mathbf{a}\right\rangle}{\left\langle\mathbf{u},\mathbf{u}\right\rangle}{\mathbf{u}}
+% </math>
+% then:
+% :<math>
+% \begin{align}
+%  \mathbf{u}_1 &= \mathbf{a}_1,
+%   & \mathbf{e}_1 &= {\mathbf{u}_1 \over \|\mathbf{u}_1\|} \\
+%  \mathbf{u}_2 &= \mathbf{a}_2-\mathrm{proj}_{\mathbf{u}_1}\,\mathbf{a}_2,
+%   & \mathbf{e}_2 &= {\mathbf{u}_2 \over \|\mathbf{u}_2\|} \\
+%  \mathbf{u}_3 &= \mathbf{a}_3-\mathrm{proj}_{\mathbf{u}_1}\,\mathbf{a}_3-\mathrm{proj}_{\mathbf{u}_2}\,\mathbf{a}_3,
+%   & \mathbf{e}_3 &= {\mathbf{u}_3 \over \|\mathbf{u}_3\|} \\
+%  & \vdots &&\vdots \\
+%  \mathbf{u}_k &= \mathbf{a}_k-\sum_{j=1}^{k-1}\mathrm{proj}_{\mathbf{u}_j}\,\mathbf{a}_k,
+%   &\mathbf{e}_k &= {\mathbf{u}_k\over\|\mathbf{u}_k\|}
+% \end{align}
+% </math>
+
+% We can now express the <math>\mathbf{a}_i</math>s over our newly computed orthonormal basis:
+
+% :<math>
+% \begin{align}
+%  \mathbf{a}_1 &= \langle\mathbf{e}_1,\mathbf{a}_1 \rangle \mathbf{e}_1  \\
+%  \mathbf{a}_2 &= \langle\mathbf{e}_1,\mathbf{a}_2 \rangle \mathbf{e}_1
+%   + \langle\mathbf{e}_2,\mathbf{a}_2 \rangle \mathbf{e}_2 \\
+%  \mathbf{a}_3 &= \langle\mathbf{e}_1,\mathbf{a}_3 \rangle \mathbf{e}_1
+%   + \langle\mathbf{e}_2,\mathbf{a}_3 \rangle \mathbf{e}_2
+%   + \langle\mathbf{e}_3,\mathbf{a}_3 \rangle \mathbf{e}_3 \\
+%  &\vdots \\
+%  \mathbf{a}_k &= \sum_{j=1}^{k} \langle \mathbf{e}_j, \mathbf{a}_k \rangle \mathbf{e}_j
+% \end{align}
+% </math>
+% where <math>\langle\mathbf{e}_i,\mathbf{a}_i \rangle = \|\mathbf{u}_i\|</math>. This can be written in matrix form:
+% :<math> A = Q R </math>
+% where:
+% :<math>Q = \left[ \mathbf{e}_1, \cdots, \mathbf{e}_n\right] </math>
+% and
+% :<math>
+% R = \begin{pmatrix}
+% \langle\mathbf{e}_1,\mathbf{a}_1\rangle & \langle\mathbf{e}_1,\mathbf{a}_2\rangle &  \langle\mathbf{e}_1,\mathbf{a}_3\rangle  & \ldots \\
+% 0                & \langle\mathbf{e}_2,\mathbf{a}_2\rangle                        &  \langle\mathbf{e}_2,\mathbf{a}_3\rangle  & \ldots \\
+% 0                & 0                                       & \langle\mathbf{e}_3,\mathbf{a}_3\rangle                          & \ldots \\
+% \vdots           & \vdots                                  & \vdots                                    & \ddots \end{pmatrix}.</math>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\bibliography{refs}
+
+
+\end{document}
+
+TODO:
+Orthogonal matrix = all eigenvalues are 1 or -1
+
+Centering matrix
+Distance matrix
+
+
+
+For two vectors $b$ and $x$, $p=\frac{b^Tx}{b^Tb}b$ is the projection of $x$ onto $b$.
+
+TODO: Gilber Strang (2016, p563: Matrix Factorizations)
+
+TODO: Strang 2016, p. 583, List of symbols and computer codes
+
+
+TODO: Add Gram-Schmidt procedure
+TODO: Add computational efficiency notes for QR
