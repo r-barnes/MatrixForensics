@@ -20,6 +20,7 @@ def MakeMatrixFig(filename, mat):
   plt.xticks([])
   plt.yticks([])
   SaveIfNew(fig, filename, bbox_inches='tight', pad_inches=0.0)  
+  plt.close()
 
 
 
@@ -103,3 +104,32 @@ a  = np.random.permutation(a)
 pm = np.zeros((10,10))
 pm[np.arange(10), a] = 1
 MakeMatrixFig("imgs/rg_permutation_matrix.pdf", pm)
+
+
+np.random.seed(123456789)
+a   = np.random.rand(10,10)
+q,r = np.linalg.qr(a, mode='complete')
+MakeMatrixFig("imgs/decomp_qr_a.pdf", a)
+MakeMatrixFig("imgs/decomp_qr_q.pdf", q)
+MakeMatrixFig("imgs/decomp_qr_r.pdf", r)
+
+
+
+np.random.seed(123456789)
+a = np.random.rand(10,10)
+a = a@np.transpose(a)
+L = np.linalg.cholesky(a)
+MakeMatrixFig("imgs/decomp_cholesky_a.pdf", a)
+MakeMatrixFig("imgs/decomp_cholesky_L.pdf", L)
+MakeMatrixFig("imgs/decomp_cholesky_LT.pdf", np.transpose(L))
+
+
+
+np.random.seed(123456789)
+a           = np.random.rand(10,10)
+a           = a@np.transpose(a)
+lu, d, perm = sp.linalg.ldl(a)
+MakeMatrixFig("imgs/decomp_ldlt_a.pdf", a)
+MakeMatrixFig("imgs/decomp_ldlt_L.pdf", lu)
+MakeMatrixFig("imgs/decomp_ldlt_D.pdf", d)
+MakeMatrixFig("imgs/decomp_ldlt_LT.pdf", np.transpose(lu))

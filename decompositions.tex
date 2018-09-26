@@ -1,6 +1,13 @@
 \chapter{Matrix Decompositions}
 
 \section{LLT/UTU: Cholesky Decomposition} %TODO: Add UU to TOC
+
+\begin{center}
+\includegraphics[align=c,height=1in]{imgs/decomp_cholesky_a.pdf}\textbf{\large =}
+\includegraphics[align=c,height=1in]{imgs/decomp_cholesky_L.pdf}\textbf{\large *}
+\includegraphics[align=c,height=1in]{imgs/decomp_cholesky_LT.pdf}
+\end{center}
+
 If $\mA$ is symmetric, positive definite, square, then
 \begin{equation}
 \mA=\mU^T\mU=\mL\mL^T
@@ -8,6 +15,13 @@ If $\mA$ is symmetric, positive definite, square, then
 where $\mU$ is a unique upper triangular matrix and $\mL$ is a unique lower-triangular matrix.
 
 \section{LDLT}
+
+\begin{center}
+\includegraphics[align=c,height=1in]{imgs/decomp_ldlt_a.pdf}\textbf{\large =}
+\includegraphics[align=c,height=1in]{imgs/decomp_ldlt_L.pdf}\textbf{\large *}
+\includegraphics[align=c,height=1in]{imgs/decomp_ldlt_D.pdf}\textbf{\large *}
+\includegraphics[align=c,height=1in]{imgs/decomp_ldlt_LT.pdf}
+\end{center}
 
 If $\mA$ is a non-singular symmetric definite square matrix, then
 \begin{equation}
@@ -37,6 +51,12 @@ Taking an SVD of $\tilde \mX \tilde \mX^T$ gives $H=\mU_r\mD^2\mU^T$, which is m
 
 \section{QR: Orthogonal-triangular}
 
+\begin{center}
+\includegraphics[align=c,height=1in]{imgs/decomp_qr_a.pdf}\textbf{\large =}
+\includegraphics[align=c,height=1in]{imgs/decomp_qr_q.pdf}\textbf{\large *}
+\includegraphics[align=c,height=1in]{imgs/decomp_qr_r.pdf}
+\end{center}
+
 For $\mA\in\sRnn$, $\mA=\mQ\mR$ where $\mQ$ is orthogonal and $\mR$ is an upper triangular matrix. If $\mA$ is non-singular, then $\mQ$ and $\mR$ are uniquely defined if $\diag(\mR)$ are imposed to be positive.
 
 \subsection*{Algorithms}
@@ -49,17 +69,17 @@ Gram-Schmidt.
 \section{SVD: Singular Value Decomposition}
 
 \begin{center}
-\includegraphics[height=1in]{imgs/decomp_svd_a.pdf}
-\includegraphics[height=1in]{imgs/decomp_svd_u.pdf}
-\includegraphics[height=1in]{imgs/decomp_svd_s.pdf}
-\includegraphics[height=1in]{imgs/decomp_svd_v.pdf}
+\includegraphics[align=c,height=1in]{imgs/decomp_svd_a.pdf}\textbf{\large =}
+\includegraphics[align=c,height=1in]{imgs/decomp_svd_u.pdf}\textbf{\large *}
+\includegraphics[align=c,height=1in]{imgs/decomp_svd_s.pdf}\textbf{\large *}
+\includegraphics[align=c,height=1in]{imgs/decomp_svd_v.pdf}
 \end{center}
 
 \begin{center}
-\includegraphics[width=0.5in]{imgs/decomp_svd_a_compact.pdf}
-\includegraphics[width=0.5in]{imgs/decomp_svd_u_compact.pdf}
-\includegraphics[width=0.5in]{imgs/decomp_svd_s_compact.pdf}
-\includegraphics[width=0.5in]{imgs/decomp_svd_v_compact.pdf}
+\includegraphics[align=c,width=0.5in]{imgs/decomp_svd_a_compact.pdf}\textbf{\large =}
+\includegraphics[align=c,width=0.5in]{imgs/decomp_svd_u_compact.pdf}\textbf{\large *}
+\includegraphics[align=c,width=0.5in]{imgs/decomp_svd_s_compact.pdf}\textbf{\large *}
+\includegraphics[align=c,width=0.5in]{imgs/decomp_svd_v_compact.pdf}
 \end{center}
 
 Any matrix $\mA\in\sRmn$ can be written as
