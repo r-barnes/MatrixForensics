@@ -9,9 +9,14 @@
     {\large\textit{A brief guide to matrix math \\ and its efficient implementation}}\\[4\baselineskip] % Subtitle or further description
     {\Large\textsc{richard barnes}} % Author name, lower case for consistent small caps
     \\[4\baselineskip]
+    \immediate\write18{ git rev-parse HEAD > /tmp/matrix_forensics_version.info }
+
+    Git Hash: \input{/tmp/matrix_forensics_version.info} \\
+    Compiled on: \today\ at \currenttime
+    \\[2\baselineskip]
     \href{https://github.com/r-barnes/MatrixForensics}{github.com/r-barnes/MatrixForensics}
     
-    \vspace{0.6\textheight} % Whitespace between the title block and the publisher
+    \vspace{0.4\textheight} % Whitespace between the title block and the publisher
     
     %{\noindent The Publisher~~\plogo}\\[\baselineskip] % Publisher and logo
   }
