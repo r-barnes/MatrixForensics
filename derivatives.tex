@@ -1,0 +1,24 @@
+\chapter{Derivatives}
+
+\section{Vectors Only}
+
+
+
+
+\section{Useful Derivatives}
+For general $\mA$ and $\mX$ (no special structure):
+\begin{align}
+\partial\mA           &= 0~~\textrm{where $\mA$ is a constant} \\
+\partial(c\mX)        &= c\partial\mX                          \\
+\partial(\mX+\mY)     &= \partial\mX+\partial\mY               \\
+\partial(\trace(\mX)) &= \trace(\partial(\mX))                 \\
+\partial(\mX\mY)      &= (\partial\mX)\mY + \mX(\partial\mY)   \\
+\partial(\mX\circ\mY) &= (\partial\mX)\circ\mY + \mX\circ(\partial\mY) \\
+%TODO Kronecker x in circle equation 39 Matrix Cookbook
+\partial(\mX^{-1})    &= -\mX^{-1}(\partial\mX)\mX^{-1}        \\
+\partial(\det(\mX))   &= \trace(\textrm{adj}(\mX)\partial\mX)  \\
+\partial(\det(\mX))   &= \det(\mX)\trace(\mX^{-1}\partial\mX)  \\
+\partial(\ln(\det(\mX))) &= \trace(\mX^{-1}\partial\mX)        \\
+\partial(\mX^T)       &= (\partial\mX)^T                       \\
+\partial(\mX^H)       &= (\partial\mX)^H                       
+\end{align}

@@ -1,0 +1,191 @@
+\chapter{Matrix Decompositions}
+
+\section{LLT/UTU: Cholesky Decomposition} %TODO: Add UU to TOC
+If $\mA$ is symmetric, positive definite, square, then
+\begin{equation}
+\mA=\mU^T\mU=\mL\mL^T
+\end{equation}
+where $\mU$ is a unique upper triangular matrix and $\mL$ is a unique lower-triangular matrix.
+
+\section{LDLT}
+
+If $\mA$ is a non-singular symmetric definite square matrix, then
+\begin{equation}
+\mA=\mL\mD\mL^T=\mL^T\mD\mL
+\end{equation}
+where $\mL$ is a unit lower triangular matrix and $\mD$ is a diagonal matrix. If $\mA\ispd0$, then $\mD_{ii}>0$.
+
+% For $\mA\in\sRnn$,
+% \begin{align}
+% \mA&\ispsd0\iff \exists\mB\ispsd0: \mA=\mB^2 \\
+% \mA&\ispd0 \iff \exists\mB\ispd 0: \mA=\mB^2
+% \end{align}
+% where $\mB$ is called the ``matrix square-root" of $\mA$.
+
+% For $\mA\ispsd0$, we can use the spectral factorization $\mA=\mU\mD\mU^T$ and take $\mD^{1/2}=\diag(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n})$ to get $\mB=\mU\mD^{1/2}\mU^T$.
+
+
+\section{PCA: Principle Components Analysis}
+Find normalized directions in data space such that the variance of the projections of the centered data points is maximal. For centered data $\tilde \mX$, the mean-square variation of data along a vector $\vx$ is $\vx^T \tilde \mX \tilde \mX^T \vx$.
+\begin{equation}
+\max_{\vx\in\sRn,~\norm{\vx}_2=1} \vx^T \tilde \mX \tilde \mX^T \vx
+\end{equation}
+Taking an SVD of $\tilde \mX \tilde \mX^T$ gives $H=\mU_r\mD^2\mU^T$, which is maximized by taking $\vx=\vu_1$. By repeatedly removing the first principal components and recalculating, all the principal axes can be found.
+
+
+
+
+\section{QR: Orthogonal-triangular}
+
+For $\mA\in\sRnn$, $\mA=\mQ\mR$ where $\mQ$ is orthogonal and $\mR$ is an upper triangular matrix. If $\mA$ is non-singular, then $\mQ$ and $\mR$ are uniquely defined if $\diag(\mR)$ are imposed to be positive.
+
+\subsection*{Algorithms}
+
+Gram-Schmidt.
+
+
+
+
+\section{SVD: Singular Value Decomposition}
+
+\begin{center}
+\includegraphics[height=1in]{imgs/decomp_svd_a.pdf}
+\includegraphics[height=1in]{imgs/decomp_svd_u.pdf}
+\includegraphics[height=1in]{imgs/decomp_svd_s.pdf}
+\includegraphics[height=1in]{imgs/decomp_svd_v.pdf}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.5in]{imgs/decomp_svd_a_compact.pdf}
+\includegraphics[width=0.5in]{imgs/decomp_svd_u_compact.pdf}
+\includegraphics[width=0.5in]{imgs/decomp_svd_s_compact.pdf}
+\includegraphics[width=0.5in]{imgs/decomp_svd_v_compact.pdf}
+\end{center}
+
+Any matrix $\mA\in\sRmn$ can be written as
+\begin{equation}
+\mA=\mU \mD \mV^T=\sum_{i=1}^r \sigma_i u_i v_i^T
+\end{equation}
+where
+\begin{align}
+U&=\textrm{eigenvectors of~}\mA\mA^T & \sRmm \\
+D&=\diag(\sigma_i)=\sqrt{\diag(\eig(\mA\mA^T))}      & \sRnm \\
+V&=\textrm{eigenvectors of~}\mA^T\mA & \sRnn
+\end{align}
+Let $\sigma_i$ be the non-zero singular values for $i=1,\ldots,r$ where $r$ is the rank of $\mA$; $\sigma_1\ge\ldots\ge\sigma_r$.
+
+We also have that
+\begin{align}
+\mA   \vv_i &= \sigma_i \vu_i \\
+\mA^T \vu_i &= \sigma_i \vv_i \\
+\mU^T\mU &= \mI \\
+\mV^T\mV &= \mI
+\end{align}
+
+$\mD$ can be written in an expanded form:
+\begin{equation}
+\tilde \mD=
+\begin{bmatrix}
+\mD       & 0_{r,n-r}   \\
+0_{m-r,r} & 0_{m-r,n-r}
+\end{bmatrix}
+\end{equation}
+The final $n-r$ columns of $\mV$ give an orthonormal basis spanning $\ns(\mA)$. An orthonormal basis spanning the range of $\mA$ is given by the first $r$ columns of $\mU$.
+
+\begin{align}
+\norm{\mA}^2_F&=\textrm{Frobenius norm} =\trace(\mA^T\mA)=\sum_{i=1}^r \sigma_i^2 \\
+\norm{\mA}^2_2&=\sigma_1^2 \\
+\norm{\mA}_* &= \textrm{nuclear norm}=\sum_{i=1}^r \sigma_i
+\end{align}
+
+The \textbf{condition number} $\kappa$ of an invertible matrix $\mA\in\sRnn$ is the ratio of the largest and smallest singular value. Matrices with large condition numbers are closer to being singular and more sensitive to changes.
+\begin{equation}
+\kappa(\mA)=\frac{\sigma_1}{\sigma_n}=\norm{A}_2 \cdot \norm{A^{-1}}_2
+\end{equation}
+
+\subsection*{Low-Rank Approximation}
+Approximating $\mA\in\sRmn$ by a matrix $\mA_k$ of rank $k>0$ can be formulated as the optimization probem
+\begin{equation}
+\min_{\mA_k\in\sRmn} \norm{\mA-\mA_k}_F^2: \rank{\mA_k}=k, 1\le k \le \rank(\mA)
+\end{equation}
+The optimal solution of this problem is given by
+\begin{equation}
+\mA_k=\sum_{i=1}^k \sigma_i \vu_i \vv_i^T
+\end{equation}
+where
+\begin{align}
+\frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_1^2+\ldots+\sigma_k^2}{\sigma_1^2+\ldots+\sigma_r^2} \\
+1-\frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_{k+1}^2+\ldots+\sigma_r^2}{\sigma_1^2+\ldots+\sigma_r^2} 
+\end{align}
+is the fraction of the total variance in $\mA$ explained by the approximation $\mA_k$.
+
+\subsection*{Range and Nullspace}
+\begin{align}
+\ns(\mA) &= \range(\mV_{nr})                      \\
+\ns(\mA)^\perp \equiv\range(\mA^T)&=\range(\mV_r) \\
+\range(\mA)&=\range(\mU_r)                        \\
+\range(\mA)^\perp\equiv\ns(\mA^T)&=\range(\mU_{nr})
+\end{align}
+where $\mV_r$ is the first $r$ columns of $V$ and $V_nr$ are the last $[r+1,n]$ columns; similarly for $\mU$.
+
+
+\subsection*{Projectors}
+The projection of $\vx$ onto $\ns(\mA)$ is $(\mV_{nr}\mV_{nr}^T)\vx$. Since $\mI_n=\mV_r\mV_r^T+\mV_{nr}\mV_{nr}^T$, $(\mI_n-\mV_{r}\mV_{r}^T)\vx$ also works. The projection of $\vx$ onto $\range(\mA)$ is $(\mU_r\mU_r^T)\vx$.
+
+If $\mA\in\sRmn$ is full row rank ($\mA\mA^T\ispd0$), then the minimum distance to an affine set $\{x:\mA\vx=\vb\}, \vb\in\sRm$ is given by $\vx^*=\mA^T(\mA\mA^T)^{-1}\vb$. %TODO
+
+If $\mA\in\sRmn$ is full column rank ($\mA^T\mA\ispd0$), then the minimum distance to an affine set $\{x:\mA\vx=\vb\}, \vb\in\sRm$ is given by $\vx^*=\mA(\mA^T\mA)^{-1}\mA^T\vb$. %TODO
+
+
+\subsection*{Computational Notes}
+Since $\sigma\approx0$, a \textit{numerical rank} can be estimated for the matrix as the largest $k$ such that $\sigma_k>\epsilon \sigma_1$ for $\epsilon\ge0$.
+
+
+
+\section{Eigenvalue Decomposition for Diagonalizable Matrices}
+
+For a square, diagonalizable matrix $\mA\in\mathbb{R}^{n,n}$ 
+\begin{equation}
+\mA=U\Lambda U^{-1}
+\end{equation}
+where $U\in\mathbb{C}^{n,n}$ is an invertible matrix whose columns are the eigenvectors of $\mA$ and $\Lambda$ is a diagonal matrix containing the eigenvalues $\lambda_1,\ldots,\lambda_n$ of $\mA$ in the diagonal.
+
+The columns $\vu_1,\ldots,\vu_n$ satisfy
+\begin{equation}
+\mA \vu_i=\lambda_i \vu_i~~i=1,\ldots,n
+\end{equation}
+
+\section{Eigenvalue (Spectral) Decomposition for Symmetric Matrices}
+
+A symmetric matrix $\mA\in\mathbb{R}^{n,n}$ can be factored as
+\begin{equation}
+\mA=U\Lambda U^T=\sum_i^n \lambda_i \vu_i \vu_i^T
+\end{equation}
+where $U\in\mathbb{R}^{n,n}$ is an orthogonal matrix whose columns $\vu_i$ are the eigenvectors of $\mA$ and $\Lambda$ is a diagonal matrix containing the eigenvalues $\lambda_1\ge\ldots\ge\lambda_n$ of $\mA$ in the diagonal. These eigenvalues are always real. The eigenvectors can always be chosen to be real and to form an orthonormal basis.
+
+The columns $\vu_1,\ldots,\vu_n$ satisfy
+\begin{equation}
+\mA \vu_i=\lambda_i \vu_i~~i=1,\ldots,n
+\end{equation}
+
+
+\section{Schur Complements}
+
+For $\mA\in\sSn$, $\mB\in\sSn$, $\mX\in\sRnm$ with $\mB\ispd0$ and the block matrix
+\begin{equation}
+\mM=
+\begin{bmatrix}
+\mA & \mX \\
+\mX^T & \mB
+\end{bmatrix}
+\end{equation}
+and the Schur complement of $\mA$ in $\mM$
+\begin{equation}
+S=\mA-\mX\mB^{-1}\mX^T
+\end{equation}
+Then
+\begin{align}
+\mM\ispsd0&\iff S\ispsd0 \\
+\mM\ispd0 &\iff S\ispd0 
+\end{align}
+

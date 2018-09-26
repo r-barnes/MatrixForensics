@@ -5,6 +5,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import scipy as sp
+from scipy.stats import ortho_group
 
 def SaveIfNew(fig, filename, *args, **kwargs):
   if os.path.exists(filename):
@@ -73,3 +75,31 @@ a    = np.random.rand(6,1)
 b    = np.random.rand(10,1)
 dyad = a@np.transpose(b)
 MakeMatrixFig("imgs/rg_dyad.pdf", dyad)
+
+np.random.seed(123456789)
+m = ortho_group.rvs(dim=10)
+MakeMatrixFig("imgs/rg_orthogonal.pdf", m)
+
+
+np.random.seed(123456787)
+cols = np.random.rand(9)
+rows = np.random.rand(10)
+m    = sp.linalg.toeplitz(cols,rows)
+MakeMatrixFig("imgs/rg_toeplitz.pdf", m)
+
+
+np.random.seed(123456787)
+h         = np.random.rand(5)
+h         = h/np.linalg.norm(h)
+padding   = np.zeros(h.shape[0] - 1, h.dtype)
+first_col = np.r_[h, padding]
+first_row = np.r_[h[0], padding]
+H         = sp.linalg.toeplitz(first_col, first_row)
+MakeMatrixFig("imgs/rg_toeplitz_1d_conv.pdf", H)
+
+
+a  = np.array(range(10))
+a  = np.random.permutation(a)
+pm = np.zeros((10,10))
+pm[np.arange(10), a] = 1
+MakeMatrixFig("imgs/rg_permutation_matrix.pdf", pm)

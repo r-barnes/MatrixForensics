@@ -1,0 +1,429 @@
+\chapter{Matrix Rogue Gallery}
+
+\section{Non-Singular vs.\ Singular Matrices}
+For $\mA\in\sRnn$ (initially drawn from \citep[p.\ 574]{Strang2016}):
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Non-Singular}                           & \textbf{Singular}                        \\
+$\mA$ is invertible                             & $\mA$ is not invertible                  \\
+The columns are independent                     & The columns are dependent                \\
+The rows are independent                        & The rows are dependent                   \\
+$\det(\mA)\ne0$                                 & $\det(\mA)=0$                            \\
+$\mA\vx=0$ has one solution: $\vx=0$            & $\mA\vx=0$ has infinitely many solutions \\
+$\mA\vx=\vb$ has one solution: $\vx=\mA^{-1}\vb$& $\mA\vx=\vb$ has either no or infinitely many solutions \\
+$\mA$ has $n$ nonzero pivots                    & $\mA$ has $r<n$ pivots                   \\
+$\mA$ has full rank $r=n$                       & $\mA$ has rank $r<n$                     \\
+The reduced row echelon form is $\mR=\mI$       & $\mR$ has at least one zero row          \\
+The column space is all of $\sRn$               & The column space has dimension $r<n$     \\
+The row space is all of $\sRn$                  & The row space has dimension $r<n$        \\
+All eigenvalues are nonzero                     & Zero is an eigenvalue of $\mA$           \\
+$\mA^T\mA$ is symmetric positive definite       & $\mA^T\mA$ is only semidefinite          \\
+$\mA$ has $n$ positive singular values          & $\mA$ has $r<n$ singular values        
+\end{tabular}
+\end{center}
+
+\section{Diagonal Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_diagonal.pdf}
+\end{center}
+
+\begin{equation}
+A=\diag(a_1,\ldots,a_n)=
+\begin{bmatrix}
+a_1  &        &  \\
+     & \ddots &  \\
+     &        & a_n 
+\end{bmatrix}
+\end{equation}
+
+Square matrix. Entries above diagonal are equal to entries below diagonal.
+
+Number of ``free entries": $\frac{n(n+1)}{2}$.
+
+\subsection*{Special Properties}
+
+\begin{equation}
+\eig(A)={a_1,\ldots,a_n}
+\end{equation}
+
+\begin{equation}
+\det(A)=\prod_i a_i 
+\end{equation}
+
+\begin{equation}
+A^{-1}=
+\begin{bmatrix}
+\frac{1}{a_1} &        &               \\
+              & \ddots &               \\
+              &        & \frac{1}{a_n}
+\end{bmatrix}
+\end{equation}
+
+
+
+
+\section{Dyads}
+
+\begin{center}
+\includegraphics[width=2in]{imgs/rg_dyad.pdf}
+\end{center}
+
+$\mA\in\sRmn$ is a dyad if it can be written as
+\begin{equation}
+\mA=\vu\vv^T~~~\vu\in\sRm, \vv\in\sRn
+\end{equation}
+
+\subsection*{Special Properties}
+\begin{itemize}
+\item The columns of $\mA$ are copies of $\vu$ scaled by the values of $\vv$.
+\item The rows of $\mA$ are copies of $\vu^T$ scaled by the values of $\vv$.
+\item If $\mA$ is a dyad, it acts on a vector $\vx$ as $\mA\vx=(\vu\vv^T)\vx=(\vv^T\vu)\vx$.
+\item $\mA\vx=c\vu$ ($\mA$ scales $\vx$ and points it along $\vu$).
+\item $\mA_{ij}=\vu_i\vv_j$.
+\item If $\vu,\vv\ne0$, then $\rank(\mA)=1$.
+\item If $m=n$, $\mA$ has one eigenvalue $\lambda=\vv^T\vu$ and eigenvector $\vu$.
+\item A dyad can always be written in a normalized form $c\tilde\vu\tilde\vv^T$.
+\end{itemize}
+
+
+
+\section{Hermitian Matrix}
+$\mH\in\sCmn$ is Hermitian iff
+\begin{equation}
+\mH=\mH^H
+\end{equation}
+where $\mH^H$ is the conjugate transpose of $\mH$.
+
+For $\mH\in\sRmn$, Hermitian and symmetric matrices are equivalent.
+
+\subsection*{Special Properties}
+\begin{align}
+\mH_{ii} &\in \sR      \\
+\mH\mH^H &=   \mH^H\mH \\
+\vx^H\mH\vx &\in \sR~~\forall\vx\in\sC \\
+\mH_1+\mH_2 &= \textrm{Hermitian} \\
+\mH^{-1}    &= \textrm{Hermitian} \\
+\mA+\mA^H   &= \textrm{Hermitian} \\
+\mA-\mA^H   &= \textrm{Skew-Hermitian} \\
+\mA\mB      &= \textrm{Hermitian iff $\mA\mB=\mB\mA$} \\
+\det(\mH)   &\in \sR \\
+\eig(\mH)   &\in \sR
+\end{align}
+
+
+
+\section{Idempotent Matrix}
+A matrix $\mA$ is idempotent iff
+\begin{equation}
+\mA\mA=\mA
+\end{equation}
+
+\subsection*{Special Properties}
+\begin{align}
+\mA^n        &=A~~\forall n              \\
+\mI-\mA      &~~\textrm{is idempotent}   \\
+\mA^H        &~~\textrm{is idempotent}   \\
+\mI-\mA^H    &~~\textrm{is idempotent}   \\
+\rank(\mA)   &= \trace(\mA)              \\
+\mA(I-\mA)   &= 0                        \\
+\mA\pinv     &= \mA                      \\
+f(s\mI+t\mA) &= (\mI-\mA)f(s)+\mA f(s+t) \\
+\mA\mB=\mB\mA&\implies \mA\mB~\textrm{is idempotent} \\
+\eig(\mA)_i  &\in \{0,1\} \\
+\mA & \textrm{~is always diagonalizable}
+\end{align}
+$\mA-\mI$ may not be idempotent.
+
+
+
+
+\section{Orthogonal Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_orthogonal.pdf}
+
+(Not much visible structure)
+\end{center}
+
+
+\begin{equation}
+U=
+\begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+\end{bmatrix}
+\end{equation}
+
+A matrix $\mU$ is orthogonal iff:
+
+\begin{equation}
+\mU^T \mU = \mU \mU^T = I
+\end{equation}
+
+Square matrix. The columns form an orthonormal basis of $\mathbb{R}^n$.
+
+
+
+\subsection*{Special Properties}
+
+\begin{itemize}
+\item The eigenvalues of $\mU$ are placed on the unit circle.
+\item The eigenvectors of $\mU$ are unitary (have length one).
+\item $\mU^{-1}$ is orthogonal.
+\end{itemize}
+
+\begin{align}
+\mU^T     &= \mU^{-1} \\
+\mU^{-T}  &= \mU      \\
+\mU^T\mU  &= \mI      \\
+\mU\mU^T  &= \mI      \\
+\det(\mU) &= \pm1
+\end{align}
+
+
+
+Orthogonal matrices preserve the lengths and angles of the vectors they operator on. The converse is true: any matrix which preserves lengths and angles is orthogonal.
+\begin{equation}
+\norm{\mU \vx}^2_2=(\mU\vx)^T(\mU\vx)=\vx^T\mU^T\mU\vx=\vx^T\vx=\norm{\vx}^2_2~~\forall \vx
+\end{equation}
+
+\begin{equation}
+\norm{\mU \mA \mV}_F=\norm{\mA}_F~~\forall \mA,\mU,\mV~\textrm{with}~U,V orthogonal
+\end{equation}
+
+
+
+\section{Permutation Matrix}
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_permutation_matrix.pdf}
+\end{center}
+
+TODO
+
+
+
+\section{Positive Definite}
+
+$\mA\in\sSn$ is positive definite (denoted $\mA\ispd0$) if any of the following are true:
+\begin{itemize}
+\item $\vx^T\mA\vx>0,\forall\vx\in\sRn$.
+\item $\eig(\mA)>0$
+\end{itemize}
+
+
+\subsection*{Special Properties}
+
+\begin{itemize}
+\item If $\mA$ is PD and invertible, $\mA^{-1}$ is also PD.
+\item If $\mA$ is PD and $c\in\sR$ then $c\mA$ is PD.
+\item The diagonal entries $\mA_{ii}$ are real and non-negative, so $\trace(\mA)\ge0$. %TODO: Shouldn't this be >0?
+\item $\det(\mA)>0$
+\item For $\mA\in\sRmn$, $\mA^T\mA\ispd0\iff \mA$ is full-column rank ($\rank(\mA)=n$)
+\item For $\mA\in\sRmn$, $\mA\mA^T\ispd0\iff \mA$ is full-row rank ($\rank(\mA)=m$)
+\item $\mP\ispd0$ defines a full-dimensional, bounded ellipsoid centered at the origin and defined by the set $\mathcal{E}=\{\vx\in\sRn: x^T\mP^{-1}x\le1\}$. The eigenvalues $\lambda_i$ and eigenvectors $u_i$ of $\mP$ define the orientation and shape of the ellipsoid. $u_i$ are the semi-axes while the lengths of the semi-axes are given by $\sqrt{\lambda_i}$. Using the Cholesky decomposition, $\mP^{-1}=\mA^T\mA$, an equivalent definition of the ellipsoid is $\mathcal{E}=\{\vx\in\sRn: \norm{\mA\vx}_2\le1\}$.
+\end{itemize}
+
+\section{Positive Semi-Definite}
+
+$\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following are true:
+\begin{itemize}
+\item $\vx^T\mA\vx\ge0,\forall\vx\in\sRn$.
+\item $\eig(\mA)\ge0$
+\end{itemize}
+
+\subsection*{Special Properties}
+\begin{itemize}
+\item For $\mA\in\sRmn$, $\mA^T\mA\ispsd0$
+\item For $\mA\in\sRmn$, $\mA\mA^T\ispsd0$
+\item The positive semi-definite matrices $\sPSD$ form a convex cone. For any two PSD matrices $\mA,\mB\in\sPSD$ and some $\alpha\in[0,1]$:
+\begin{equation}
+\vx^T(\alpha\mA+(1-\alpha)\mB)\vx=\alpha \vx^T\mA\vx+(1-\alpha)\vx^T\mB\vx\ge0~~\forall\vx
+\end{equation}
+\begin{equation}
+\alpha\mA+(1-\alpha)\mB\in\sPSD
+\end{equation}
+\item For $\mA\in\sPSD$ and $\alpha\ge0$, $\alpha\mA\ispsd0$, so $\sPSD$ is a cone.
+\end{itemize}
+
+
+
+\section{Projection Matrix}
+A square matrix $\mP$ is a projection matrix that projects onto a vector space $\mathcal{S}$ iff
+\begin{align}
+\mP&~\textrm{is idempotent} \\
+\mP\vx&\in\mathcal{S}~~\forall\vx \\
+\mP\vz&=\vz~~\forall\vz\in\mathcal{S}
+\end{align}
+
+
+
+
+
+\section{Singular Matrix}
+A square matrix that is not invertible.
+
+$\mA\in\sRnn$ is singular iff $\det \mA=0$ iff $\mathcal{N}(A)\ne\{0\}$.
+
+
+\section{Symmetric Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_symmetric_matrix.pdf}
+\end{center}
+
+$\mA\in\sSn$ is a symmetric matrix if $\mA=\mA^T$ (entries above diagonal are equal to entries below diagonal).
+
+\begin{equation}
+\begin{bmatrix}
+a & b & c & d & e & f \\
+b & g & l & m & o & p \\
+c & l & h & n & q & r \\
+d & m & n & i & s & t \\
+e & o & q & s & j & u \\
+f & p & r & t & u & k \\
+\end{bmatrix}
+\end{equation}
+
+
+\subsection*{Special Properties}
+
+\begin{equation}
+\mA=\mA^T
+\end{equation}
+
+Number of ``free entries": $\frac{n(n+1)}{2}$.
+
+If $\mA$ is real, it can be decomposed into $\mA=\mQ^T\mD\mQ$ where $\mQ$ is a real orthogonal matrix (the columns of which are eigenvectors of $\mA$) and $\mD$ is real and diagonal containing the eigenvalues of $\mA$.
+
+For a real, symmetric matrix with non-negative eignevalues, the eigenvalues and singular values coincide.
+
+
+
+\section{Skew-Hermitian}
+A matrix $\mH\in\sCmn$ is Skew-Hermitian iff
+\begin{equation}
+\mH=-\mH^H
+\end{equation}
+
+
+
+\section{Toeplitz Matrix, General Form}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_toeplitz.pdf}
+\end{center}
+
+
+Constant values on descending diagonals.
+
+\begin{equation}
+\begin{bmatrix}
+  a_{0} & a_{-1} & a_{-2} & \ldots  & \ldots & a_{-(n-1)}  \\
+  a_{1} & a_0    & a_{-1} & \ddots  &        & \vdots \\
+  a_{2} & a_{1}  & \ddots & \ddots  & \ddots & \vdots \\ 
+ \vdots & \ddots & \ddots & \ddots  & a_{-1} & a_{-2}\\
+ \vdots &        & \ddots & a_{1}   & a_{0}  & a_{-1} \\
+a_{n-1} & \ldots & \ldots & a_{2}   & a_{1}  & a_{0}
+\end{bmatrix}
+\end{equation}
+
+
+\section{Toeplitz Matrix, Discrete Convolution}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_toeplitz_1d_conv.pdf}
+\end{center}
+
+Constant values on main and subdiagonals.
+
+\begin{equation}
+\begin{bmatrix}
+  h_m &   0 &   0 &      \hdots &   0 &   0 \\
+  \vdots & h_m &   0 &   \hdots &   0 &   0 \\
+  h_1 & \vdots & h_m &   \hdots &   0 &   0 \\
+    0 & h_1 & \ddots & \ddots &   0 &   0 \\
+    0 &   0 & h_1 &    \ddots & h_m &   0 \\
+    0 &   0 &   0 &    \ddots & \vdots & h_m \\
+    0 &   0 &   0 &      \hdots & h_1 & \vdots \\
+    0 &   0 &   0 &      \hdots &   0 & h_1 
+\end{bmatrix}
+\end{equation}
+
+
+\section{Triangular Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_lower_triangular.pdf}~\includegraphics[width=1.5in]{imgs/rg_upper_triangular.pdf}
+\end{center}
+
+\begin{equation}
+\begin{bmatrix}
+a & b & c & d & e & f \\
+  & g & h & i & j & k \\
+  &   & l & m & n & o \\
+  &   &   & p & q & r \\
+  &   &   &   & s & t \\
+  &   &   &   &   & u \\
+\end{bmatrix}
+~
+~
+\begin{bmatrix}
+a &   &   &   &   &   \\
+b & g &   &   &   &   \\
+c & h & l &   &   &   \\
+d & i & m & p &   &   \\
+e & j & n & q & s &   \\
+f & k & o & r & t & u \\
+\end{bmatrix}
+\end{equation}
+
+Square matrices in which all elements either above or below the main diagonal are zero. An upper (left) and a lower (right) triangular matrix are shown above.
+
+For an upper triangular matrix $A_{ij}=0$ whenever $i>j$; for a lower triangular matrix $A_{ij}=0$ whenever $i<j$.
+
+
+\subsection*{Special Properties}
+
+\begin{equation}
+\eig(A)=\diag(A) 
+\end{equation}
+
+\begin{equation}
+\det(A)=\prod_i \diag(A)_i
+\end{equation}
+
+The product of two upper (lower) triangular matrices is still upper (lower) triangular.
+
+The inverse of a nonsingular upper (lower) triangular matrix is still upper (lower) triangular.
+
+
+
+
+\section{Vandermonde Matrix}
+\begin{equation}
+V=
+\begin{bmatrix}
+1      & \alpha_1 & \alpha_1^2 & \dots  & \alpha_1^{n-1} \\
+1      & \alpha_2 & \alpha_2^2 & \dots  & \alpha_2^{n-1} \\
+1      & \alpha_3 & \alpha_3^2 & \dots  & \alpha_3^{n-1} \\
+\vdots & \vdots   & \vdots     & \ddots & \vdots         \\
+1      & \alpha_m & \alpha_m^2 & \dots  & \alpha_m^{n-1}
+\end{bmatrix}
+\end{equation}
+Alternatively,
+\begin{equation}
+V_{i,j} = \alpha_i^{j-1}
+\end{equation}
+
+\subsection*{Uses}
+Polynomial interpolation of data.
+
+\subsection*{Special Properties}
+\begin{itemize}
+\item $\det(V)=\prod_{1\le i < j \le n} (x_j-x_i)$
+\end{itemize}
