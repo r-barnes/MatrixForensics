@@ -398,28 +398,30 @@ where $u_1$ and $u_n$ are the eigenvectors associated with $\lambda_\textrm{max}
 \chapter{Linear Equations}
 The linear equation $\mA\vx=\vy$ with $\mA\in\sRmn$ admits a solution iff $\rank([\mA \vy])=\rank(\mA)$. If this is satisfied, the set of all solutions is an affine set $\mathcal{S}=\{\vx=\bar \vx+z: z\in\ns(\mA)\}$ where $\bar \vx$ is any vector such that $\mA\bar\vx=\vy$. The solution is unique if $\ns(\mA)=\{0\}$.
 
-$\mA\vx=\vy$ is \textit{overdetermined} if it is tall/skinny ($m>n$); that is, if there are more equations than unknowns. If $\rank(\mA)=n$ then $\dim\ns(\mA)=0$, so there is either no solution or one solution. Overdetermined systems often have no solution ($\vy\notin\range(\mA)$), so an approximate solution is necessary.
+$\mA\vx=\vy$ is \textit{overdetermined} if it is tall/skinny ($m>n$); that is, if there are more equations than unknowns. If $\rank(\mA)=n$ then $\dim\ns(\mA)=0$, so there is either no solution or one solution. Overdetermined systems often have no solution ($\vy\notin\range(\mA)$), so an approximate solution is necessary. See \autoref{sec:least-squares}.
 
 $\mA\vx=\vy$ is \textit{underdetermined} if it is short/wide ($n>m$); that is, if has more unknowns than equations. If $\rank(\mA)=m$ then $\range(\mA)=\sRm$, so $\dim\ns(\mA)=n-m>0$, so the set of solutions is infinite. Therefore, finding a single solution that optimizes some quantity is of interest.
 
-$\mA\vx=\vy$ is \textit{square} if $n=m$. If $\mA$ is invertible, then the equations have the unique solution $\vx=\mA^{-1}\vy$.
+$\mA\vx=\vy$ is \textit{square} if $n=m$. If $\mA$ is invertible, then the equations have the unique solution $\vx=\mA^{-1}\vy$. See \autoref{sec:minimum-norm}.
 
 \section{Least-Squares}
+\label{sec:least-squares}
 For an overdetermined system we wish to find:
 \begin{equation}
 \min_\vx \norm{\mA\vx-\vy}_2^2
 \end{equation}
-Since $\mA\vx\in\range(\mA)$, we need a point $\tilde \vy = \mA\vx^*\in\range(\mA)$ closest to $\vy$. This point lies in the nullspace of $\mA^T$, so we have $\mA^T(\vy-\mA\vx^*)=0$. There is always a solution to this problem and, if $\rank(\mA)=n$, it is unique.
+Since $\mA\vx\in\range(\mA)$, we need a point $\tilde \vy = \mA\vx^*\in\range(\mA)$ closest to $\vy$. This point lies in the nullspace of $\mA^T$, so we have $\mA^T(\vy-\mA\vx^*)=0$. There is always a solution to this problem and, if $\rank(\mA)=n$, it is unique~\citep[p.\ 161]{Calafiore2014}
 \begin{equation}
 \vx^*=(\mA^T\mA)^{-1}\mA^T\vy
 \end{equation} %TODO: Check
 
 \section{Minimum Norm Solutions}
+\label{sec:minimum-norm}
 For undertermined systems in which $\mA\in\sRmn$ with $m<n$. We wish to find
 \begin{equation}
 \min_{\vx: \mA\vx=\vy} \norm{\vx}_2
 \end{equation}
-The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)$, so $\vx^*=\mA^Tc$ for some $c$, so $\mA \mA^T c=\vy$, therefore:
+The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)$, so $\vx^*=\mA^Tc$ for some $c$, so $\mA \mA^T c=\vy$, therefore~\citep[p.\ 162]{Calafiore2014}:
 \begin{equation}
 \vx^*=\mA^T(\mA\mA^T)^{-1}\vy
 \end{equation}
