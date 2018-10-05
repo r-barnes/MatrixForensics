@@ -431,41 +431,7 @@ The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)
 
 
 
-
-
-
-
-
-
-
-
-
-\chapter{$\mathbf{1}_r^T \mA \mathbf{1}_c$}
-
-\textbf{Reduces to:} Scalar
-
-\textbf{Notation:} For $\mA \in \mathbb{R}^{r\times c}$, $\mathbf{1}_r$ is in $\mathbb{R}^{r \times 1}$ and $\mathbf{1}_c$ is in $\mathbb{R}^{c \times 1}$.
-
-\textbf{Plain English:} The sum of the elements of the matrix.
-
-\textbf{Algorithm:} Traverse all the element of the matrix in order keeping track of the sum. For applications where accuracy is important and the matrices have a large dynamic range, Kahan summation or a similar technique should be used.
-
-\textbf{Update Algorithm:} If an entry changes, subtract its old value from the sum and add its new value to the sum.
-
-
-
-\chapter{$\vx^T \mA \vx$}
-
-\textbf{Reduces to}: Scalar
-
-\textbf{Notation:} $\mA$ must be in $\mathbb{R}^{i\times i}$. $\vx$ is in $\mathbb{R}^{i \times 1}$.
-
-\textbf{Plain English:} TODO
-
-\textbf{Algorithm:} TODO
-
-\textbf{Update Algorithm:} We make use of the identity $(\vx^T \mA \vx)=\sum_{i,j}\big((\vx \vx^T)\circ\mA\big)$. If an entry $\mA_{i,j}$ in the matrix changes subtract its old value $\vx_i \vx_j \mA_{ij}$ and add the new value $\vx_i \vx_j \mA_{ij}'$. If an entry $\vx_i$ changes TODO.
-
+\input{updates}
 
 
 

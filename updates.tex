@@ -1,0 +1,55 @@
+\chapter{Updates}
+
+\section{Removing a row from $\mA^T\mA$ ($\mA^T\mA\rightarrow \mA_{\bs i}^T\mA_{\bs i}$)}
+
+\textbf{Plain English:} Matrix times its transpose after eliminating row $i$ from the matrix
+
+\textbf{Inputs:} $\mA\in\sR^{k,m},\vu\in\sRm,\vv\in\sRn$ and $i$, the row to remove from $\mA$
+
+\textbf{Reduces to:} $\mC\in\sR^{k,l}$
+
+\textbf{Algorithm:}
+
+Recall that
+\begin{equation}
+(\mA\mB)_{kl} = \sum_m \mA_{km}\mB_{ml}~~~\mA\in\sR^{k,m},\mB\in\sR^{m,l}
+\end{equation}
+then we have that
+\begin{equation}
+(\mA^T\mA)_{kl} = \sum_{m} \mA_{mk}\mA_{ml}=\sum_{m\ne i} \mA_{mk}\mA_{ml} + \mA_{jk}\mA_{jl}=\sum_{m\ne i} \mA_{mk}\mA_{ml} + (\mA_{k*})_{j} (\mA_{l*})_{j}
+\end{equation}
+where $(\mA_k*)_{j}$ is the $j$th element of the $k$th column of $\mA$. %TODO
+
+Thus,
+\begin{equation}
+\mA_{\bs i}^T\mA_{\bs i}=\mA^T\mA-\mA_{*j}\mA_{*j}^T
+\end{equation}
+
+
+
+
+\section{$\mathbf{1}_r^T \mA \mathbf{1}_c$}
+
+\textbf{Plain English:} The sum of the elements of the matrix.
+
+\textbf{Reduces to:} Scalar
+
+\textbf{Notation:} For $\mA \in \mathbb{R}^{r\times c}$, $\mathbf{1}_r$ is in $\mathbb{R}^{r \times 1}$ and $\mathbf{1}_c$ is in $\mathbb{R}^{c \times 1}$.
+
+\textbf{Algorithm:} Traverse all the element of the matrix in order keeping track of the sum. For applications where accuracy is important and the matrices have a large dynamic range, Kahan summation or a similar technique should be used.
+
+\textbf{Update Algorithm:} If an entry changes, subtract its old value from the sum and add its new value to the sum.
+
+
+
+\section{$\vx^T \mA \vx$}
+
+\textbf{Plain English:} TODO
+
+\textbf{Reduces to}: Scalar
+
+\textbf{Notation:} $\mA$ must be in $\mathbb{R}^{i\times i}$. $\vx$ is in $\mathbb{R}^{i \times 1}$.
+
+\textbf{Algorithm:} TODO
+
+\textbf{Update Algorithm:} We make use of the identity $(\vx^T \mA \vx)=\sum_{i,j}\big((\vx \vx^T)\circ\mA\big)$. If an entry $\mA_{i,j}$ in the matrix changes subtract its old value $\vx_i \vx_j \mA_{ij}$ and add the new value $\vx_i \vx_j \mA_{ij}'$. If an entry $\vx_i$ changes TODO.
