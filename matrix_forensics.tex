@@ -220,14 +220,16 @@ where the foregoing comes from a singular-value decomposition and $\mD^{-1}=\dia
 \chapter{Hadamard Identities}
 
 \begin{align}
-(\mA\circ\mB)_{ij}    &= A_{ij}B_{ij}~\forall~i,j                            \\
-\mA\circ\mB           &= \mB\circ\mA                    \eqcite{million2007} \\
-\mA\circ(\mB\circ\mC) &= (\mA\circ\mB)\circ\mC                               \\
-\mA\circ(\mB+\mC)     &= \mA\circ\mB+\mA\circ\mC        \eqcite{million2007} \\
-a(\mA\circ\mB)        &= (a\mA)\circ\mB =\mA\circ(a\mB) \eqcite{million2007} \\
-(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                     \\
-(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                     \\
-(x^T \mA x)           &= \sum_{i,j}\big((x x^T)\circ\mA\big)
+(\mA\circ\mB)_{ij}    &= A_{ij}B_{ij}~\forall~i,j                                     \\
+\mA\circ\mB           &= \mB\circ\mA                             \eqcite{million2007} \\
+\mA\circ(\mB\circ\mC) &= (\mA\circ\mB)\circ\mC                                        \\
+\mA\circ(\mB+\mC)     &= \mA\circ\mB+\mA\circ\mC                 \eqcite{million2007} \\
+a(\mA\circ\mB)        &= (a\mA)\circ\mB =\mA\circ(a\mB)          \eqcite{million2007} \\
+(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                              \\
+(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                              \\
+(\vx^T \mA \vx)       &= \sum_{i,j}\big((\vx \vx^T)\circ\mA\big)                      \\
+\vx^T(\mA\circ\mB)\vy &= \trace((\diag(\vx)\mA)^T \mB\diag(\vy))~~~\mA,\mB\in\sRmn \eqcite{Minka2000}   \\
+\trace(\mA^T\mB)      &= \mathbf{1}^T(\mA\circ\mB)\mathbf{1}                          
 \end{align}
 
 
