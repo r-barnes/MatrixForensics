@@ -1,0 +1,80 @@
+\chapter{Optimization}
+
+\section{Standard Forms}
+
+\textbf{Least Squares}
+\begin{equation}
+\min_{\vx\in\sRn} \norm{\vy-\mA\vx}_2
+\end{equation}
+
+\textbf{LASSO}
+\begin{equation}
+\min_{\vb\in\sRn} \left(\frac{1}{N}\norm{\vy-\mX\vb}_2^2+\lambda\norm{\vb}_1\right)
+\end{equation}
+
+\textbf{LP: Linear program}
+\begin{align}
+\min_{\vx}      ~& \vc^T \vx \\
+\textrm{s.t.}   ~& \mA_\textrm{eq}\vx = \vb_\textrm{eq} \\
+                ~& \mA\vx \le \vb
+\end{align}
+
+\textbf{Linear Fractional Program}
+\begin{maxi!}{\vx}{\frac{\vc^T\vx + a}{\vd^T \vx + b}}{}{}
+\addConstraint{\mA\vx}{\le \vb}
+\end{maxi!}
+Additional constraints must ensure $\vd^T \vx + b$ has the same sign throughout the entire feasible region.
+
+\begin{align}
+\max_{\vx}      ~& \frac{\vc^T\vx + a}{\vd^T \vx + b} \\
+\textrm{s.t.}   ~& 
+\end{align}
+
+\textbf{QCQP: Quadratic Constrainted Quadratic Programs}
+\begin{align}
+\min_{\vx}      ~& \vx^T\mH_0\vx+2\vc_0^T\vx + \vd_0 \\
+\textrm{s.t.}   ~& \vx^T\mH_i\vx+2\vc_i^T\vx + \vd_i \le 0,~~i\in\mathcal{I} \\
+                ~& \vx^T\mH_j\vx+2\vc_j^T\vx + \vd_j = 0,~~j\in\mathcal{E}
+\end{align}
+
+Note that, in general, QCQPs are NP-Hard.
+
+
+\textbf{QP: Quadratic Program}
+\begin{align}
+\min_{\vx}      ~& \frac{1}{2}\vx^T\mH_0\vx+\vc_0^T\vx \\
+\textrm{s.t.}   ~& \mA_\textrm{eq}\vx = \vb_\textrm{eq} \\
+                ~& \mA\vx \le \vb
+\end{align}
+
+\textbf{SOCP: Second Order Cone Program (Standard Form)}
+\begin{align}
+\min_{\vx}      ~& \vc^T \vx \\
+\textrm{s.t.}   ~& \norm{\mA_i \vx+\vb_i}_2\le \vc_i^T \vx+\vd_i,~~i=1,\ldots,m
+\end{align}
+
+\textbf{SOCP: Second Order Cone Program (Conic Standard Form)}
+\begin{align}
+\min_{\vx}      ~& \vc^T \vx \\
+\textrm{s.t.}   ~& (\mA_i \vx+\vb_i, \vc_i^T \vx+\vd_i)\in\mathcal{K}_{m_i} ~~i=1,\ldots,m
+\end{align}
+
+\section{Transformations}
+
+\subsection{Linear-Fractional to Linear}
+We transform a Linear-Fractional Program
+\begin{maxi!}{\vx}{\frac{\vc^T\vx + a}{\vd^T \vx + b}}{}{}
+\addConstraint{\mA\vx}{\le \vb}
+\end{maxi!}
+where $\vd^T \vx + b$ has the same sign throughout the entire feasible region to a linear program using the Charnes--Cooper transformation~\citep{Charnes1962} by defining
+\begin{align}
+\vy &= \frac{1}{\vd^T\vx+b}\cdot\vx \\
+t   &= \frac{1}{\vd^T\vx+b}
+\end{align}
+to form the equivalent program
+\begin{maxi!}{\vy,t}{\vc^T\vy + at}{}{}
+\addConstraint{\mA\vy}{\le \vb t}
+\addConstraint{\vd^T\vy+bt}{=1}
+\addConstraint{t}{\ge0}
+\end{maxi!}
+We then have $\vx^*=\frac{1}{t}\vy$.

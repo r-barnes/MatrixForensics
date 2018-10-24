@@ -14,6 +14,10 @@
 \usepackage{parskip}
 \usepackage{titlesec}
 \usepackage{xcolor}
+\usepackage{optidef}
+
+\usepackage{makeidx}
+\makeindex
 
 \usepackage[numbers,sort&compress]{natbib}
 \bibliographystyle{unsrtnat}
@@ -39,6 +43,8 @@
 \newcommand{\mY}{\mathbf{Y}}
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
+\newcommand{\vc}{\mathbf{c}}
+\newcommand{\vd}{\mathbf{d}}
 \newcommand{\vp}{\mathbf{p}}
 \newcommand{\vq}{\mathbf{q}}
 \newcommand{\vu}{\mathbf{u}}
@@ -337,10 +343,13 @@ Not a proper norm.
 
 \section{Vectors}
 
-P-norm:
-\begin{equation}
-\norm{\vx}_p = (\sum_i |\vx_i|^p)^{1/p}
-\end{equation}
+\begin{align}
+\norm{\vx}_1      &= \sum_i |\vx_i| & \textrm{(L1-norm\index{L1-norm})} \\
+\norm{\vx}_p      &= (\sum_i |\vx_i|^p)^{1/p} & \textrm{(P-norm\index{P-norm})} \\
+\norm{\vx}_\infty &= \max_i |\vx_i| & \textrm{(L$\infty$-norm\index{L$\infty$-norm}, L-infinity norm)}
+\end{align}
+
+
 
 \chapter{Bounds}
 
@@ -421,7 +430,7 @@ For undertermined systems in which $\mA\in\sRmn$ with $m<n$. We wish to find
 \begin{equation}
 \min_{\vx: \mA\vx=\vy} \norm{\vx}_2
 \end{equation}
-The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)$, so $\vx^*=\mA^Tc$ for some $c$, so $\mA \mA^T c=\vy$, therefore~\citep[p.\ 162]{Calafiore2014}:
+The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)$, so $\vx^*=\mA^Tc$ for some $c$. Substituting into $\mA\vx=\vy$ gives $\mA \mA^T c=\vy$, therefore~\citep[p.\ 162]{Calafiore2014}:
 \begin{equation}
 \vx^*=\mA^T(\mA\mA^T)^{-1}\vy
 \end{equation}
@@ -432,6 +441,8 @@ The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)
 
 
 \input{updates}
+
+\input{standard_forms}
 
 
 
@@ -503,6 +514,7 @@ TODO
 
 \bibliography{refs}
 
+\printindex
 
 \end{document}
 
