@@ -6,3 +6,6 @@ matrix_forensics.out
 matrix_forensics.toc
 imgs/
 refs/
+*.idx
+*.ilg
+*.ind
