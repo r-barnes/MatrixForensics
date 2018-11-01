@@ -284,13 +284,11 @@ Many popular matrix norms also satisfy ``sub-multiplicativity": $f(\mA\mB)\le f(
 \end{align}
 
 \subsubsection{Special Properties}
-\begin{equation}
-\norm{\mA\vx}_2 \le \norm{\mA}_F \norm{\vx}_2~~~\vx\in\sRn
-\end{equation}
-
-\begin{equation}
-\norm{\mA\mB}_F\le \norm{\mA}_F \norm{\mB}_F
-\end{equation}
+\begin{align}
+\norm{\mA\vx}_2         &\le \norm{\mA}_F \norm{\vx}_2~~~\vx\in\sRn \\
+\norm{\mA\mB}_F         &\le \norm{\mA}_F \norm{\mB}_F \\
+\norm{\mC-\vx\vx^T}_F^2 &= \norm{\mC}_F^2+\norm{\vx}_2^4-2 \vx^T \mC \vx
+\end{align}
 
 \subsection{Operator Norms}
 For $p=1,2,\infty$ or other values, an operator norm indicates the maximum input-output gain of the matrix.
@@ -348,6 +346,8 @@ Not a proper norm.
 \norm{\vx}_p      &= (\sum_i |\vx_i|^p)^{1/p} & \textrm{(P-norm\index{P-norm})} \\
 \norm{\vx}_\infty &= \max_i |\vx_i| & \textrm{(L$\infty$-norm\index{L$\infty$-norm}, L-infinity norm)}
 \end{align}
+
+
 
 
 
