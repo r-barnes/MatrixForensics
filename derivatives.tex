@@ -17,3 +17,11 @@ For general $\mA$ and $\mX$ (no special structure):
 \partial(\mX^T)       &= (\partial\mX)^T                       \\
 \partial(\mX^H)       &= (\partial\mX)^H                       
 \end{align}
+
+\section{Derivatives of vector norms}
+
+\begin{align}
+\pd{}{\vx}\norm{\vx-\va}_2 &= \frac{\vx-\va}{\norm{\vx-\va}_2} \\
+\pd{}{\vx}\frac{\vx-\va}{\norm{\vx-\va}_2} &= \frac{\mI}{\norm{\vx-\va}_2}-\frac{(\vx-\va)(\vx-\va)^T}{\norm{\vx-\va}_2^3} \\
+\pd{\norm{\vx}_2^2}{\vx} &= \pd{\norm{\vx^T\vx}_2}{\vx} = 2\vx
+\end{align}
