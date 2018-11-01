@@ -424,6 +424,23 @@ Since $\mA\vx\in\range(\mA)$, we need a point $\tilde \vy = \mA\vx^*\in\range(\m
 \vx^*=(\mA^T\mA)^{-1}\mA^T\vy
 \end{equation} %TODO: Check
 
+\subsection{Regularized least-squares with low-rank data}
+
+For $\mA\in\sRmn$, $\vy\in\sRm$, $\lambda\ge0$, the regularized least-squares problem
+\begin{equation}
+\textrm{argmin}_\vx \norm{\mA\vx-\vy}_2^2 + \lambda\norm{\vx}_2^2
+\end{equation}
+has a closed form solution
+\begin{equation}
+\label{equ:regularized_least_squares}
+\vx = (\mA^T\mA   + \lambda \mI)^{-1}\mA^T\vy
+\end{equation}
+However, if $\mA$ has a $\rank{r}\ll\min(n,m)$ and a known low-rank decomposition $\mA=\mL\mR^T$ with $\mL\in\mathbb{R}^{m,r}$ and $\mR\in\mathbb{R}^{n,r}$, then we can rewrite \autoref{equ:regularized_least_squares} as
+\begin{equation}
+\vx = (\mR^T \mR\mL^T \mL   + \lambda \mI)^{-1}\mL^T\vy
+\end{equation}
+This decreases the time complexity from $O(mn^2 + n^\omega)$ to $O(nr^2+mr^2)$.
+
 \section{Minimum Norm Solutions}
 \label{sec:minimum-norm}
 For undertermined systems in which $\mA\in\sRmn$ with $m<n$. We wish to find
