@@ -1,0 +1,103 @@
+\chapter{Norms}
+
+\section{Matrices}
+Matrix norms satisfy some properties:
+\begin{align}
+f(\mA)    &\ge 0             \\
+f(\mA)    &=   0  \iff \mA=0 \\
+f(c\mA)   &=   |c|f(\mA)     \\
+f(\mA+\mB)&\le f(\mA)+f(\mB)
+\end{align}
+Many popular matrix norms also satisfy ``sub-multiplicativity": $f(\mA\mB)\le f(\mA)f(\mB)$.
+
+\subsection{Frobenius norm}
+\begin{align}
+\norm{\mA}_F &= \sqrt{\trace\mA\mA^H}                           \\
+             &= \sqrt{\sum_{i=1}^m \sum_{j=1}^n |\mA_{ij}|^2 }  \\
+             &= \sqrt{\sum_{i=1}^m \eig(A^H A)_i }
+\end{align}
+
+\subsubsection{Special Properties}
+\begin{align}
+\norm{\mA\vx}_2         &\le \norm{\mA}_F \norm{\vx}_2~~~\vx\in\sRn \\
+\norm{\mA\mB}_F         &\le \norm{\mA}_F \norm{\mB}_F \\
+\norm{\mC-\vx\vx^T}_F^2 &= \norm{\mC}_F^2+\norm{\vx}_2^4-2 \vx^T \mC \vx
+\end{align}
+
+\subsection{Operator Norms}
+For $p=1,2,\infty$ or other values, an operator norm indicates the maximum input-output gain of the matrix.
+\begin{equation}
+\norm{\mA}_p=\max_{\norm{\vu}_p=1} \norm{\mA\vu}_p
+\end{equation}
+
+\begin{align}
+\norm{\mA}_1
+  &=\max_{\norm{\vu}_1=1} \norm{\mA\vu}_1       \\
+  &=\max_{j=1,\ldots,n} \sum_{i=1}^m |\mA_{ij}| \\
+  &=\textrm{Largest absolute column sum}
+\end{align}
+
+\begin{align}
+\norm{\mA}_\infty
+  &=\max_{\norm{\vu}_\infty=1} \norm{\mA\vu}_\infty  \\
+  &=\max_{j=1,\ldots,m} \sum_{i=1}^n |\mA_{ij}| \\
+  &=\textrm{Largest absolute row sum}
+\end{align}
+
+\begin{align}
+\norm{\mA}_2
+  &=\textrm{``spectral norm"}                   \\
+  &=\max_{\norm{\vu}_2=1} \norm{\mA\vu}_2       \\
+  &=\sqrt{\max(\eig(\mA^T\mA))} \\
+  &=\textrm{Square root of largest eigenvalue of~}\mA^T\mA
+\end{align}
+
+
+
+\subsubsection{Special Properties}
+\begin{align}
+\norm{\mA\vu}_p &\le \norm{\mA}_p \norm{\vu}_p \\
+\norm{\mA\mB}_p &\le \norm{\mA}_p \norm{\mB}_p \\
+\end{align}
+
+\subsection{Spectral Radius}
+Not a proper norm.
+\begin{equation}
+\rho(\mA)=\textrm{spectral radius}(\mA)=\max_{i=1,\ldots,n} | \eig(\mA)_i |
+\end{equation}
+
+\subsubsection{Special Properties}
+\begin{align}
+\rho(\mA) &\le \norm{\mA}_p \\
+\rho(\mA) &\le \min(~\norm{\mA}_1, \norm{\mA}_\infty) \\
+\end{align}
+
+
+\section{Vectors}
+
+\begin{align}
+\norm{\vx}_1      &= \sum_i |\vx_i| & \textrm{(L1-norm\index{L1-norm})} \\
+\norm{\vx}_p      &= (\sum_i |\vx_i|^p)^{1/p} & \textrm{(P-norm\index{P-norm})} \\
+\norm{\vx}_\infty &= \max_i |\vx_i| & \textrm{(L$\infty$-norm\index{L$\infty$-norm}, L-infinity norm)}
+\end{align}
+
+
+\subsection{Bounds}
+
+\begin{align}
+|\vx^T \vy| &\le \norm{\vx}_2 \norm{\vy}_2 & \textrm{Cauchy-Schwartz Inequality} \\
+|\vx^T \vy| &\le \sum_{k=1}^n |\vx_k \vy_k| \le \norm{\vx}_p \norm{\vx}_q~~~\forall p,q\ge1: 1/p+1/q=1 & \textrm{H\"older Inequality}
+\end{align}
+
+For $\vx\in\mathbb{R}^n$
+\begin{equation}
+\frac{1}{\sqrt{n}}\norm{\vx}_2
+\le\norm{\vx}_\infty
+\le\norm{\vx}_2
+\le\norm{\vx}_1
+\le\sqrt{\textrm{card}(\vx)}\norm{\vx}_2
+\le\sqrt{n}\norm{\vx}_2
+\le n \norm{\vx}_\infty
+\end{equation}
+
+For any $0<p<q$ we have that $\norm{\vx}_q\le\norm{\vx}_p$.
