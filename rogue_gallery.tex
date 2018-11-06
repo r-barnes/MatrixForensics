@@ -191,9 +191,8 @@ Orthogonal matrices preserve the lengths and angles of the vectors they operator
 \begin{equation}
 \norm{\mU \vx}^2_2=(\mU\vx)^T(\mU\vx)=\vx^T\mU^T\mU\vx=\vx^T\vx=\norm{\vx}^2_2~~\forall \vx
 \end{equation}
-
 \begin{equation}
-\norm{\mU \mA \mV}_F=\norm{\mA}_F~~\forall \mA,\mU,\mV~\textrm{with}~U,V orthogonal
+\norm{\mU \mA \mV}_F=\norm{\mA}_F~~\forall \mA,\mU,\mV~\textrm{with}~\mU,\mV \textrm{orthogonal}
 \end{equation}
 
 
@@ -296,11 +295,10 @@ f & p & r & t & u & k \\
 \subsection*{Special Properties}
 
 \begin{align}
-\mA    &=\mA^T \\
-\eig(A)&\in\sRn
+\mA                                &=   \mA^T \\
+\eig(A)                            &\in \sRn  \\
+\textrm{Number of ``free entries"} &=    \frac{n(n+1)}{2}
 \end{align}
-
-Number of ``free entries": $\frac{n(n+1)}{2}$.
 
 If $\mA$ is real, it can be decomposed into $\mA=\mQ^T\mD\mQ$ where $\mQ$ is a real orthogonal matrix (the columns of which are eigenvectors of $\mA$) and $\mD$ is real and diagonal containing the eigenvalues of $\mA$.
 
@@ -393,13 +391,10 @@ For an upper triangular matrix $A_{ij}=0$ whenever $i>j$; for a lower triangular
 
 \subsection*{Special Properties}
 
-\begin{equation}
-\eig(A)=\diag(A) 
-\end{equation}
-
-\begin{equation}
-\det(A)=\prod_i \diag(A)_i
-\end{equation}
+\begin{align}
+\eig(A) &= \diag(A)             \\
+\det(A) &= \prod_i \diag(A)_i
+\end{align}
 
 The product of two upper (lower) triangular matrices is still upper (lower) triangular.
 
