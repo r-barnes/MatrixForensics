@@ -13,11 +13,10 @@
 \end{equation}
 
 \textbf{LP: Linear program}
-\begin{align}
-\min_{\vx}      ~& \vc^T \vx \\
-\textrm{s.t.}   ~& \mA_\textrm{eq}\vx = \vb_\textrm{eq} \\
-                ~& \mA\vx \le \vb
-\end{align}
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\mA_\textrm{eq}\vx}{= \vb_\textrm{eq}}
+\addConstraint{\mA\vx}{\le \vb}
+\end{mini!}
 
 \textbf{Linear Fractional Program}
 \begin{maxi!}{\vx}{\frac{\vc^T\vx + a}{\vd^T \vx + b}}{}{}
@@ -25,27 +24,21 @@
 \end{maxi!}
 Additional constraints must ensure $\vd^T \vx + b$ has the same sign throughout the entire feasible region.
 
-\begin{align}
-\max_{\vx}      ~& \frac{\vc^T\vx + a}{\vd^T \vx + b} \\
-\textrm{s.t.}   ~& 
-\end{align}
 
 \textbf{QCQP: Quadratic Constrainted Quadratic Programs}
-\begin{align}
-\min_{\vx}      ~& \vx^T\mH_0\vx+2\vc_0^T\vx + \vd_0 \\
-\textrm{s.t.}   ~& \vx^T\mH_i\vx+2\vc_i^T\vx + \vd_i \le 0,~~i\in\mathcal{I} \\
-                ~& \vx^T\mH_j\vx+2\vc_j^T\vx + \vd_j = 0,~~j\in\mathcal{E}
-\end{align}
+\begin{mini!}{\vx}{\vx^T\mH_0\vx+2\vc_0^T\vx + \vd_0}{}{}
+\addConstraint{\vx^T\mH_i\vx+2\vc_i^T\vx + \vd_i}{\le 0}{~~i\in\mathcal{I}}
+\addConstraint{\vx^T\mH_j\vx+2\vc_j^T\vx + \vd_j}{  = 0}{~~j\in\mathcal{E}}
+\end{mini!}
 
 Note that, in general, QCQPs are NP-Hard.
 
 
 \textbf{QP: Quadratic Program}
-\begin{align}
-\min_{\vx}      ~& \frac{1}{2}\vx^T\mH_0\vx+\vc_0^T\vx \\
-\textrm{s.t.}   ~& \mA_\textrm{eq}\vx = \vb_\textrm{eq} \\
-                ~& \mA\vx \le \vb
-\end{align}
+\begin{mini!}{\vx}{\frac{1}{2}\vx^T\mH_0\vx+\vc_0^T\vx}{}{}
+\addConstraint{\mA_\textrm{eq}\vx}{=\vb_\textrm{eq}}
+\addConstraint{\mA\vx}{\le \vb}
+\end{mini!}
 
 \textbf{SOCP: Second Order Cone Program (Standard Form)}
 \begin{align}
@@ -78,3 +71,166 @@ to form the equivalent program
 \addConstraint{t}{\ge0}
 \end{maxi!}
 We then have $\vx^*=\frac{1}{t}\vy$.
+
+\subsection{LP as SOCP}
+
+The linear program
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\mA\vx}{\le \vb}
+\end{mini!}
+becomes can be cast as an SOCP:
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\norm{\mC_i \vx+\vd_i}_2}{\le \vb_i - \va_i^T \vx}{\forall i}
+\end{mini!}
+where $C_i=0, d_i=0 \forall i$.
+
+\subsection{QCQP as SOCP}
+
+The quadratic constrainted quadratic program
+\begin{mini!}{\vx}{\vx^T\mQ_0\vx+\va_0^T\vx}{}{}
+\addConstraint{\vx^T\mQ_i\vx+\va_i^T\vx}{\le b_i}{~~i=1,\ldots,m}
+\end{mini!}
+with $\mQ_i=\mQ_i^T\ispsd0$, $i=0,\ldots,m$ can be cast as an SOCP:
+\begin{mini!}{\vx,t}{\va_0^T\vx + t}{}{}
+\addConstraint{\norm{\begin{bmatrix} 2 \mQ_0^{1/2}\vx \\ t-1 \end{bmatrix}}_2}{\le t+1}
+\addConstraint{\norm{\begin{bmatrix} 2 \mQ_i^{1/2}\vx \\ b_i-\va_i^T\vx-1 \end{bmatrix}}_2}{\le b_i-\va_i^T\vx+1}{~~i=1,\ldots,m}
+\end{mini!}
+
+
+\subsection{QP as SOCP}
+
+The quadratic program
+\begin{mini!}{\vx}{\frac{1}{2}\vx^T\mQ\vx+\vc^T\vx}{}{}
+\addConstraint{\va_i^T\vx}{\le \vb_i}
+\end{mini!}
+with $\mQ=\mQ^T\ispsd0$ can be cast as an SOCP:
+\begin{mini!}{\vx,\vy}{\vc^T \vx+y}{}{}
+\addConstraint{\norm{
+\begin{bmatrix} 2 \mQ^{1/2}\vx \\ y-1 \end{bmatrix}}_2}{\le y+1}
+\addConstraint{\va_i^T \vx}{\le \vb_i}{~~\forall i}
+\end{mini!}
+
+\subsection{Sum of L2 Norms to SOCP}
+
+\begin{mini!}{\vx}{\sum_{i=1}^p \norm{\mA_i\vx-\vb_i}_2}{}{}
+\end{mini!}
+becomes
+\begin{mini!}{\vx,y}{\sum_{i=1}^p y_i}{}{}
+\addConstraint{\norm{\mA_i\vx-\vb_i}_2}{\le y_i}{~~i=1,\ldots,p}
+\end{mini!}
+
+\subsection{Minimax of L2 Norms to SOCP}
+
+\begin{mini!}{\vx}{\max_{i=1,\ldots,p} \norm{\mA_i\vx-\vb_i}_2}{}{}
+\end{mini!}
+becomes
+\begin{mini!}{\vx,y}{y}{}{}
+\addConstraint{\norm{\mA_i\vx-\vb_i}_2}{\le y}{~~i=1,\ldots,p}
+\end{mini!}
+
+\subsection{Hyperbolic Constraints to SOCP}
+
+For scalar $w$, a constraint of the form
+\begin{equation}
+w^2\le xy, ~~x\ge0, ~~y\ge0
+\end{equation}
+can be transformed into the SOCP constraint
+\begin{equation}
+\norm{\begin{bmatrix} 2w \\ x-y \end{bmatrix}}_2 \le x+y \eqcite{Lobo1998}
+\end{equation}
+
+For vector $\vw$, a constraint of the form
+\begin{equation}
+\vw^T\vw = \norm{\vw}_2^2 \le xy, ~~x\ge0, ~~y\ge0
+\end{equation}
+can be transformed into the SOCP constraint
+\begin{equation}
+\label{equ:hyperbolic_constraint_to_socp}
+\norm{\begin{bmatrix} 2\vw \\ x-y \end{bmatrix}}_2 \le x+y \eqcite{Lobo1998}
+\end{equation}
+
+%TODO: From slides
+% A constraint of the form
+% \begin{equation}
+% \norm{x}_2^2\le 2yz, ~~y\ge0, ~~z\ge0
+% \end{equation}
+% can be transformed into the SOCP constraint
+% \begin{equation}
+% \norm{\begin{bmatrix} x \\ \frac{1}{\sqrt{2}}(y-z) \end{bmatrix}}_2 \le \frac{1}{\sqrt{2}}(y+z)
+% \end{equation}
+
+%TODO Lobo1998 fractional constraints as SOCPs
+
+\subsection{Matrix Fractional to SOCP}
+
+The problem
+\begin{mini!}{\vx}{(\mF\vx+\vg)^T(\mP_0+\vx_1\mP+\ldots+\vx_p\mP_P)^{-1}(\mF\vx+\vg)}{}{}
+\addConstraint{\mP_0+\vx_1\mP+\ldots+\vx_p\mP_P}{>0}
+\addConstraint{\vx}{\ge0}
+\end{mini!}
+where $\mP_i=\mP_i^T\in\sRnn$, $\mF\in\sRnp$, $\vg\in\sRn$, and $\vx\in\sRp$ can be transformed into the SOCP where $t_i\in\sR, \vy_i\in\sRn$:
+\begin{mini!}{\vx,t}{t_0+\ldots+t_p}{}{}
+\addConstraint{\mP_0^{1/2}\vy_0+\ldots+\mP_p^{1/2}\vy_p}{=\mF\vx+\vg} \eqcite{Lobo1998}
+\addConstraint{\norm{\begin{bmatrix} 2 \vy_0 \\ t_0-1\end{bmatrix}}_2}{\le t_0+1}
+\addConstraint{\norm{\begin{bmatrix} 2 \vy_i \\ t_i-x_i \end{bmatrix}}_2}{\le t_i+x_i}{~~i=1,\ldots,p}
+\end{mini!}
+
+\subsection{Fractional Objective to SOCP}
+
+Convert
+\begin{mini!}{\vx}{\frac{f(x)^2}{g(x)}}{}{}
+\addConstraint{g(x)}{>0}
+\end{mini!}
+to
+\begin{mini!}{\vx,t}{t}{}{}
+\addConstraint{f(x)^2}{\le t g(y)} 
+\addConstraint{g(y)}{>0}           
+\addConstraint{t}{\ge 0}
+\end{mini!}
+and apply \autoref{equ:hyperbolic_constraint_to_socp}.
+
+\subsection{Chance-Constrained LP to SOCP}
+
+The problem
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\textrm{Prob}\{\va_i^T\vx\le \vb_i\}}{\ge p_i}{~~i=1,\ldots,m}
+\end{mini!}
+where $p_i>0.5$ and all $\va_i$ are independent normal random vectors with expected values $\bar \va_i$ and covariance matrices $\Sigma_i\ispd0$, can be transformed into the SOCP:
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\bar \va_i^T \vx \le b_i-\Phi^{-1}(p_i)\norm{\Sigma_i^{1/2}\vx}_2}{~~i=1,\ldots,m}
+\end{mini!}
+where $\Phi^{-1}(p)$ is the inverse cumulative probability distribution of a standard normal variable.
+
+\subsection{Robust LP with Box Uncertainty as LP}
+
+The problem
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\va_i^T \vx}{\le b_i}{~~\forall \va_i\in\{\hat \va_i + \rho_i \vu : \norm{\vu}_\infty\le1\}}{~~i=1,\ldots,m}
+\end{mini!}
+is equivalent to
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\hat \va_i^T \vx + \rho_i\norm{\vx}_1}{\le b_i}{~~i=1,\ldots,m}
+\end{mini!}
+which is equivalent to:
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\hat \va_i^T \vx + \rho_i \sum_{j=1}^n \vu_j}{\le b_i}{~~i=1,\ldots,m}
+\addConstraint{-\vu_j}{\le \vx_j\le\vu_i}{~~j=1,\ldots,n}
+\end{mini!}
+
+\subsection{Robust LP with Ellipsoidal Uncertainty as SOCP}
+
+The problem
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\va_i^T \vx}{\le b_i}{~~\forall \va_i\in\{\hat \va_i + \mR_i \vu : \norm{\vu}_2\le1\}}{~~i=1,\ldots,m}
+\end{mini!}
+is equivalent to
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\hat \va_i^T \vx + \norm{\mR_i^T \vx}_2}{\le b_i}{~~i=1,\ldots,m}
+\end{mini!}
+
+\section{Useful Problems}
+
+\begin{align}
+\textrm{average}(\vv) &= \min_{x\in\sR} \norm{\vv-\vx\mathbf{1}}_2^2 \\
+\textrm{median}(\vv) &= \min_{x\in\sR} \norm{\vv-\vx\mathbf{1}}_1
+\end{align}
