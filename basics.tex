@@ -20,6 +20,26 @@
 (\mA\mB)\mC  &=   \mA(\mB\mC)   &\textrm{(associativity)}
 \end{align}
 
+\section{Rank}
+
+\begin{align}
+\noalign{If $\mA\in\sRmn$ and $\mB\in\sRnr$, then}
+\eqcite{Thome2016}
+\rank(\mA)+\rank(\mB)-n\le \rank(\mA\mB)\le \min(\rank(\mA),\rank(\mB)) &&~~~~\textrm{Sylvester's Inequality} \\
+\noalign{If $\mA\mB$, $\mA\mB\mC$, $\mB\mC$ are defined, then}
+\eqcite{Thome2016}
+\rank(\mA\mB)+\rank(\mB\mC)\le \rank(\mB)+\rank(\mA\mB\mC) && \textrm{Frobenius's inequality} \\
+\noalign{If $\dim(\mA)=\dim(\mB)$, then}
+\rank(\mA+\mB)\le\rank(\mA)+\rank(\mB) &&\textrm{Subadditivity}
+\end{align}
+If $\mA_1, \mA_2, \ldots, \mA_l$ have $n_1,n_2,\ldots,n_l$ columns, so that $\mA_1\mA_2\ldots\mA_l$ is well-defined, then
+\begin{equation}
+\eqcite{Thome2016}
+\rank(\mA_1\mA_2\ldots\mA_l)
+\ge \sum_{i=1}^{l-1}\rank(\mA_i\mA_{i+1})-\sum_{i=2}^{l-1}\rank(\mA_i)
+\ge\sum_{i=1}^l\rank(\mA_i)-\sum_{i=1}^{l-1}n_i 
+\end{equation}
+
 \section{Identities}
 \begin{align}
 \left(\sum_{i=1}^n \vz_i\right)^2 = \vz^T
