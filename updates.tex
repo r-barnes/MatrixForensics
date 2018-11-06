@@ -10,22 +10,22 @@
 
 \textbf{Algorithm:}
 
-Recall that
-\begin{equation}
-(\mA\mB)_{kl} = \sum_m \mA_{km}\mB_{ml}~~~\mA\in\sR^{k,m},\mB\in\sR^{m,l}
-\end{equation}
-then we have that
-\begin{equation}
-(\mA^T\mA)_{kl} = \sum_{m} \mA_{mk}\mA_{ml}=\sum_{m\ne i} \mA_{mk}\mA_{ml} + \mA_{jk}\mA_{jl}=\sum_{m\ne i} \mA_{mk}\mA_{ml} + (\mA_{k*})_{j} (\mA_{l*})_{j}
-\end{equation}
-where $(\mA_k*)_{j}$ is the $j$th element of the $k$th column of $\mA$. %TODO
+% Recall that
+% \begin{equation}
+% (\mA\mB)_{kl} = \sum_m \mA_{km}\mB_{ml}~~~\mA\in\sR^{k,m},\mB\in\sR^{m,l}
+% \end{equation}
+% then we have that
+% \begin{equation}
+% (\mA^T\mA)_{kl} = \sum_{m} \mA_{mk}\mA_{ml}=\sum_{m\ne i} \mA_{mk}\mA_{ml} + \mA_{jk}\mA_{jl}=\sum_{m\ne i} \mA_{mk}\mA_{ml} + (\mA_{k*})_{j} (\mA_{l*})_{j}
+% \end{equation}
+% where $(\mA_k*)_{j}$ is the $j$th element of the $k$th column of $\mA$. %TODO
 
-Thus,
-\begin{equation}
-\mA_{\bs i}^T\mA_{\bs i}=\mA^T\mA-\mA_{*j}\mA_{*j}^T
-\end{equation}
-
-
+% Thus,
+\begin{align}
+\mA_{\bs i}^T\mA_{\bs i} &= \mA^T\mA-\mA_{*i}\mA_{*i}^T \\
+\noalign{Similarly:}
+\mA_{\bs i}^T  y_{\bs i} &= \mA^Ty  -\mA_{*i}y_i^T
+\end{align}
 
 
 \section{$\mathbf{1}_r^T \mA \mathbf{1}_c$}

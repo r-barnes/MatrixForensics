@@ -128,44 +128,33 @@
 
 \chapter{Transpose Properties}
 
-\begin{equation}
-(\mA\mB)^T=\mB^T\mA^T
-\end{equation}
-
-\begin{equation}
-(\mA+\mB)^T=\mA^T+\mB^T
-\end{equation}
-
-\begin{equation}
-(\mA^{-1})^T=(\mA^T)^{-1}
-\end{equation}
+\begin{align}
+(\mA\mB)^T   &= \mB^T\mA^T    \\
+(\mA+\mB)^T  &= \mA^T+\mB^T   \\
+(\mA^{-1})^T &= (\mA^T)^{-1}
+\end{align}
 
 
 \chapter{Determinant Properties}
 
 Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicates the volume after the transformation.
-
 \begin{align}
-\det(I_n)          &= 1                                  \\
-\det(\mA^T)        &= \det(\mA)                          \\
-\det(\mA^{-1})     &= \frac{1}{\det(\mA)}=\det(\mA)^{-1} \\
-\det(AB)           &= \det(BA)                           \\
-\det(AB)           &= \det(A)\det(B)~~\mA,\mB\in\sRnn    \\
-\det(c\mA)         &= c^n\det(\mA)~~\mA\in\sRnn          \\
-\det(\mA)          &= \prod \eig(\mA)                    \\
+\det(I_n)          &= 1                                   \\
+\det(\mA^T)        &= \det(\mA)                           \\
+\det(\mA^{-1})     &= \frac{1}{\det(\mA)}=\det(\mA)^{-1}  \\
+\det(\mA\mB)       &= \det(\mB\mA)                        \\
+\det(\mA\mB)       &= \det(\mA)\det(\mB)                  &\mA,\mB\in\sRnn \\
+\det(c\mA)         &= c^n\det(\mA)                        &\mA\in\sRnn     \\
+\det(\mA)          &= \prod \eig(\mA)                     \\
 \noalign{For $\mA\in\sRmn, \mB\in\sRnm$}
 \eqcite{Sylvester1851}
-\det(\mI_m+\mA\mB) &= \det(\mI_n+\mB\mA) & \textrm{Sylvester's determinant identity}
+\det(\mI_m+\mA\mB) &= \det(\mI_n+\mB\mA) & & \textrm{Sylvester's determinant identity}
 \end{align}
 
 
 \chapter{Trace Properties}
-For $\mA\in\sRnn$
-\begin{equation}
-\trace(\mA)=\sum_{i=1}^n \mA_{ii}
-\end{equation}
-
 \begin{align}
+\trace(\mA)    &=\sum_{i=1}^n \mA_{ii}   & \mA\in\sRnn \\
 \trace(\mA+\mB)&=\trace(\mA)+\trace(\mB) \\
 \trace(c\mA)   &=c\trace(\mA)            \\
 \trace(\mA)    &=\trace(\mA^T)
@@ -176,7 +165,6 @@ For $\mA,\mB,\mC,\mD$ of compatible dimensions,
 \begin{equation}
 \trace(\mA^T\mB)=\trace(\mA\mB^T)=\trace(\mB^T\mA)=\trace(\mB\mA^T)
 \end{equation}
-
 \begin{equation}
 \trace(\mA\mB\mC\mD)=\trace(\mB\mC\mD\mA)=\trace(\mC\mD\mA\mB)=\trace(\mD\mA\mB\mC)
 \end{equation}
@@ -268,11 +256,19 @@ Any matrix $\mA\in\sRnn$ has $n$ eigenvalues, though some may be repeated. $\lam
 \end{equation}
 
 \subsection{Weyl's Inequality}
-If $\mM,\mH,\mP\in\sRnn$ are Hermitian matrices and $\mM=\mH+\mP$ ($\mH$ is perturbed by $\mP$) and $\mM$ has eigenvalues $\mu_1\ge\cdots\ge\mu_n$, $\mH$ has eigenvalues $\nu_1\ge\cdots\ge\nu_n$, and $\mP$ has eigenvalues $\rho_1\ge\cdots\ge\rho_n$, then $\nu_i+\rho_n\le \mu_i \le \nu_i + \rho_1~\forall i$. If $j+k-n\ge i \ge r+s-1$, then $\nu_j+\rho_k\le\mu_i\le\nu_r+\rho_s$. If $\mP\ispsd0$, then $\mu_i>\nu_i~\forall i$.
+If $\mM,\mH,\mP\in\sRnn$ are Hermitian matrices and $\mM=\mH+\mP$ ($\mH$ is perturbed by $\mP$) and $\mM$ has eigenvalues $\mu_1\ge\cdots\ge\mu_n$, $\mH$ has eigenvalues $\nu_1\ge\cdots\ge\nu_n$, and $\mP$ has eigenvalues $\rho_1\ge\cdots\ge\rho_n$, then
+\begin{equation}
+\nu_i+\rho_n\le \mu_i \le \nu_i + \rho_1~\forall i
+\end{equation}
+If $j+k-n\ge i \ge r+s-1$, then
+\begin{equation}
+\nu_j+\rho_k\le\mu_i\le\nu_r+\rho_s
+\end{equation}
+If $\mP\ispsd0$, then $\mu_i>\nu_i~\forall i$.
 
-\section*{Computation}
-
-TODO: eigsh, small eigen value extraction, top-k
+%TODO
+% \section*{Computation}
+% TODO: eigsh, small eigen value extraction, top-k
 
 
 
