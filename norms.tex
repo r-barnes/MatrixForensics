@@ -76,9 +76,16 @@ Not a proper norm.
 \section{Vectors}
 
 \begin{align}
-\norm{\vx}_1      &= \sum_i |\vx_i| & \textrm{(L1-norm\index{L1-norm})} \\
-\norm{\vx}_p      &= (\sum_i |\vx_i|^p)^{1/p} & \textrm{(P-norm\index{P-norm})} \\
-\norm{\vx}_\infty &= \max_i |\vx_i| & \textrm{(L$\infty$-norm\index{L$\infty$-norm}, L-infinity norm)}
+\norm{\vx}_1      &= \sum_i |\vx_i| & \textrm{L1-norm\index{L1-norm}} \\
+\norm{\vx}_p      &= (\sum_i |\vx_i|^p)^{1/p} & \textrm{P-norm\index{P-norm}} \\
+\norm{\vx}_\infty &= \max_i |\vx_i| & \textrm{L$\infty$-norm\index{L$\infty$-norm}, L-infinity norm}
+\end{align}
+
+\subsection{Identities}
+
+\begin{align}
+2\norm{\vu}_2^2+2\norm{\vv}_2^2 &= \norm{\vu+\vv}_2^2 + \norm{\vu-\vv}_2^2 & \textrm{Polarization Identity} \\
+<\vx,\vy> &= \frac{1}{4}(\norm{\vx+\vy}_2^2-\norm{\vx-\vy}_2^2)~~\forall \vx,\vy\in\mathcal{V} & \textrm{Polarization Identity}
 \end{align}
 
 
