@@ -71,6 +71,7 @@
 \newcommand{\sRmn}{\mathbb{R}^{m,n}}
 \newcommand{\sRnn}{\mathbb{R}^{n,n}}
 \newcommand{\sRnp}{\mathbb{R}^{n,p}}
+\newcommand{\sRnr}{\mathbb{R}^{n,r}}
 \newcommand{\sRmm}{\mathbb{R}^{m,m}}
 \newcommand{\sSn}{\mathbb{S}^{n}}
 \newcommand{\ispsd}{\succeq}
@@ -145,13 +146,16 @@
 Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicates the volume after the transformation.
 
 \begin{align}
-\det(I_n)     &= 1                                  \\
-\det(\mA^T)   &= \det(\mA)                          \\
-\det(\mA^{-1})&= \frac{1}{\det(\mA)}=\det(\mA)^{-1} \\
-\det(AB)      &= \det(BA)                           \\
-\det(AB)      &= \det(A)\det(B)~~\mA,\mB\in\sRnn    \\
-\det(c\mA)    &= c^n\det(\mA)~~\mA\in\sRnn          \\
-\det(\mA)     &= \prod \eig(\mA)                    
+\det(I_n)          &= 1                                  \\
+\det(\mA^T)        &= \det(\mA)                          \\
+\det(\mA^{-1})     &= \frac{1}{\det(\mA)}=\det(\mA)^{-1} \\
+\det(AB)           &= \det(BA)                           \\
+\det(AB)           &= \det(A)\det(B)~~\mA,\mB\in\sRnn    \\
+\det(c\mA)         &= c^n\det(\mA)~~\mA\in\sRnn          \\
+\det(\mA)          &= \prod \eig(\mA)                    \\
+\noalign{For $\mA\in\sRmn, \mB\in\sRnm$}
+\eqcite{Sylvester1851}
+\det(\mI_m+\mA\mB) &= \det(\mI_n+\mB\mA) & \textrm{Sylvester's determinant identity}
 \end{align}
 
 
