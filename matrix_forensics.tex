@@ -259,6 +259,13 @@ Any matrix $\mA\in\sRnn$ has $n$ eigenvalues, though some may be repeated. $\lam
 \eig(\mA^T\mA)\ge0
 \end{equation}
 
+\begin{equation}
+\lambda_\textrm{min}(\mA)\le \frac{\vx^T \mA \vx}{\vx^T\vx} \le \lambda_\textrm{max}(\mA)~~\vx\ne0
+\end{equation}
+
+\subsection{Weyl's Inequality}
+If $\mM,\mH,\mP\in\sRnn$ are Hermitian matrices and $\mM=\mH+\mP$ ($\mH$ is perturbed by $\mP$) and $\mM$ has eigenvalues $\mu_1\ge\cdots\ge\mu_n$, $\mH$ has eigenvalues $\nu_1\ge\cdots\ge\nu_n$, and $\mP$ has eigenvalues $\rho_1\ge\cdots\ge\rho_n$, then $\nu_i+\rho_n\le \mu_i \le \nu_i + \rho_1~\forall i$. If $j+k-n\ge i \ge r+s-1$, then $\nu_j+\rho_k\le\mu_i\le\nu_r+\rho_s$. If $\mP\ispsd0$, then $\mu_i>\nu_i~\forall i$.
+
 \section*{Computation}
 
 TODO: eigsh, small eigen value extraction, top-k
