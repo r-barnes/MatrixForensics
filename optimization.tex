@@ -30,8 +30,7 @@ Additional constraints must ensure $\vd^T \vx + b$ has the same sign throughout 
 \addConstraint{\vx^T\mH_i\vx+2\vc_i^T\vx + \vd_i}{\le 0}{~~i\in\mathcal{I}}
 \addConstraint{\vx^T\mH_j\vx+2\vc_j^T\vx + \vd_j}{  = 0}{~~j\in\mathcal{E}}
 \end{mini!}
-
-Note that, in general, QCQPs are NP-Hard.
+If $\mH_i\ispsd 0~\forall i$, then the program is convex. In general, QCQPs are NP-Hard.
 
 
 \textbf{QP: Quadratic Program}
@@ -39,6 +38,20 @@ Note that, in general, QCQPs are NP-Hard.
 \addConstraint{\mA_\textrm{eq}\vx}{=\vb_\textrm{eq}}
 \addConstraint{\mA\vx}{\le \vb}
 \end{mini!}
+If $\mH_0\ispd 0$, then the program is convex.
+
+If only equality constraints are present, then the solution is the linear system:
+\begin{equation}
+\begin{bmatrix}
+\mH_0 & \mA^T \\
+\mA & 0
+\end{bmatrix}
+\begin{bmatrix} \vx \\ \lambda \end{bmatrix}
+=\begin{bmatrix} -\vc_0 \\ \vb \end{bmatrix}
+\end{equation}
+where $\lambda$ is a set of Lagrange multipliers.
+
+For $\mH_0\ispd 0$, the ellipsoid method solves the problem in polynomial time.~\citep{Kozlov1980} If, $\mH_0$ is indefinite, then the problem is NP-hard~\citep{Sahni1974}, even if $\mH_0$ has only one negative eigenvalue~\citep{Pardalos1991}.
 
 \textbf{SOCP: Second Order Cone Program (Standard Form)}
 \begin{align}
@@ -82,7 +95,7 @@ becomes can be cast as an SOCP:
 \begin{mini!}{\vx}{\vc^T \vx}{}{}
 \addConstraint{\norm{\mC_i \vx+\vd_i}_2}{\le \vb_i - \va_i^T \vx}{\forall i}
 \end{mini!}
-where $C_i=0, d_i=0 \forall i$.
+where $\mC_i=0, d_i=0~\forall i$.
 
 \subsection{QCQP as SOCP}
 
@@ -214,7 +227,7 @@ is equivalent to
 which is equivalent to:
 \begin{mini!}{\vx}{\vc^T \vx}{}{}
 \addConstraint{\hat \va_i^T \vx + \rho_i \sum_{j=1}^n \vu_j}{\le b_i}{~~i=1,\ldots,m}
-\addConstraint{-\vu_j}{\le \vx_j\le\vu_i}{~~j=1,\ldots,n}
+\addConstraint{-\vu_j}{\le \vx_j\le\vu_j}{~~j=1,\ldots,n}
 \end{mini!}
 
 \subsection{Robust LP with Ellipsoidal Uncertainty as SOCP}
