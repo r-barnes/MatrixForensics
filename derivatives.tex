@@ -18,6 +18,20 @@ For general $\mA$ and $\mX$ (no special structure):
 \partial(\mX^H)       &= (\partial\mX)^H                       
 \end{align}
 
+\section{Derivatives of Matrices and Vectors}
+
+\subsection{First-Order}
+
+In the following, $\mJ$ is the Single-Entry Matrix (\autoref{sec:rogue_single_entry}).
+\begin{align}
+\pd{\vx^T \va}{\vx}     &= \pd{\va^T \vx}{\vx} = \va          \\
+\pd{\va^T\mX\vb}{\mX}   &= \va\vb^T                           \\
+\pd{\va^T\mX^T\vb}{\mX} &= \vb\va^T                           \\
+\pd{\va^T\mX\va}{\mX}   &= \pd{\va^T\mX^T\va}{\mX} = \va\va^T \\
+\pd{\mX}{\mX_{ij}}      &= \mJ^{ij}                              %TODO: What is this? (MCB 73)
+%TODO: MCB 74, 75
+\end{align}
+
 \section{Derivatives of vector norms}
 
 \begin{align}
