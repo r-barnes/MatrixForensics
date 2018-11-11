@@ -9,7 +9,7 @@
     {\large\textit{A brief guide to matrix math \\ and its efficient implementation}}\\[4\baselineskip] % Subtitle or further description
     {\Large\textsc{richard barnes}} % Author name, lower case for consistent small caps
     \\[4\baselineskip]
-    \immediate\write18{ git rev-parse HEAD > /tmp/matrix_forensics_version.info }
+    \immediate\write18{ git rev-parse HEAD | cut -b 1-10 > /tmp/matrix_forensics_version.info }
 
     Git Hash: \input{/tmp/matrix_forensics_version.info} \\
     Compiled on: \today\ at \currenttime

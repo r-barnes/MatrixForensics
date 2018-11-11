@@ -93,6 +93,22 @@
   pdfcreator  = {pdfLaTeX}
 }
 
+
+\usepackage{fancyhdr}
+% \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+\setlength{\headheight}{15.2pt}
+\pagestyle{fancy}
+
+\lhead[\thepage]{\leftmark}
+% \chead[]{<odd output>}
+\rhead[\leftmark]{\thepage}
+
+\renewcommand{\footrulewidth}{0.4pt}% default is 0pt
+\lfoot[\footnotesize{Richard Barnes. Matrix Forensics. \today-\currenttime. \href{https://github.com/r-barnes/MatrixForensics}{github.com/r-barnes/MatrixForensics}}. \input{/tmp/matrix_forensics_version.info}\!\!.]{\footnotesize{Richard Barnes. Matrix Forensics. \today-\currenttime. \href{https://github.com/r-barnes/MatrixForensics}{github.com/r-barnes/MatrixForensics}}. \input{/tmp/matrix_forensics_version.info}\!\!.} %  [<even output>]{<odd output>}
+\cfoot[]{}
+\rfoot[]{}
+
+
 \newcommand{\eqcite}[1]{\marginnote{\citep{#1}}}
 
 %Adjust chapter formatting
