@@ -43,22 +43,17 @@ Number of ``free entries": $\frac{n(n+1)}{2}$.
 
 \subsection*{Special Properties}
 
-\begin{equation}
-\eig(A)={a_1,\ldots,a_n}
-\end{equation}
-
-\begin{equation}
-\det(A)=\prod_i a_i 
-\end{equation}
-
-\begin{equation}
-A^{-1}=
+\begin{align}
+\eig(A) &= {a_1,\ldots,a_n}           \\
+\det(A) &= \prod_i a_i                \\
+A^{-1}  &= 
 \begin{bmatrix}
 \frac{1}{a_1} &        &               \\
               & \ddots &               \\
               &        & \frac{1}{a_n}
-\end{bmatrix}
-\end{equation}
+\end{bmatrix} \\
+\vx^T \mA \vx &= \sum_i a_i \vx_i^2     \\
+\end{align}
 
 
 
@@ -85,6 +80,7 @@ $\mA\in\sRmn$ is a dyad if it can be written as
 \item If $m=n$, $\mA$ has one eigenvalue $\lambda=\vv^T\vu$ and eigenvector $\vu$.
 \item A dyad can always be written in a normalized form $c\tilde\vu\tilde\vv^T$.
 \end{itemize}
+%TODO: Dyad eigenvalues
 
 
 
@@ -175,6 +171,7 @@ Square matrix. The columns form an orthonormal basis of $\mathbb{R}^n$.
 \item The eigenvalues of $\mU$ are placed on the unit circle.
 \item The eigenvectors of $\mU$ are unitary (have length one).
 \item $\mU^{-1}$ is orthogonal.
+\item The product of two orthogonal matrices is itself orthogonal.
 \end{itemize}
 
 \begin{align}
@@ -247,6 +244,7 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 \alpha\mA+(1-\alpha)\mB\in\sPSD
 \end{equation}
 \item For $\mA\in\sPSD$ and $\alpha\ge0$, $\alpha\mA\ispsd0$, so $\sPSD$ is a cone.
+\item $\mA\ispsd 0$ has a unique PSD matrix $\mS^{1/2}$ such that $\mS^{1/2}\mS^{1/2}=\mA$
 \end{itemize}
 
 \subsection{Loewner order}

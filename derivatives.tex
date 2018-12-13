@@ -1,3 +1,5 @@
+%TODO: Include handy diagram from https://explained.ai/matrix-calculus/index.html
+
 \chapter{Derivatives}
 
 \section{Useful Rules for Derivatives}
@@ -15,7 +17,7 @@ For general $\mA$ and $\mX$ (no special structure):
 \partial(\det(\mX))   &= \det(\mX)\trace(\mX^{-1}\partial\mX)  \\
 \partial(\ln(\det(\mX))) &= \trace(\mX^{-1}\partial\mX)        \\
 \partial(\mX^T)       &= (\partial\mX)^T                       \\
-\partial(\mX^H)       &= (\partial\mX)^H                       
+\partial(\mX^H)       &= (\partial\mX)^H
 \end{align}
 
 \section{Derivatives of Matrices and Vectors}
@@ -39,3 +41,65 @@ In the following, $\mJ$ is the Single-Entry Matrix (\autoref{sec:rogue_single_en
 \pd{}{\vx}\frac{\vx-\va}{\norm{\vx-\va}_2} &= \frac{\mI}{\norm{\vx-\va}_2}-\frac{(\vx-\va)(\vx-\va)^T}{\norm{\vx-\va}_2^3} \\
 \pd{\norm{\vx}_2^2}{\vx} &= \pd{\norm{\vx^T\vx}_2}{\vx} = 2\vx
 \end{align}
+
+\section{Scalar by Vector}
+\begin{center}
+\begin{tabular}{l|Sc|Sc|Sc}
+Qualifier                  & Expression                                    & Numerator layout                                   & Denominator layout                            \\
+                           & $\pd{a}{x}$                                   & $\vzero^T$                                         & $\vzero$                                      \\
+                           & $\pd{au(\vx)}{\vx}$                           & $a\pd{u}{\vx}$                                     & Same                                          \\
+                           & $\pd{u(\vx)+v(\vx)}{\vx}$                     & $\pd{u}{\vx} + \pd{v}{\vx}$                        & Same                                          \\
+                           & $\pd{u(\vx)v(\vx)}{\vx}$                      & $u\pd{v}{\vx} + v\pd{u}{\vx}$                      & Same                                          \\
+                           & $\pd{g(u(\vx))}{\vx}$                         & $\pd{g(u)}{u}\pd{u}{\vx}$                          & Same                                          \\
+                           & $\pd{f(g(u(\vx)))}{\vx}$                      & $\pd{f(g)}{g}\pd{g(u)}{u}\pd{u}{\vx}$              & Same                                          \\
+                           & $\pd{\vu(\vx)^T\vv(\vx)}{\vx}$                & $\vu^T\pd{\vv}{\vx}+\vv^T\pd{\vu}{\vx}$            & $\pd{\vu}{\vx}\vv+\pd{\vv}{\vx}\vu$           \\
+                           & $\pd{\vu(\vx)^T\mA\vv(\vx)}{\vx}$             & $\vu^T\mA\pd{\vv}{\vx}+\vv^T\mA^T\pd{\vu}{\vx}$    & $\pd{\vu}{\vx}\mA\vv+\pd{\vv}{\vx}\mA^T\vu$   \\
+                           & $\md{f}{2}{\vx}{}{{\vx^T}}{}$                 &                                                    & $\mH$, the Hessian matrix                     \\
+                           & $\pd{\va\cdot\vx}{\vx}=\pd{\vx\cdot\va}{\vx}$ & $\va^T$                                            & $\va$                                         \\
+                           & $\pd{\vb^T\mA\vx}{\vx}$                       & $\vb^T\mA$                                         & $\mA^T\vb$                                    \\
+                           & $\pd{\vx^T\mA\vx}{\vx}$                       & $\vx^T(\mA+\mA^T)$                                 & $(\mA+\mA^T)\vx$                              \\
+$\mA$ symmetric            & $\pd{\vx^T\mA\vx}{\vx}$                       & $2\vx^T\mA$                                        & $2\mA\vx$                                     \\
+                           & $\pd{\vx^T\mA\vx}{\vx}$                       & $\mA+\mA^T$                                        & Same                                          \\
+$\mA$ symmetric            & $\pd{\vx^T\mA\vx}{\vx}$                       & $\mA$                                              & Same                                          \\
+                           & $\pd{\vx^T\vx}{\vx}$                          & $2\vx^T$                                           & $2\vx$                                        \\
+                           & $\pd{\va^T\vu(\vx)}{\vx}$                     & $\va^T\pd{\vu}{\vx}$                               & $\pd{\vu}{\vx}\va$                            \\
+                           & $\pd{\va^T\vx\vx^T\vb}{\vx}$                  & $\vx^T(\va\vb^T+\vb\va^T)$                         & $(\va\vb^T+\vb\va^T)\vx$                      \\
+                           & $\pd{(\mA\vx+\vb)^T\mC(\mD\vx+\ve)}{\vx}$     & $(\mD\vx+\ve)^T\mC^T\mA+(\mA\vx+\vb)^T\mC\mD$      & $\mD^T\mC^T(\mA\vx+\vb)+\mA^T\mC(\mD\vx+\ve)$ \\
+                           & $\pd{\norm{\vx-\va}}{\vx}$                    & $\frac{(\vx-\va)^T}{\norm{\vx-\va}}$               & $\frac{\vx-\va}{\norm{\vx-\va}}$              \\                           
+\end{tabular}
+\end{center}
+
+\section{Vector by Vector}
+\begin{center}
+\begin{tabular}{l|Sc|Sc|Sc}
+Qualifier                  & Expression                                    & Numerator layout                                   & Denominator layout                            \\
+                           & $\pd{\va}{\vx}$                               & $\vzero$                                           & Same                                          \\ %TODO: really the same? shouldn't be transposed?
+                           & $\pd{\vx}{\vx}$                               & $\mI$                                              & Same                                          \\ %TODO: Really the identity matrix? Which one?
+                           & $\pd{\mA\vx}{\vx}$                            & $\mA$                                              & $\mA^T$                                       \\
+                           & $\pd{\vx^T\mA}{\vx}$                          & $\mA^T$                                            & $\mA$                                         \\
+                           & $\pd{a\vu(\vx)}{\vx}$                         & $a\pd{\vu}{\vx}$                                   & Same                                          \\
+                           & $\pd{a(\vx)\vu(\vx)}{\vx}$                    & $a\pd{\vu}{\vx}+\vu\pd{a}{\vx}$                    & $a\pd{\vu}{\vx}+\pd{a}{\vx}\vu^T$             \\
+                           & $\pd{\mA\vu(\vx)}{\vx}$                       & $\mA\pd{\vu}{\vx}$                                 & $\pd{\vu}{\vx}\mA^T$                          \\
+                           & $\pd{(\vu(\vx)+\vv(\vx))}{\vx}$               & $\pd{\vu}{\vx}+\pd{\vv}{\vx}$                      & Same                                          \\
+                           & $\pd{\vg(\vu(\vx))}{\vx}$                     & $\pd{\vg(\vu)}{\vu}\pd{\vu}{\vx}$                  & $\pd{\vu}{\vx}\pd{\vg(\vu)}{\vu}$             \\
+                           & $\pd{\vf(\vg(\vu(\vx)))}{\vx}$                & $\pd{\vf(\vg)}{\vg(\vu)}\pd{\vg(\vu)}{\vu}\pd{\vu}{\vx}$& $\pd{\vu}{\vx}\pd{\vg(\vu)}{\vu}\pd{\vf(\vg)}{\vg}$
+\end{tabular}
+\end{center}
+
+
+
+\section{Matrix by Scalar}
+\begin{center}
+\begin{tabular}{l|Sc|Sc}
+Qualifier                  & Expression                                     & Numerator layout                                       \\
+                           & $\pd{a\mU(x)}{x}$                              & $a\pd{\mU}{x}$                                         \\
+                           & $\pd{\mA\mU(x)\mB}{x}$                         & $\mA\pd{\mU}{x}\mB$                                    \\
+                           & $\pd{(\mU(x)+\mV(x))}{x}$                      & $\pd{\mU}{x}+\pd{\mV}{x}$                              \\
+                           & $\pd{(\mU(x)\mV(x))}{x}$                       & $\mU\pd{\mV}{x}+\pd{\mU}{x}\mV$                        \\
+                           & $\pd{(\mU(x)\kp\mV(x))}{x}$                    & $\mU\kp\pd{\mV}{x} + \pd{\mU}{x}\kp\mV$                \\
+                           & $\pd{(\mU(x)\hp\mV(x))}{x}$                    & $\mU\hp\pd{\mV}{x} + \pd{\mU}{x}\hp\mV$                \\
+                           & $\pd{\mU^{-1}(x)}{x}$                          & $-\mU^{-1} \pd{\mU}{x} \mU^{-1}$                       \\
+                           & $\md{\mU^{-1}}{2}{x}{}{y}{}$                   & $\mU^{-1}\left(\pd{\mU}{x}\mU^{-1}\pd{\mU}{y} - \md{\mU}{2}{x}{}{y}{} + \pd{\mU}{y}\mU^{-1}\pd{\mU}{x}\right)\mU^{-1}$ \\
+                           & $\pd{e^{x\mA}}{x}$                             & $\mA e^{x\mA}=e^{x\mA}\mA$
+\end{tabular}
+\end{center}
