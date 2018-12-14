@@ -241,6 +241,21 @@ is equivalent to
 \addConstraint{\hat \va_i^T \vx + \norm{\mR_i^T \vx}_2}{\le b_i}{~~i=1,\ldots,m}
 \end{mini!}
 
+\subsection{Square Root as SOCP}
+\begin{equation}
+\sqrt{x}\ge t \iff x\ge t^2 \iff \norm{\begin{matrix} 1-x \\ 2t \end{matrix}}_2 \le 1+x
+\end{equation}
+
+The problem
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\va_i^T \vx}{\le b_i}{~~\forall \va_i\in\{\hat \va_i + \mR_i \vu : \norm{\vu}_2\le1\}}{~~i=1,\ldots,m}
+\end{mini!}
+is equivalent to
+\begin{mini!}{\vx}{\vc^T \vx}{}{}
+\addConstraint{\hat \va_i^T \vx + \norm{\mR_i^T \vx}_2}{\le b_i}{~~i=1,\ldots,m}
+\end{mini!}
+
+
 \section{Useful Problems}
 
 \begin{align}
