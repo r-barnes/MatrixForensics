@@ -205,24 +205,33 @@ TODO
 
 \section{Positive Definite}
 
-$\mA\in\sSn$ is positive definite (denoted $\mA\ispd0$) if any of the following are true:
+$\mP\in\sSn$ is positive definite (denoted $\mP\ispd0$) if any of the following are true:
 \begin{itemize}
-\item $\vx^T\mA\vx>0,\forall\vx\in\sRn$.
-\item $\eig(\mA)>0$
+\item $\vx^T\mP\vx>0,\forall\vx\in\sRn$.
+\item $\eig(\mP)>0$
 \end{itemize}
 
 
 \subsection*{Special Properties}
 
 \begin{itemize}
-\item If $\mA$ is PD and invertible, $\mA^{-1}$ is also PD.
-\item If $\mA$ is PD and $c\in\sR$ then $c\mA$ is PD.
-\item The diagonal entries $\mA_{ii}$ are real and non-negative, so $\trace(\mA)\ge0$. %TODO: Shouldn't this be >0?
-\item $\det(\mA)>0$
-\item For $\mA\in\sRmn$, $\mA^T\mA\ispd0\iff \mA$ is full-column rank ($\rank(\mA)=n$)
-\item For $\mA\in\sRmn$, $\mA\mA^T\ispd0\iff \mA$ is full-row rank ($\rank(\mA)=m$)
-\item $\mP\ispd0$ defines a full-dimensional, bounded ellipsoid centered at the origin and defined by the set $\mathcal{E}=\{\vx\in\sRn: x^T\mP^{-1}x\le1\}$. The eigenvalues $\lambda_i$ and eigenvectors $u_i$ of $\mP$ define the orientation and shape of the ellipsoid. $u_i$ are the semi-axes while the lengths of the semi-axes are given by $\sqrt{\lambda_i}$. Using the Cholesky decomposition, $\mP^{-1}=\mA^T\mA$, an equivalent definition of the ellipsoid is $\mathcal{E}=\{\vx\in\sRn: \norm{\mA\vx}_2\le1\}$.
+\item $\mP^{-1}\ispd0$
+\item $c\mP\ispd0$
+\item $\mA_{ii}\in\sR$
+\item $\mA_{ii}>0$
+\item $\trace(\mP)\ge0$. %TODO: Shouldn't this be >0?
+\item $\det(\mP)>0$
+\item The eigenvalues of $\mP^{-1}$ are the inverses of the eigenvalues of $\mP$.
+\item For $\mP\in\sRmn$, $\mP^T\mP\ispd0\iff \mP$ is full-column rank ($\rank(\mP)=n$)
+\item For $\mP\in\sRmn$, $\mP\mP^T\ispd0\iff \mP$ is full-row rank ($\rank(\mP)=m$)
 \end{itemize}
+
+\subsubsection{Ellipsoids}
+$\mP\ispd0$ defines a full-dimensional, bounded ellipsoid defined by the set
+\begin{equation}
+\mathcal{E}=\{\vx\in\sRn: (\vx-\vz)^T\mP^{-1}(\vx-\vz)\le \beta\}
+\end{equation}
+The eigenvectors of $\mP$ define the directions of the semi-axes of the ellipsoid; the lengths of these axes are given by $\sqrt{\beta\lambda_i}$ where $\lambda_i$ are the eigenvalues of $\mP$. The ellipsoid is centered at $\vz$. Since $\mP\ispd 0 \implies \mP^{-1}\ispd 0$, the Cholesky decomposition says that $\mP^{-1}=\mA^T\mA$; therefore, an equivalent definition of the ellipsoid is $\mathcal{E}=\{\vx\in\sRn: \norm{\mA\vx}_2\le1\}$.
 
 \section{Positive Semi-Definite}
 
