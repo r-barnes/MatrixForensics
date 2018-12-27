@@ -133,6 +133,49 @@ $\mA-\mI$ may not be idempotent.
 
 
 
+\section{Laplacian Matrix of a Graph}
+Let $\mL$ be the Laplacian matrix of a graph $G$ with neither multiple edges nor loops defined by $(V,E,w)$ where $V$ is the set of vertices, $E$ the set of edges, and $w$ is a weight function. Is is also the case that $L=D-A$ where $D$ is the degree matrix and $A$ is the adjaceny matrix. In the case of directed graphs either the indegree or outdegree might be used.
+
+The elements of $\mL$ are given by
+\begin{equation}
+\mL_{i,j} = \begin{cases}
+  \deg(v_i) & \textrm{if $i=j$} \\
+  -1        & \textrm{if $i\ne j$ and $v_i$ is adjacent to $v_j$} \\
+   0        & \textrm{otherwise}
+\end{cases}
+\end{equation}
+
+If $G$ is weighted, the elements of its Laplacian $\mL$ are given by
+\begin{equation}
+\mL_{i,j} = \begin{cases}
+  \sum_{j,j\ne i} w(i,j) & \textrm{if $i=j$} \\
+  -w(i,j)   & \textrm{if $i\ne j$ and $v_i$ is adjacent to $v_j$ with weight $w(i,j)$} \\
+   0        & \textrm{otherwise}
+\end{cases}
+\end{equation}
+
+For an undirected graph $G$ and its Laplacian $\mL$:
+\begin{itemize}
+\item $\mL$ is symmetric
+\item $L\ispsd 0$
+\item The row sum and column sums of $\mL$ are both zero.
+\item $\mL$ is singular
+\item The number of connected components in $G$ is the dimension of $\ns(L)$ and the algebraic multiplicity of the 0 eigenvalue.
+\item The smallest non-zero eigenvalue of $\mL$ is called the spectral gap.
+\item The second smallest eigenvalue of $\mL$ (could be zero) is the algebraic connectivity (Fiedler value) of $G$ and approximates the sparest cut of $G$.
+\item For a graph with multiple connected components, $\mL$ is a block diagonal matrix.
+\item Using preconditioners, the linear equaitons of any Laplacian matrix $\mL\in\sRnn$ can be solved to accuracy $\epsilon$ in time $O((\nnz(\mL) + n\log n (\log \log n)^2) \log \epsilon^{-1})$. The best balance between preconditioners and solving linear equations yields an algorithm of complexity $O(\nnz(\mL) \log^c n \log \epsilon^{-1})$.~\citep{Spielman2010}
+\end{itemize}
+
+\begin{align}
+\vx^T \mL \vx = \sum_{(u,v)\in E} w(u,v) \left(\vx(u)-\vx(v)\right)^2~~~~\vx\in\sR^{V} \label{equ:laplace_quad}
+\end{align}
+
+\autoref{equ:laplace_quad} provides a measure of the ``smoothness" of $\vx$ over the edges of $G$. The more $\vx$ jumps over an edge, the larger the quadratic form becomes.
+
+
+
+
 
 \section{Orthogonal Matrix}
 
