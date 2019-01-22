@@ -49,7 +49,14 @@ a = np.random.rand(N)
 m = np.diag(a)
 MakeMatrixFig("imgs/rg_diagonal.pdf", m)
 
-
+np.random.seed(123456789)
+N = 10
+m = sp.sparse.diags(
+      [np.random.random(N-1),np.random.random(N),np.random.random(N-1)],
+      [-1,0,1],
+      shape=(N,N)
+    ).todense()
+MakeMatrixFig("imgs/rg_tridiagonal.pdf", m)
 
 np.random.seed(123456789)
 a     = np.random.rand(10,4)

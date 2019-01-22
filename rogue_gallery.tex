@@ -464,6 +464,59 @@ The product of two upper (lower) triangular matrices is still upper (lower) tria
 The inverse of a nonsingular upper (lower) triangular matrix is still upper (lower) triangular.
 
 
+\section{Tridiagonal Matrix}
+
+\begin{center}
+\includegraphics[width=1.5in]{imgs/rg_tridiagonal.pdf}
+\end{center}
+
+\begin{equation}
+\begin{bmatrix}
+b_1 & c_1 &     &        &        &         \\
+a_2 & b_2 & c_2 &        &        &         \\
+    & a_3 & b_3 & c_3    &        &         \\
+    &     & a_4 & b_4    & \ddots &         \\
+    &     &     & \ddots & \ddots & c_{n-1} \\
+    &     &     &        & a_n    & b_n     \\
+\end{bmatrix}
+\end{equation}
+
+A tridiagonal matrix has values on its main diagonal as well as the diagonals abutting the main, with zeros elsewhere.
+
+A system of $n$ unknowns which can be written as
+\begin{align}
+a_i x_{i-1}+b_i x_i + c_i x_{i+1} &= d_i \\
+a_1 &=0                                  \\
+c_n &=0
+\end{align}
+can be rewritten as
+\begin{equation}
+\begin{bmatrix}
+b_1 & c_1 &     &        &        &         \\
+a_2 & b_2 & c_2 &        &        &         \\
+    & a_3 & b_3 & c_3    &        &         \\
+    &     & a_4 & b_4    & \ddots &         \\
+    &     &     & \ddots & \ddots & c_{n-1} \\
+    &     &     &        & a_n    & b_n     \\
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+d_1 \\ d_2 \\ d_3 \\ \vdots \\ d_n
+\end{bmatrix}
+\end{equation}
+This system can be solved in $O(n)$ time using the tridiagonal matrix algorithm (aka the Thomas Algorithm). The algorithm is not unconditionally stable; however, it is stable when the matrix is diagonally dominant or symmetric positive definite. A matix is diagonally dominant if for every row of the matrix the agnitude of the diagoanl entry is greater than or equal to the sum of the magnitudes of all the other non-diagonal entries in that row ($|a_{ii}|\ge\sum_{j\ne i} |a_{ij}|~\forall i$). If uncondonitional stability is grequired, Gaussian elimination with partial pivoting is an alternative, if slower, solution method. See \citep[Theorem 9.12]{Higham2002} for full stability details.
+
+A modified system can be solved for situations involving periodic boundary conditions, e.g.:
+\begin{align}
+a_1 x_n + b_1 x_1 + c_1 x_2 &= d_1 \\
+a_i x_{i-1} + b_i x_i + c_i x_{i+1} &= d_i~~\forall i=2,\ldots,n-1 \\
+a_n x_{n-1}+b_n x_n + c_n x_1 &= d_n 
+\end{align}
+
+Modified algorithms are also available for block tridiagonal matrices~\citep[\textsection3.8]{Quateroni2007}. See \citep[\textsection5.5]{Gallopoulos2016} for a discussion of parallel solvers.
 
 
 \section{Vandermonde Matrix}
