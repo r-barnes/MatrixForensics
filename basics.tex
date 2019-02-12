@@ -53,9 +53,12 @@ If $\mA_1, \mA_2, \ldots, \mA_l$ have $n_1,n_2,\ldots,n_l$ columns, so that $\mA
 
 \section{Matrix Multiplication}
 
-\begin{equation}
-(\mA\mB)_{kl} = \sum_m \mA_{km}\mB_{ml}~~~\mA\in\sR^{k,m},\mB\in\sR^{m,l}
-\end{equation}
+For $\mA\in\sR^{i,j}$ and $\mB\in\sR^{j,k}$ and $\mC\in\sR^{l,k}$
+\begin{align}
+[\mA\mB]_{ik} &= \sum_j \mA_{ij}\mB_{jk} \\
+[\mA\mB\mC^T]_{il} &= \sum_j \mA_{ij}[\mB\mC^T]_{jl}=\sum_j \mA_{ij}\sum_k \mB_{jk}\mC_{lk}=\sum_j\sum_k \mA_{ij}\mB_{jk}\mC_{lk}
+\end{align}
+
 
 
 \section{Time Complexities}
