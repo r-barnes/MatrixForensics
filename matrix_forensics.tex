@@ -186,10 +186,12 @@ Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicat
 
 \chapter{Trace Properties}
 \begin{align}
-\trace(\mA)    &=\sum_{i=1}^n \mA_{ii}   & \mA\in\sRnn \\
-\trace(\mA+\mB)&=\trace(\mA)+\trace(\mB) \\
-\trace(c\mA)   &=c\trace(\mA)            \\
-\trace(\mA)    &=\trace(\mA^T)
+\trace(\mA)      &=\sum_{i=1}^n \mA_{ii}   & \mA\in\sRnn \\
+\trace(\mA+\mB)  &=\trace(\mA)+\trace(\mB)     \\
+\trace(c\mA)     &=c\trace(\mA)                \\
+\trace(\mA)      &=\trace(\mA^T)               \\
+\trace(\mA^T\mB) &=\sum_{i,j} \mA_{ij}\mB_{ij} \\  %TODO: For real matrices only?
+\trace(\mA^T\mB) &=\sum_{ij} (\mA\circ\mB)_{ij}    %TODO: For real matrices only?
 \end{align}
 
 For $\mA,\mB,\mC,\mD$ of compatible dimensions,
