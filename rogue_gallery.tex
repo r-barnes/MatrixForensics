@@ -282,12 +282,18 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 \begin{itemize}
 \item $\vx^T\mA\vx\ge0,\forall\vx\in\sRn$.
 \item $\eig(\mA)\ge0$
+\item There exists a matrix $\mU\in\sRnn$, such that $\mA=\mU\mU^T$.
 \end{itemize}
 
 \subsection*{Special Properties}
 \begin{itemize}
 \item For $\mA\in\sRmn$, $\mA^T\mA\ispsd0$
 \item For $\mA\in\sRmn$, $\mA\mA^T\ispsd0$
+\item $\diag(\mA)_i\ge0$
+\item $\sum_{ij} \mA_{ij}\ge0$
+\item $\trace(\mA)\ge0$
+\item For $\mA,\mB\ispsd0$, $\trace(AB)\ge0$
+\item For $\mA,\mB\ispsd0$, $\trace(AB)=0\iff \mA\mB=0$
 \item The positive semi-definite matrices $\sPSD$ form a convex cone. For any two PSD matrices $\mA,\mB\in\sPSD$ and some $\alpha\in[0,1]$:
 \begin{equation}
 \vx^T(\alpha\mA+(1-\alpha)\mB)\vx=\alpha \vx^T\mA\vx+(1-\alpha)\vx^T\mB\vx\ge0~~\forall\vx
