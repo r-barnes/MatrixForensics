@@ -20,6 +20,23 @@ For general $\mA$ and $\mX$ (no special structure):
 \partial(\mX^H)       &= (\partial\mX)^H
 \end{align}
 
+\section{Gradient Notation}
+For a matrix $\mA\in\sRnm$, the gradient is defined as:
+\begin{equation}
+\grad_\mA f(\mA)=
+\begin{bmatrix}
+\pd{f(\mA)}{\mA_{11}} & \pd{f(\mA)}{\mA_{12}} & \ldots & \pd{f(\mA)}{\mA_{1n}} \\
+\pd{f(\mA)}{\mA_{21}} & \pd{f(\mA)}{\mA_{22}} & \ldots & \pd{f(\mA)}{\mA_{2n}} \\
+\vdots                & \vdots                & \ddots & \vdots                \\
+\pd{f(\mA)}{\mA_{m1}} & \pd{f(\mA)}{\mA_{m2}} & \ldots & \pd{f(\mA)}{\mA_{mn}}
+\end{bmatrix}
+\end{equation}
+i.e.
+\begin{equation}
+(\grad_\mA f(\mA))_{ij}=\pd{f(\mA)}{\mA_{ij}}
+\end{equation}
+Note that the size of the gradient is always the same size as the entity to which it is taken. Also note that the gradient of a function is only defined if the function is real-valued, that is, if it returns a scalar value.
+
 \section{Derivatives of Matrices and Vectors}
 
 \subsection{First-Order}
