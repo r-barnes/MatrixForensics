@@ -120,3 +120,19 @@ Qualifier                  & Expression                                     & Nu
                            & $\pd{e^{x\mA}}{x}$                             & $\mA e^{x\mA}=e^{x\mA}\mA$
 \end{tabular}
 \end{center}
+
+\section{Traces}
+\begin{align}
+\pd{}{\mX}\trace(\mX)             &=\mI            \\
+\pd{}{\mX}\trace(\mX\mA)          &=\mA^T          \\
+\pd{}{\mX}\trace(\mA\mX\mB)       &=\mA^T\mB^T     \\
+\pd{}{\mX}\trace(\mA\mX^T\mB)     &=\mB\mA         \\
+\pd{}{\mX}\trace(\mX^T\mA)        &=\mA            \\
+\pd{}{\mX}\trace(\mA\mX^T)        &=\mA            \\
+\pd{}{\mX}\trace(\mA\kp\mX)       &=\trace(\mA)\mI 
+\end{align}
+For traces with many instances of $\mX$ we can apply an analogue of the product rule. For example:
+\begin{equation}
+\pd{}{\mX}\trace(\mA\mX\mB\mX\mC^T)=\pd{}{\mX}\trace(\mA\mX\mD)+\pd{}{\mX}\trace(\mE\mX\mC^T)=\mA^T\mD^T+\mE^T\mC
+\end{equation}
+where $\mD=\mB\mX\mC^T$ and $\mE=\mA\mX\mB$.
