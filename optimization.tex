@@ -159,7 +159,11 @@ For vector $\vw$, a constraint of the form
 can be transformed into the SOCP constraint
 \begin{equation}
 \label{equ:hyperbolic_constraint_to_socp}
-\norm{\begin{bmatrix} 2\vw \\ x-y \end{bmatrix}}_2 \le x+y \eqcite{Lobo1998}
+\norm{\begin{bmatrix} 2\vw \\ x-y \end{bmatrix}}_2 \le x+y \eqcite{Lobo1998,Alizadeh2003}
+\end{equation}
+Note that this implies that
+\begin{equation}
+x^{-1}\le y \iff \norm{\begin{bmatrix} 2 \\ x-y \end{bmatrix}}_2 \le x+y
 \end{equation}
 
 %TODO: From slides

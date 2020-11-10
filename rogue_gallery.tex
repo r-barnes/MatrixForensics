@@ -18,7 +18,7 @@ The column space is all of $\sRn$               & The column space has dimension
 The row space is all of $\sRn$                  & The row space has dimension $r<n$        \\
 All eigenvalues are nonzero                     & Zero is an eigenvalue of $\mA$           \\
 $\mA^T\mA$ is symmetric positive definite       & $\mA^T\mA$ is only semidefinite          \\
-$\mA$ has $n$ positive singular values          & $\mA$ has $r<n$ singular values        
+$\mA$ has $n$ positive singular values          & $\mA$ has $r<n$ singular values
 \end{tabular}
 \end{center}
 
@@ -33,7 +33,7 @@ A=\diag(a_1,\ldots,a_n)=
 \begin{bmatrix}
 a_1  &        &  \\
      & \ddots &  \\
-     &        & a_n 
+     &        & a_n
 \end{bmatrix}
 \end{equation}
 
@@ -46,16 +46,17 @@ Number of ``free entries": $\frac{n(n+1)}{2}$.
 \begin{align}
 \eig(A) &= {a_1,\ldots,a_n}           \\
 \det(A) &= \prod_i a_i                \\
-A^{-1}  &= 
+A^{-1}  &=
 \begin{bmatrix}
 \frac{1}{a_1} &        &               \\
               & \ddots &               \\
               &        & \frac{1}{a_n}
 \end{bmatrix} \\
-\vx^T \mA \vx &= \sum_i a_i \vx_i^2     \\
+\vx^T \mA \vx &= \sum_i a_i \vx_i^2
 \end{align}
 
-
+\section{Doubly stochastic matrix}
+A square matrix of nonnegative real numbers whose rows and columns each sum to 1.
 
 
 \section{Dyads}
@@ -107,6 +108,9 @@ For $\mH\in\sRmn$, Hermitian and symmetric matrices are equivalent.
 \eig(\mH)   &\in \sR
 \end{align}
 
+
+\section{Hurwitz matrix}
+TODO
 
 
 \section{Idempotent Matrix}
@@ -174,7 +178,8 @@ For an undirected graph $G$ and its Laplacian $\mL$:
 \autoref{equ:laplace_quad} provides a measure of the ``smoothness" of $\vx$ over the edges of $G$. The more $\vx$ jumps over an edge, the larger the quadratic form becomes.
 
 
-
+\section{Metzler matrix}
+TODO
 
 
 \section{Orthogonal Matrix}
@@ -252,6 +257,7 @@ $\mP\in\sSn$ is positive definite (denoted $\mP\ispd0$) if any of the following 
 \begin{itemize}
 \item $\vx^T\mP\vx>0,\forall\vx\in\sRn$.
 \item $\eig(\mP)>0$
+\item There exists a unique matrix $\mU\in\sRnn$, such that $\mA=\mU\mU^T$ (Cholesky Decomposition). %TODO
 \end{itemize}
 
 
@@ -282,7 +288,7 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 \begin{itemize}
 \item $\vx^T\mA\vx\ge0,\forall\vx\in\sRn$.
 \item $\eig(\mA)\ge0$
-\item There exists a matrix $\mU\in\sRnn$, such that $\mA=\mU\mU^T$.
+\item There exists a non-unique matrix $\mU\in\sRnn$, such that $\mA=\mU\mU^T$ (Cholesky Decomposition). %TODO
 \end{itemize}
 
 \subsection*{Special Properties}
@@ -292,8 +298,8 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 \item $\diag(\mA)_i\ge0$
 \item $\sum_{ij} \mA_{ij}\ge0$
 \item $\trace(\mA)\ge0$
-\item For $\mA,\mB\ispsd0$, $\trace(AB)\ge0$
-\item For $\mA,\mB\ispsd0$, $\trace(AB)=0\iff \mA\mB=0$
+\item For $\mA,\mB\ispsd0$, $\trace(\mA\mB)\ge0$
+\item For $\mA,\mB\ispsd0$, $\trace(\mA\mB)=0\iff \mA\mB=0$
 \item The positive semi-definite matrices $\sPSD$ form a convex cone. For any two PSD matrices $\mA,\mB\in\sPSD$ and some $\alpha\in[0,1]$:
 \begin{equation}
 \vx^T(\alpha\mA+(1-\alpha)\mB)\vx=\alpha \vx^T\mA\vx+(1-\alpha)\vx^T\mB\vx\ge0~~\forall\vx
@@ -302,7 +308,7 @@ $\mA$ is positive semi-definite (denoted $\mA\ispsd0$) if any of the following a
 \alpha\mA+(1-\alpha)\mB\in\sPSD
 \end{equation}
 \item For $\mA\in\sPSD$ and $\alpha\ge0$, $\alpha\mA\ispsd0$, so $\sPSD$ is a cone.
-\item $\mA\ispsd 0$ has a unique PSD matrix $\mS^{1/2}$ such that $\mS^{1/2}\mS^{1/2}=\mA$
+\item $\mA\ispsd 0$ if and only if there is a PSD matrix $\mS^{1/2}$ such that $\mS^{1/2}\mS^{1/2}=\mA$. This $\mS$ is unique.
 \end{itemize}
 
 \subsection{Loewner order}
@@ -320,7 +326,7 @@ A square matrix $\mP$ is a projection matrix that projects onto a vector space $
 
 
 \section{Single-Entry Matrix}
-\label{sec:rogue_single_entry} 
+\label{sec:rogue_single_entry}
 \begin{equation}
 \mJ^{2,3} =
 \begin{bmatrix}
@@ -396,7 +402,7 @@ Constant values on descending diagonals.
 \begin{bmatrix}
   a_{0} & a_{-1} & a_{-2} & \ldots  & \ldots & a_{-(n-1)}  \\
   a_{1} & a_0    & a_{-1} & \ddots  &        & \vdots \\
-  a_{2} & a_{1}  & \ddots & \ddots  & \ddots & \vdots \\ 
+  a_{2} & a_{1}  & \ddots & \ddots  & \ddots & \vdots \\
  \vdots & \ddots & \ddots & \ddots  & a_{-1} & a_{-2}\\
  \vdots &        & \ddots & a_{1}   & a_{0}  & a_{-1} \\
 a_{n-1} & \ldots & \ldots & a_{2}   & a_{1}  & a_{0}
@@ -421,7 +427,7 @@ Constant values on main and subdiagonals.
     0 &   0 & h_1 &    \ddots & h_m &   0 \\
     0 &   0 &   0 &    \ddots & \vdots & h_m \\
     0 &   0 &   0 &      \hdots & h_1 & \vdots \\
-    0 &   0 &   0 &      \hdots &   0 & h_1 
+    0 &   0 &   0 &      \hdots &   0 & h_1
 \end{bmatrix}
 \end{equation}
 
@@ -519,7 +525,7 @@ A modified system can be solved for situations involving periodic boundary condi
 \begin{align}
 a_1 x_n + b_1 x_1 + c_1 x_2 &= d_1 \\
 a_i x_{i-1} + b_i x_i + c_i x_{i+1} &= d_i~~\forall i=2,\ldots,n-1 \\
-a_n x_{n-1}+b_n x_n + c_n x_1 &= d_n 
+a_n x_{n-1}+b_n x_n + c_n x_1 &= d_n
 \end{align}
 
 Modified algorithms are also available for block tridiagonal matrices~\citep[\textsection3.8]{Quateroni2007}. See \citep[\textsection5.5]{Gallopoulos2016} for a discussion of parallel solvers.

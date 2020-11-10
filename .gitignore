@@ -9,3 +9,5 @@ refs/
 *.idx
 *.ilg
 *.ind
+texput.log
+

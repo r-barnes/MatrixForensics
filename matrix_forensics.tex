@@ -187,11 +187,11 @@ Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicat
 \chapter{Trace Properties}
 \begin{align}
 \trace(\mA)      &=\sum_{i=1}^n \mA_{ii}   & \mA\in\sRnn \\
-\trace(\mA+\mB)  &=\trace(\mA)+\trace(\mB)     \\
-\trace(c\mA)     &=c\trace(\mA)                \\
-\trace(\mA)      &=\trace(\mA^T)               \\
-\trace(\mA^T\mB) &=\sum_{i,j} \mA_{ij}\mB_{ij} \\  %TODO: For real matrices only?
-\trace(\mA^T\mB) &=\sum_{ij} (\mA\circ\mB)_{ij}    %TODO: For real matrices only?
+\trace(\mA+\mB)  &=\trace(\mA)+\trace(\mB)      \\
+\trace(c\mA)     &=c\trace(\mA)                 \\
+\trace(\mA)      &=\trace(\mA^T)                \\
+\trace(\mA^T\mB) &=\sum_{i,j} \mA_{ij}\mB_{ij}  \\  %TODO: For real matrices only?
+\trace(\mA^T\mB) &=\sum_{i,j} (\mA\circ\mB)_{ij}       %TODO: For real matrices only?
 \end{align}
 
 For $\mA,\mB,\mC,\mD$ of compatible dimensions,
@@ -266,49 +266,12 @@ a(\mA\circ\mB)        &= (a\mA)\circ\mB =\mA\circ(a\mB)          \eqcite{million
 (\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                              \\
 (\vx^T \mA \vx)       &= \sum_{i,j}\big((\vx \vx^T)\circ\mA\big)                      \\
 \vx^T(\mA\circ\mB)\vy &= \trace((\diag(\vx)\mA)^T \mB\diag(\vy))~~~\mA,\mB\in\sRmn \eqcite{Minka2000}   \\
-\trace(\mA^T\mB)      &= \mathbf{1}^T(\mA\circ\mB)\mathbf{1}                          
+\trace(\mA^T\mB)      &= \mathbf{1}^T(\mA\circ\mB)\mathbf{1}                          \\
+                      &= \sum_{i,j} \mA_{ij}\mB_{ij}
 \end{align}
 
 
-\chapter{Eigenvalue Properties}
-
-$\lambda\in\mathbb{C}$ is an eigenvalue of $\mA\in\sRnn$ and $u\in\mathbb{C}^n$ is a corresponding eigenvector if $\mA\vu=\lambda\vu$ and $\vu\ne0$. Equivalantly, $(\lambda \mI_n-\mA)\vu=0$ and $\vu\ne0$. Eigenvalues satisfy the equation $\det(\lambda\mI_n-\mA)=0$.
-
-Any matrix $\mA\in\sRnn$ has $n$ eigenvalues, though some may be repeated. $\lambda_1$ is the largest eigenvalue and $\lambda_n$ the smallest.
-
-\begin{equation}
-\eig(\mA\mA^T)=\eig(\mA^T\mA)
-\end{equation}
-(Note that the number of entries in $\mA\mA^T$ and $\mA^T\mA$ may differ significantly leading to different compute times.)
-
-\begin{equation}
-\eig(\mA^T\mA)\ge0
-\end{equation}
-
-\begin{equation}
-\lambda_\textrm{min}(\mA)\le \frac{\vx^T \mA \vx}{\vx^T\vx} \le \lambda_\textrm{max}(\mA)~~\vx\ne0
-\end{equation}
-
-\subsection{Weyl's Inequality}
-If $\mM,\mH,\mP\in\sRnn$ are Hermitian matrices and $\mM=\mH+\mP$ ($\mH$ is perturbed by $\mP$) and $\mM$ has eigenvalues $\mu_1\ge\cdots\ge\mu_n$, $\mH$ has eigenvalues $\nu_1\ge\cdots\ge\nu_n$, and $\mP$ has eigenvalues $\rho_1\ge\cdots\ge\rho_n$, then
-\begin{equation}
-\nu_i+\rho_n\le \mu_i \le \nu_i + \rho_1~\forall i
-\end{equation}
-If $j+k-n\ge i \ge r+s-1$, then
-\begin{equation}
-\nu_j+\rho_k\le\mu_i\le\nu_r+\rho_s
-\end{equation}
-If $\mP\ispsd0$, then $\mu_i>\nu_i~\forall i$.
-
-%TODO
-% \section*{Computation}
-% TODO: eigsh, small eigen value extraction, top-k
-
-
-
-
-
-
+\input{eigenvalues}
 
 \input{norms}
 
@@ -351,7 +314,9 @@ where $u_1$ and $u_n$ are the eigenvectors associated with $\lambda_\textrm{max}
 
 
 
-\chapter{Linear Equations}
+\chapter{Equations}
+
+\section{Linear Equations}
 The linear equation $\mA\vx=\vy$ with $\mA\in\sRmn$ admits a solution iff $\rank([\mA \vy])=\rank(\mA)$. If this is satisfied, the set of all solutions is an affine set $\mathcal{S}=\{\vx=\bar \vx+z: z\in\ns(\mA)\}$ where $\bar \vx$ is any vector such that $\mA\bar\vx=\vy$. The solution is unique if $\ns(\mA)=\{0\}$.
 
 $\mA\vx=\vy$ is \textit{overdetermined} if it is tall/skinny ($m>n$); that is, if there are more equations than unknowns. If $\rank(\mA)=n$ then $\dim\ns(\mA)=0$, so there is either no solution or one solution. Overdetermined systems often have no solution ($\vy\notin\range(\mA)$), so an approximate solution is necessary. See \autoref{sec:least-squares}.
@@ -399,9 +364,12 @@ The solution $\vx^*$ must be orthogonal to $\ns(\mA)$, so $\vx^*\in\range(\mA^T)
 \vx^*=\mA^T(\mA\mA^T)^{-1}\vy
 \end{equation}
 
-
-
-
+\section{The Sylvester Equation: $\mA\mX+\mX^T\mB=\mC$}
+The equation
+\begin{equation}
+\mA\mX+\mX^T\mB=\mC
+\end{equation}
+is called a T-Sylvester equation, or *-Sylvester equation in the complex case. It can be solved using methods from, e.g.:~\citet{Teran2011,Teran2019,Dopico2016}.
 
 
 \input{updates}

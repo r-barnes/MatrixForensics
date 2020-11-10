@@ -1,0 +1,41 @@
+\chapter{Eigenvalue Properties}
+
+$\lambda\in\mathbb{C}$ is an eigenvalue of $\mA\in\sRnn$ and $u\in\mathbb{C}^n$ is a corresponding eigenvector if $\mA\vu=\lambda\vu$ and $\vu\ne0$. Equivalantly, $(\lambda \mI_n-\mA)\vu=0$ and $\vu\ne0$. Eigenvalues satisfy the equation $\det(\lambda\mI_n-\mA)=0$.
+
+Any matrix $\mA\in\sRnn$ has $n$ eigenvalues, though some may be repeated. $\lambda_1$ is the largest eigenvalue and $\lambda_n$ the smallest.
+
+If $\lambda$ is an eigenvalue of $\mA$, $\lambda^2$ is an eigenvalue of $\mA^2$.
+
+\begin{equation}
+\eig(\mA\mA^T)=\eig(\mA^T\mA)
+\end{equation}
+(Note that the number of entries in $\mA\mA^T$ and $\mA^T\mA$ may differ significantly leading to different compute times.)
+
+\begin{equation}
+\eig(\mA^T\mA)\ge0
+\end{equation}
+
+\begin{equation}
+\lambda_\textrm{min}(\mA)\le \frac{\vx^T \mA \vx}{\vx^T\vx} \le \lambda_\textrm{max}(\mA)~~\vx\ne0
+\end{equation}
+
+\section{Weyl's Inequality}
+If $\mM,\mH,\mP\in\sRnn$ are Hermitian matrices and $\mM=\mH+\mP$ ($\mH$ is perturbed by $\mP$) and $\mM$ has eigenvalues $\mu_1\ge\cdots\ge\mu_n$, $\mH$ has eigenvalues $\nu_1\ge\cdots\ge\nu_n$, and $\mP$ has eigenvalues $\rho_1\ge\cdots\ge\rho_n$, then
+\begin{equation}
+\nu_i+\rho_n\le \mu_i \le \nu_i + \rho_1~\forall i
+\end{equation}
+If $j+k-n\ge i \ge r+s-1$, then
+\begin{equation}
+\nu_j+\rho_k\le\mu_i\le\nu_r+\rho_s
+\end{equation}
+If $\mP\ispsd0$, then $\mu_i>\nu_i~\forall i$.
+
+%TODO
+% \section*{Computation}
+% TODO: eigsh, small eigen value extraction, top-k
+
+\section{Estimating Eigenvalues}
+\subsection{Gershgorin circle theorem}
+For $\mA\in\sCnn$ with entries $a_{ij}$ let $R_i=\sum_{j\ne i} |a_{ij}|$ be the sum of the absolute values of the non-diagonal entries of the $i$-th row. Let $D(a_{ii},R_i)\subseteq\sC$ be a closed disc (a circle containing its boundary) centered at $a_{ii}$ with radius $R_i$. This is the Gershgorin disc.
+
+Every eigenvalue of $\mA$ lies within at least one of the $D(a_{ii},R_i)$. Further, if the union of $k$ such discs is disjoint from the union of the other $n-k$ discs then the former union contains exactly $k$ and the latter $n-k$ of the eigenvalues of $\mA$.
