@@ -30,6 +30,11 @@
 \usepackage{chngcntr}
 \counterwithout{equation}{chapter}
 
+\renewcommand{\sectionautorefname}{\textsection}
+\renewcommand{\subsectionautorefname}{\textsection}
+\renewcommand{\subsubsectionautorefname}{\textsection}
+
+
 \renewcommand*{\pd}[3][]{\ensuremath{\frac{\partial^{#1} #2}{\partial #3}}}
 
 \newcommand{\mA}{\mathbf{A}}
@@ -51,6 +56,14 @@
 \newcommand{\mV}{\mathbf{V}}
 \newcommand{\mX}{\mathbf{X}}
 \newcommand{\mY}{\mathbf{Y}}
+
+\newcommand{\mAi}{\mathbf{A}^{-1}}
+\newcommand{\mBi}{\mathbf{B}^{-1}}
+\newcommand{\mCi}{\mathbf{C}^{-1}}
+\newcommand{\mPi}{\mathbf{P}^{-1}}
+\newcommand{\mRi}{\mathbf{R}^{-1}}
+
+
 \newcommand{\va}{\mathbf{a}}
 \newcommand{\vb}{\mathbf{b}}
 \newcommand{\vc}{\mathbf{c}}
@@ -80,9 +93,12 @@
 \newcommand{\sRm}{\mathbb{R}^{m}}
 \newcommand{\sRn}{\mathbb{R}^{n}}
 \newcommand{\sRp}{\mathbb{R}^{p}}
+\newcommand{\sRkk}{\mathbb{R}^{k,k}}
+\newcommand{\sRkn}{\mathbb{R}^{k,n}}
 \newcommand{\sRnm}{\mathbb{R}^{n,m}}
 \newcommand{\sRmn}{\mathbb{R}^{m,n}}
 \newcommand{\sRnn}{\mathbb{R}^{n,n}}
+\newcommand{\sRnk}{\mathbb{R}^{n,k}}
 \newcommand{\sRnp}{\mathbb{R}^{n,p}}
 \newcommand{\sRnr}{\mathbb{R}^{n,r}}
 \newcommand{\sRmm}{\mathbb{R}^{m,m}}
@@ -155,121 +171,6 @@
 \input{rogue_gallery}
 
 \input{decompositions}
-
-
-
-\chapter{Transpose Properties}
-
-\begin{align}
-(\mA\mB)^T   &= \mB^T\mA^T    \\
-(\mA+\mB)^T  &= \mA^T+\mB^T   \\
-(\mA^{-1})^T &= (\mA^T)^{-1}
-\end{align}
-
-
-\chapter{Determinant Properties}
-
-Geometrically, if a unit volume is acted on by $\mA$, then $|\det(\mA)|$ indicates the volume after the transformation.
-\begin{align}
-\det(I_n)          &= 1                                   \\
-\det(\mA^T)        &= \det(\mA)                           \\
-\det(\mA^{-1})     &= \frac{1}{\det(\mA)}=\det(\mA)^{-1}  \\
-\det(\mA\mB)       &= \det(\mB\mA)                        \\
-\det(\mA\mB)       &= \det(\mA)\det(\mB)                  &\mA,\mB\in\sRnn \\
-\det(c\mA)         &= c^n\det(\mA)                        &\mA\in\sRnn     \\
-\det(\mA)          &= \prod \eig(\mA)                     \\
-\noalign{For $\mA\in\sRmn, \mB\in\sRnm$}
-\eqcite{Sylvester1851}
-\det(\mI_m+\mA\mB) &= \det(\mI_n+\mB\mA) & & \textrm{Sylvester's determinant identity}
-\end{align}
-
-
-\chapter{Trace Properties}
-\begin{align}
-\trace(\mA)      &=\sum_{i=1}^n \mA_{ii}   & \mA\in\sRnn \\
-\trace(\mA+\mB)  &=\trace(\mA)+\trace(\mB)      \\
-\trace(c\mA)     &=c\trace(\mA)                 \\
-\trace(\mA)      &=\trace(\mA^T)                \\
-\trace(\mA^T\mB) &=\sum_{i,j} \mA_{ij}\mB_{ij}  \\  %TODO: For real matrices only?
-\trace(\mA^T\mB) &=\sum_{i,j} (\mA\circ\mB)_{ij}       %TODO: For real matrices only?
-\end{align}
-
-For $\mA,\mB,\mC,\mD$ of compatible dimensions,
-
-\begin{equation}
-\trace(\mA^T\mB)=\trace(\mA\mB^T)=\trace(\mB^T\mA)=\trace(\mB\mA^T)
-\end{equation}
-\begin{equation}
-\trace(\mA\mB\mC\mD)=\trace(\mB\mC\mD\mA)=\trace(\mC\mD\mA\mB)=\trace(\mD\mA\mB\mC)
-\end{equation}
-(Invariant under cyclic permutations)
-
-
-
-\chapter{Inverse Properties}
-The inverse of $\mA\in\sCnn$ is denoted $\mA^{-1}$ and defined such that
-\begin{equation}
-\mA\mA^{-1}=\mA^{-1}\mA=\mI_n
-\end{equation}
-where $\mI_n$ is the $n \times n$ identity matrix. $\mA$ is nonsingular if $\mA^{-1}$ exists; otherwise, $\mA$ is singular.
-
-
-If individual inverses exist
-\begin{equation}
-(\mA\mB)^{-1}=\mB^{-1}\mA^{-1}
-\end{equation}
-more generally
-\begin{equation}
-(\mA_1\mA_2\ldots\mA_n)^{-1}=\mA_n^{-1}\ldots\mA_2^{-1}\mA_1^{-1}
-\end{equation}
-
-\begin{equation}
-(\mA^{-1})^T=(\mA^T)^{-1}
-\end{equation}
-
-
-
-
-\chapter{Pseudo-Inverse Properties}
-For $\mA\in\sRmn$, a pseudoinverse satisfies:
-\begin{align}
-\mA\mA\pinv\mA      &= \mA         \\
-\mA\pinv\mA\mA\pinv &= \mA\pinv    \\
-(\mA\mA\pinv)^T     &= \mA\mA\pinv \\
-(\mA\pinv\mA)^T     &= \mA\pinv\mA
-\end{align}
-
-\section{Moore-Penrose Pseudoinverse}
-\begin{equation}
-\mA\pinv = \mV \mD^{-1} \mU^T
-\end{equation}
-where the foregoing comes from a singular-value decomposition and $\mD^{-1}=\diag(\frac{1}{\sigma_1},\ldots,\frac{1}{\sigma_r})$
-
-\subsection*{Special Properties}
-\begin{itemize}
-\item $\mA\pinv=\mA^{-1}$ if $\mA\in\sRnn$ and $\mA$ is square and nonsingular.
-\item $\mA\pinv=(\mA^T\mA)^{-1}\mA^T$, if $\mA\in\sRmn$ is full column rank ($r=n\le m$). $\mA\pinv$ is a left inverse of $\mA$, so $\mA\pinv\mA=\mV_r\mV_r^T=\mV\mV^T=\mI_n$.
-\item $\mA\pinv=\mA^T(\mA\mA^T)^{-1}$, if $\mA\in\sRmn$ is full row rank ($r=m\le n$). $\mA\pinv$ is a right inverse of $\mA$, so $\mA\mA\pinv=\mU_r\mU_r^T=\mU\mU^T=\mI_m$.
-\end{itemize} %TODO: Check these
-
-
-
-\chapter{Hadamard Identities}
-
-\begin{align}
-(\mA\circ\mB)_{ij}    &= A_{ij}B_{ij}~\forall~i,j                                     \\
-\mA\circ\mB           &= \mB\circ\mA                             \eqcite{million2007} \\
-\mA\circ(\mB\circ\mC) &= (\mA\circ\mB)\circ\mC                                        \\
-\mA\circ(\mB+\mC)     &= \mA\circ\mB+\mA\circ\mC                 \eqcite{million2007} \\
-a(\mA\circ\mB)        &= (a\mA)\circ\mB =\mA\circ(a\mB)          \eqcite{million2007} \\
-(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                              \\
-(\mA^T\circ\mB^T)     &= (\mA\circ\mB)^T                                              \\
-(\vx^T \mA \vx)       &= \sum_{i,j}\big((\vx \vx^T)\circ\mA\big)                      \\
-\vx^T(\mA\circ\mB)\vy &= \trace((\diag(\vx)\mA)^T \mB\diag(\vy))~~~\mA,\mB\in\sRmn \eqcite{Minka2000}   \\
-\trace(\mA^T\mB)      &= \mathbf{1}^T(\mA\circ\mB)\mathbf{1}                          \\
-                      &= \sum_{i,j} \mA_{ij}\mB_{ij}
-\end{align}
-
 
 \input{eigenvalues}
 
@@ -376,72 +277,7 @@ is called a T-Sylvester equation, or *-Sylvester equation in the complex case. I
 
 \input{optimization}
 
-
-
-
-\chapter{Algorithms}
-
-\section{Gram-Schmidt}
-TODO
-% Consider the [[Gram–Schmidt process]] applied to the columns of the full column rank matrix <math>A=[\mathbf{a}_1, \cdots, \mathbf{a}_n]</math>, with [[inner product]] <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^\top \mathbf{w}</math> (or <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^* \mathbf{w}</math> for the complex case).
-
-% Define the [[Vector projection|projection]]:
-% :<math>\mathrm{proj}_{\mathbf{u}}\mathbf{a}
-% = \frac{\left\langle\mathbf{u},\mathbf{a}\right\rangle}{\left\langle\mathbf{u},\mathbf{u}\right\rangle}{\mathbf{u}}
-% </math>
-% then:
-% :<math>
-% \begin{align}
-%  \mathbf{u}_1 &= \mathbf{a}_1,
-%   & \mathbf{e}_1 &= {\mathbf{u}_1 \over \|\mathbf{u}_1\|} \\
-%  \mathbf{u}_2 &= \mathbf{a}_2-\mathrm{proj}_{\mathbf{u}_1}\,\mathbf{a}_2,
-%   & \mathbf{e}_2 &= {\mathbf{u}_2 \over \|\mathbf{u}_2\|} \\
-%  \mathbf{u}_3 &= \mathbf{a}_3-\mathrm{proj}_{\mathbf{u}_1}\,\mathbf{a}_3-\mathrm{proj}_{\mathbf{u}_2}\,\mathbf{a}_3,
-%   & \mathbf{e}_3 &= {\mathbf{u}_3 \over \|\mathbf{u}_3\|} \\
-%  & \vdots &&\vdots \\
-%  \mathbf{u}_k &= \mathbf{a}_k-\sum_{j=1}^{k-1}\mathrm{proj}_{\mathbf{u}_j}\,\mathbf{a}_k,
-%   &\mathbf{e}_k &= {\mathbf{u}_k\over\|\mathbf{u}_k\|}
-% \end{align}
-% </math>
-
-% We can now express the <math>\mathbf{a}_i</math>s over our newly computed orthonormal basis:
-
-% :<math>
-% \begin{align}
-%  \mathbf{a}_1 &= \langle\mathbf{e}_1,\mathbf{a}_1 \rangle \mathbf{e}_1  \\
-%  \mathbf{a}_2 &= \langle\mathbf{e}_1,\mathbf{a}_2 \rangle \mathbf{e}_1
-%   + \langle\mathbf{e}_2,\mathbf{a}_2 \rangle \mathbf{e}_2 \\
-%  \mathbf{a}_3 &= \langle\mathbf{e}_1,\mathbf{a}_3 \rangle \mathbf{e}_1
-%   + \langle\mathbf{e}_2,\mathbf{a}_3 \rangle \mathbf{e}_2
-%   + \langle\mathbf{e}_3,\mathbf{a}_3 \rangle \mathbf{e}_3 \\
-%  &\vdots \\
-%  \mathbf{a}_k &= \sum_{j=1}^{k} \langle \mathbf{e}_j, \mathbf{a}_k \rangle \mathbf{e}_j
-% \end{align}
-% </math>
-% where <math>\langle\mathbf{e}_i,\mathbf{a}_i \rangle = \|\mathbf{u}_i\|</math>. This can be written in matrix form:
-% :<math> A = Q R </math>
-% where:
-% :<math>Q = \left[ \mathbf{e}_1, \cdots, \mathbf{e}_n\right] </math>
-% and
-% :<math>
-% R = \begin{pmatrix}
-% \langle\mathbf{e}_1,\mathbf{a}_1\rangle & \langle\mathbf{e}_1,\mathbf{a}_2\rangle &  \langle\mathbf{e}_1,\mathbf{a}_3\rangle  & \ldots \\
-% 0                & \langle\mathbf{e}_2,\mathbf{a}_2\rangle                        &  \langle\mathbf{e}_2,\mathbf{a}_3\rangle  & \ldots \\
-% 0                & 0                                       & \langle\mathbf{e}_3,\mathbf{a}_3\rangle                          & \ldots \\
-% \vdots           & \vdots                                  & \vdots                                    & \ddots \end{pmatrix}.</math>
-
-
-
-
-
-
-
-
-
-
-
-
-
+\input{algorithmics}
 
 
 \bibliography{refs}

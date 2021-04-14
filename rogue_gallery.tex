@@ -22,6 +22,36 @@ $\mA$ has $n$ positive singular values          & $\mA$ has $r<n$ singular value
 \end{tabular}
 \end{center}
 
+\section{2x2 Matrix}
+%TODO: Image
+\begin{equation}
+\mA=
+\begin{bmatrix}
+\mA_{11} & \mA_{12} \\
+\mA_{21} & \mA_{22}
+\end{bmatrix}
+\end{equation}
+
+\begin{align}
+\det(\mA)   &= \mA_{1,1} \mA_{2,2} - \mA_{1,2} \mA_{2,1} \\
+\trace(\mA) &= \mA_{1,1} + \mA_{2,2} \\
+\mA^{-1}    &= \frac{1}{\det(\mA)}\begin{bmatrix} \mA_{2,2} & -\mA_{1,2} \\ -\mA_{2,1} & \mA_{1,1}\end{bmatrix}
+\end{align}
+\subsection{Eigenvalues}
+\begin{align}
+\lambda &= \frac{\trace(\mA)\pm\sqrt{\trace(\mA)^2 - 4\det(\mA)}}{2} \\
+0           &= \lambda^2 - \lambda \trace(\mA) + \det(\mA) \\
+\trace(\mA) &= \lambda_1 + \lambda_2            \\
+\det(\mA)   &= \lambda_1\lambda_2
+\end{align}
+\subsection{Eigenvectors}
+\begin{align}
+\vv_1 \propto \begin{bmatrix}\mA_{12} \\ \lambda_1 - \mA_{11}\end{bmatrix} \\
+\vv_2 \propto \begin{bmatrix}\mA_{12} \\ \lambda_2 - \mA_{11}\end{bmatrix} \\
+\end{align}
+
+
+
 \section{Diagonal Matrix}
 
 \begin{center}
@@ -121,12 +151,12 @@ A matrix $\mA$ is idempotent iff
 
 \subsection*{Special Properties}
 \begin{align}
-\mA^n        &=A~~\forall n              \\
+\mA^n        &=\mA~~\forall n\ge1        \\
 \mI-\mA      &~~\textrm{is idempotent}   \\
 \mA^H        &~~\textrm{is idempotent}   \\
 \mI-\mA^H    &~~\textrm{is idempotent}   \\
 \rank(\mA)   &= \trace(\mA)              \\
-\mA(I-\mA)   &= 0                        \\
+\mA(\mI-\mA)   &= 0                      \\
 \mA\pinv     &= \mA                      \\
 f(s\mI+t\mA) &= (\mI-\mA)f(s)+\mA f(s+t) \\
 \mA\mB=\mB\mA&\implies \mA\mB~\textrm{is idempotent} \\
@@ -135,6 +165,7 @@ f(s\mI+t\mA) &= (\mI-\mA)f(s)+\mA f(s+t) \\
 \end{align}
 $\mA-\mI$ may not be idempotent.
 
+See also: nilpotent (\autoref{sec:rogue:nilpotent}), unipotent (\autoref{sec:rogue:unipotent}).
 
 
 \section{Laplacian Matrix of a Graph}
@@ -181,6 +212,19 @@ For an undirected graph $G$ and its Laplacian $\mL$:
 \section{Metzler matrix}
 TODO
 
+\section{Nilpotent}
+\label{sec:rogue:nilpotent}
+A matrix $\mA$ is nilpotent iff
+\begin{equation}
+\mA^2=0
+\end{equation}
+
+\subsection*{Special Properties}
+\begin{align}
+  f(s\mI+t\mA) = \mI f(s) + t \mA f'(s)
+\end{align}
+
+
 
 \section{Orthogonal Matrix}
 
@@ -203,13 +247,13 @@ U=
 \end{bmatrix}
 \end{equation}
 
-A matrix $\mU$ is orthogonal iff:
+A square matrix $\mU\in\sRnn$ is orthogonal iff:
 
 \begin{equation}
-\mU^T \mU = \mU \mU^T = I
+\mU^T \mU = \mU \mU^T = \mI
 \end{equation}
 
-Square matrix. The columns form an orthonormal basis of $\mathbb{R}^n$.
+The columns form an orthonormal basis of $\mathbb{R}^n$.
 
 
 
@@ -227,20 +271,12 @@ Square matrix. The columns form an orthonormal basis of $\mathbb{R}^n$.
 \mU^{-T}  &= \mU      \\
 \mU^T\mU  &= \mI      \\
 \mU\mU^T  &= \mI      \\
-\det(\mU) &= \pm1
+\det(\mU) &= \pm1     \\
+\norm{\mU \vx}^2_2&=(\mU\vx)^T(\mU\vx)=\vx^T\mU^T\mU\vx=\vx^T\vx=\norm{\vx}^2_2~~\forall \vx \\
+\norm{\mU \mA \mV}_F&=\norm{\mA}_F~~\forall \mA,\mU,\mV~\textrm{with}~\mU,\mV \textrm{orthogonal}
 \end{align}
 
-
-
 Orthogonal matrices preserve the lengths and angles of the vectors they operator on. The converse is true: any matrix which preserves lengths and angles is orthogonal.
-\begin{equation}
-\norm{\mU \vx}^2_2=(\mU\vx)^T(\mU\vx)=\vx^T\mU^T\mU\vx=\vx^T\vx=\norm{\vx}^2_2~~\forall \vx
-\end{equation}
-\begin{equation}
-\norm{\mU \mA \mV}_F=\norm{\mA}_F~~\forall \mA,\mU,\mV~\textrm{with}~\mU,\mV \textrm{orthogonal}
-\end{equation}
-
-
 
 \section{Permutation Matrix}
 \begin{center}
@@ -531,6 +567,21 @@ a_n x_{n-1}+b_n x_n + c_n x_1 &= d_n
 Modified algorithms are also available for block tridiagonal matrices~\citep[\textsection3.8]{Quateroni2007}. See \citep[\textsection5.5]{Gallopoulos2016} for a discussion of parallel solvers.
 
 
+
+\section{Unipotent}
+\label{sec:rogue:unipotent}
+A matrix $\mA$ is unipotent iff
+\begin{equation}
+\mA\mA = \mI
+\end{equation}
+
+\subsection*{Special Properties}
+\begin{align}
+  f(s\mI+t\mA) = \frac{1}{2}\left((\mI+\mA)f(s+t) + (\mI-\mA)f(s-t)\right)
+\end{align}
+
+
+
 \section{Vandermonde Matrix}
 \begin{equation}
 V=
@@ -541,16 +592,17 @@ V=
 \vdots & \vdots   & \vdots     & \ddots & \vdots         \\
 1      & \alpha_m & \alpha_m^2 & \dots  & \alpha_m^{n-1}
 \end{bmatrix}
-\end{equation}
+\end{equation} %TODO: Check m vs n
 Alternatively,
 \begin{equation}
-V_{i,j} = \alpha_i^{j-1}
+\mV_{i,j} = \alpha_i^{j-1}
 \end{equation}
 
 \subsection*{Uses}
 Polynomial interpolation of data.
 
 \subsection*{Special Properties}
-\begin{itemize}
-\item $\det(V)=\prod_{1\le i < j \le n} (x_j-x_i)$
-\end{itemize}
+$\mV^T$ is also a Vandermone matrix.
+\begin{align}
+\det(\mV)&=\prod_{1\le i < j \le n} (x_j-x_i)
+\end{align} %TODO: What does this mean?

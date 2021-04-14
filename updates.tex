@@ -5,6 +5,35 @@
 
 % Given nonsingular $\mA\in\sRnn$ and $\vu,\vv\in\sRn$ with $1+\vv^T\mA^{-1}\vu\ne0$, if we have solved $\mA\vx=\vb$, then we can quickly find $(\mA+\vu\vv^T)\bar \vx = \vb$. Namely,
 
+\section{Woodbury Identity (rank-$k$ update to inverse)}
+\label{sec:update:woodbury}
+
+%TODO: Add material from "ON DERIVING THE INVERSE OF A SUM OF MATRICES"
+%TODO: Add material from "Generalization of the matrix inversion lemma"
+
+The inverse of a rank-$k$ update of some matrix $\mA$ can be computed by doing a rank-$k$ update of $\mAi$.
+
+\begin{align}
+%(\mA + \mC\mB\mC^T)^{-1} = \mAi - \mAi\mC(\mBi + \mC^T\mAi\mC)^{-1}\mC^T\mAi %TODO: What is this good for?
+(\mA+\mU\mC\mV)^{-1} &= \mAi - \mAi\mU(\mBi+\mV\mAi\mU)^{-1}\mV\mAi \\
+\end{align} %TODO
+where $\mA\in\sRnn$, $\mC\in\sRkk$, $\mU\in\sRnk$, $\mV\in\sRkn$, and $\mA$ and $\mC$ non-singular.
+
+If $\mU$ and $\mV$ are vectors, then the Woodbury Identity reduces to the Sherman--Morrison formula (\autoref{sec:update:sherman}).
+
+If $\mP,\mR$ are positive definite and $\mP\in\sRnn$, $\mR\in\sRkk$, and $\mB\in\sRkn$, then
+\begin{align}
+(\mPi + \mB^T\mRi\mB)^{-1} &= \mP - \mP\mB^T(\mB\mP\mB^T+\mR)^{-1}\mB\mP  \eqcite{WellingXXXX} \\
+(\mPi + \mB^T\mRi\mB)^{-1} \mB^T\mRi &= \mP\mB^T(\mB\mP\mB^T+\mR)^{-1}    \eqcite{WellingXXXX}
+\end{align}
+
+\section{Sherman--Morrison Formula (rank-1 update to inverse)}
+\label{sec:update:sherman}
+The inverse of a rank-1 update of some matrix $\mA$ can be computed by doing a rank-1 update of $\mAi$.
+\begin{equation}
+(\mA + \vu\vv^T)^{-1}=\mAi-\frac{\mAi\vu\vv^T\mAi}{1+\vv^T\mAi\vu}
+\end{equation}
+This is a special case of the Woodbury Identity (\autoref{sec:update:woodbury}).
 
 
 \section{Removing a row from $\mA^T\mA$ ($\mA^T\mA\rightarrow \mA_{\bs i}^T\mA_{\bs i}$)}

@@ -14,7 +14,7 @@ If $\mA$ is symmetric, positive definite, square, then
 \end{equation}
 where $\mU$ is a unique upper triangular matrix and $\mL$ is a unique lower-triangular matrix.
 
-\section{LDLT}
+\section{LDL Decomposition}
 
 \begin{center}
 \includegraphics[align=c,height=1in]{imgs/decomp_ldlt_a.pdf}\textbf{\large =}
@@ -23,6 +23,7 @@ where $\mU$ is a unique upper triangular matrix and $\mL$ is a unique lower-tria
 \includegraphics[align=c,height=1in]{imgs/decomp_ldlt_LT.pdf}
 \end{center}
 
+This is a special case of the LDM decomposition.\footnote{TODO: Crossreference}
 If $\mA$ is a non-singular symmetric definite square matrix, then
 \begin{equation}
 \mA=\mL\mD\mL^T=\mL^T\mD\mL
@@ -88,9 +89,9 @@ Any matrix $\mA\in\sRmn$ can be written as
 \end{equation}
 where
 \begin{align}
-U&=\textrm{eigenvectors of~}\mA\mA^T & \sRmm \\
-D&=\diag(\sigma_i)=\sqrt{\diag(\eig(\mA\mA^T))}      & \sRnm \\
-V&=\textrm{eigenvectors of~}\mA^T\mA & \sRnn
+\mU&=\textrm{eigenvectors of~}\mA\mA^T & \sRmm \\
+\mD&=\diag(\sigma_i)=\sqrt{\diag(\eig(\mA\mA^T))}      & \sRmn \\
+\mV&=\textrm{eigenvectors of~}\mA^T\mA & \sRnn
 \end{align}
 Let $\sigma_i$ be the non-zero singular values for $i=1,\ldots,r$ where $r$ is the rank of $\mA$; $\sigma_1\ge\ldots\ge\sigma_r$.
 
@@ -135,7 +136,7 @@ The optimal solution of this problem is given by
 where
 \begin{align}
 \frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_1^2+\ldots+\sigma_k^2}{\sigma_1^2+\ldots+\sigma_r^2} \\
-1-\frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_{k+1}^2+\ldots+\sigma_r^2}{\sigma_1^2+\ldots+\sigma_r^2} 
+1-\frac{\norm{\mA_k}_F^2}{\norm{\mA}_F^2}&=\frac{\sigma_{k+1}^2+\ldots+\sigma_r^2}{\sigma_1^2+\ldots+\sigma_r^2}
 \end{align}
 is the fraction of the total variance in $\mA$ explained by the approximation $\mA_k$.
 
@@ -164,7 +165,7 @@ A \textit{numerical rank} can be estimated for the matrix as the largest $k$ suc
 
 \section{Eigenvalue Decomposition for Diagonalizable Matrices}
 
-For a square, diagonalizable matrix $\mA\in\mathbb{R}^{n,n}$ 
+For a square, diagonalizable matrix $\mA\in\mathbb{R}^{n,n}$
 \begin{equation}
 \mA=U\Lambda U^{-1}
 \end{equation}
@@ -206,6 +207,5 @@ S=\mA-\mX\mB^{-1}\mX^T
 Then
 \begin{align}
 \mM\ispsd0&\iff S\ispsd0 \\
-\mM\ispd0 &\iff S\ispd0 
+\mM\ispd0 &\iff S\ispd0
 \end{align}
-

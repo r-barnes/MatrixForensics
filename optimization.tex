@@ -163,7 +163,7 @@ can be transformed into the SOCP constraint
 \end{equation}
 Note that this implies that
 \begin{equation}
-x^{-1}\le y \iff \norm{\begin{bmatrix} 2 \\ x-y \end{bmatrix}}_2 \le x+y
+x^{-1}\le y \iff \norm{\begin{bmatrix} 2 \\ x-y \end{bmatrix}}_2 \le x+y %TODO: For x>0 ?
 \end{equation}
 
 %TODO: From slides
@@ -200,8 +200,8 @@ Convert
 \end{mini!}
 to
 \begin{mini!}{\vx,t}{t}{}{}
-\addConstraint{f(x)^2}{\le t g(y)} 
-\addConstraint{g(y)}{>0}           
+\addConstraint{f(x)^2}{\le t g(y)}
+\addConstraint{g(y)}{>0}
 \addConstraint{t}{\ge 0}
 \end{mini!}
 and apply \autoref{equ:hyperbolic_constraint_to_socp}.
@@ -247,7 +247,7 @@ is equivalent to
 
 \subsection{Square Root as SOCP}
 \begin{equation}
-\sqrt{x}\ge t \iff x\ge t^2 \iff \norm{\begin{matrix} 1-x \\ 2t \end{matrix}}_2 \le 1+x
+\sqrt{x}\ge t \iff x\ge t^2 \iff \norm{\begin{matrix} 1-x \\ 2t \end{matrix}}_2 \le 1+x %TODO: For x>=0?
 \end{equation}
 
 The problem
