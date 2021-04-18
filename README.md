@@ -14,6 +14,13 @@ The guide is freely available as a PDF [here](matrix_forensics.pdf).
 
 
 
+Building
+----------------
+
+On a Linux-based system type `make` to build the book.
+
+
+
 Contributing
 ----------------
 
