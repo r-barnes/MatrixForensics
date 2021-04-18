@@ -1,0 +1,166 @@
+\chapter{Algorithmics}
+
+\section{Time Complexities}
+\begin{center}
+{\footnotesize\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{1.5cm}p{3cm}p{3cm}p{4cm}p{1cm}}
+\textbf{Operation}             & \textbf{Input}                   & \textbf{Output}    & \textbf{Algorithm}                     & \textbf{Time}   \\ \hline
+Matmult
+    & $A,B\in n\times n$
+    & $n \times n$
+    & Schoolbook
+    & $O(n^3)$
+    \\ \hline
+
+    &
+    &
+    & Strassen~\citep{Strassen1969}
+    & $O(n^{2.807})$
+    \\ \hline
+
+    &
+    &
+    & Best
+    & $O(n^\omega)$
+    \\ \hline
+Matmult
+    & $A\in n\times m, B\in m\times p$
+    & $n \times p$
+    & Schoolbook
+    & $O(nmp)$
+    \\ \hline
+Inversion
+    & $A\in n\times n$
+    & $n \times n$
+    & Gauss--Jordan elimination
+    & $O(n^3)$
+    \\ \hline
+
+    &
+    &
+    & Strassen~\citep{Strassen1969}
+    & $O(n^{2.807})$
+    \\ \hline
+
+    &
+    &
+    & Best
+    & $O(n^\omega)$
+    \\ \hline
+SVD
+    & $A\in m\times n$
+    & $m\times m, m\times n, n\times n$ \newline $m\times r, r\times r, n\times r$
+    &
+    & $O(mn^2)$ \newline \hbox{$(m\ge n)$} \\ \hline
+Determinant
+    & $A\in n\times n$
+    & Scalar
+    & Laplace expansion
+    & $O(n!)$         \\ \hline
+
+    &
+    &
+    & Division-free~\citep{Rote2001}
+    & $O(n!)$
+    \\ \hline
+
+    &
+    &
+    & LU decomposition
+    & $O(n^3)$
+    \\ \hline
+
+    &
+    &
+    & Integer preserving~\citep{Bareiss1968}
+    & $O(n^3)$
+    \\ \hline
+Back \newline substitution
+    & $A$ triangular
+    & $n$ solutions
+    & Back substitution
+    & $O(n^2)$
+    \\ \hline
+\end{tabular}
+}
+\end{center}
+
+\subsubsection{A comment on $\omega$}
+
+The lower bound on matmult time complexity is $O(n^\omega)$, where $\omega$ is an unknown constant bounded by $2\le\omega\le2.3728596$ (\autoref{tbl:omega-vals} lists the known upper bound on $\omega$ over time). Algorithms achieving lower values of $\omega$ tend to be less efficient in practice for all but the largest matrices. Of the algorithms with times of less than $O(n^3)$, only the Strassen algorithm~\citep{Strassen1969} has seen serious attempts at optimized implementation. Most matmult implementations use highly optimized variants of the standard $O(n^3)$ algorithm. At this point, memory and bus speeds dominate the performance of implementations, so simple Big-O notation cannot be used to reliably compare matmult performances.
+
+The time complexity for solving sparse linear systems was bounded by $\omega$ until recently, when randomized methods were used to obtain a bound of $O(n^{2.331645})$~\citep{Peng2021}.
+
+\begin{table}
+\centering
+\begin{tabular}{lll}
+\textbf{Name}           & \textbf{Year} & $\omega$  \\ \hline
+Standard                & -             & 3         \\
+\citet{Strassen1969}    & 1969          & 2.807     \\
+\citet{Pan1978}         & 1978          & 2.796     \\
+\citet{Bini1979}        & 1979          & 2.78      \\
+\citet{Schonhage1981}   & 1981          & 2.548     \\
+\citet{Schonhage1981}   & 1981          & 2.522     \\
+\citet{Romani1982}      & 1982          & 2.517     \\
+\citet{Coppersmith1982} & 1982          & 2.496     \\
+\citet{Strassen1986}    & 1986          & 2.479     \\
+\citet{Copper1990}      & 1990          & 2.376     \\
+\citet{Williams2012}    & 2012          & 2.37293   \\
+\citet{Williams2012}    & 2012          & 2.37287\footnote{The original conference paper gave a bound of $\omega<2.3727$, but omitted some necessary constraints. This corrected value appears in the final paper.}   \\
+\citet{LeGall2014}      & 2014          & 2.3728642 \\
+\citet{LeGall2014}      & 2014          & 2.3728640 \\
+\citet{LeGall2014}      & 2014          & 2.3728639 \\
+\citet{Alman2020}       & 2020          & 2.3728596
+\end{tabular}
+\caption{Upper bounds on the value of $\omega$ over time \label{tbl:omega-vals}}
+\end{table}
+
+
+%\section{Gram-Schmidt}
+%TODO
+% Consider the [[Gram–Schmidt process]] applied to the columns of the full column rank matrix <math>A=[\mathbf{a}_1, \cdots, \mathbf{a}_n]</math>, with [[inner product]] <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^\top \mathbf{w}</math> (or <math>\langle\mathbf{v},\mathbf{w}\rangle = \mathbf{v}^* \mathbf{w}</math> for the complex case).
+
+% Define the [[Vector projection|projection]]:
+% :<math>\mathrm{proj}_{\mathbf{u}}\mathbf{a}
+% = \frac{\left\langle\mathbf{u},\mathbf{a}\right\rangle}{\left\langle\mathbf{u},\mathbf{u}\right\rangle}{\mathbf{u}}
+% </math>
+% then:
+% :<math>
+% \begin{align}
+%  \mathbf{u}_1 &= \mathbf{a}_1,
+%   & \mathbf{e}_1 &= {\mathbf{u}_1 \over \|\mathbf{u}_1\|} \\
+%  \mathbf{u}_2 &= \mathbf{a}_2-\mathrm{proj}_{\mathbf{u}_1}\,\mathbf{a}_2,
+%   & \mathbf{e}_2 &= {\mathbf{u}_2 \over \|\mathbf{u}_2\|} \\
+%  \mathbf{u}_3 &= \mathbf{a}_3-\mathrm{proj}_{\mathbf{u}_1}\,\mathbf{a}_3-\mathrm{proj}_{\mathbf{u}_2}\,\mathbf{a}_3,
+%   & \mathbf{e}_3 &= {\mathbf{u}_3 \over \|\mathbf{u}_3\|} \\
+%  & \vdots &&\vdots \\
+%  \mathbf{u}_k &= \mathbf{a}_k-\sum_{j=1}^{k-1}\mathrm{proj}_{\mathbf{u}_j}\,\mathbf{a}_k,
+%   &\mathbf{e}_k &= {\mathbf{u}_k\over\|\mathbf{u}_k\|}
+% \end{align}
+% </math>
+
+% We can now express the <math>\mathbf{a}_i</math>s over our newly computed orthonormal basis:
+
+% :<math>
+% \begin{align}
+%  \mathbf{a}_1 &= \langle\mathbf{e}_1,\mathbf{a}_1 \rangle \mathbf{e}_1  \\
+%  \mathbf{a}_2 &= \langle\mathbf{e}_1,\mathbf{a}_2 \rangle \mathbf{e}_1
+%   + \langle\mathbf{e}_2,\mathbf{a}_2 \rangle \mathbf{e}_2 \\
+%  \mathbf{a}_3 &= \langle\mathbf{e}_1,\mathbf{a}_3 \rangle \mathbf{e}_1
+%   + \langle\mathbf{e}_2,\mathbf{a}_3 \rangle \mathbf{e}_2
+%   + \langle\mathbf{e}_3,\mathbf{a}_3 \rangle \mathbf{e}_3 \\
+%  &\vdots \\
+%  \mathbf{a}_k &= \sum_{j=1}^{k} \langle \mathbf{e}_j, \mathbf{a}_k \rangle \mathbf{e}_j
+% \end{align}
+% </math>
+% where <math>\langle\mathbf{e}_i,\mathbf{a}_i \rangle = \|\mathbf{u}_i\|</math>. This can be written in matrix form:
+% :<math> A = Q R </math>
+% where:
+% :<math>Q = \left[ \mathbf{e}_1, \cdots, \mathbf{e}_n\right] </math>
+% and
+% :<math>
+% R = \begin{pmatrix}
+% \langle\mathbf{e}_1,\mathbf{a}_1\rangle & \langle\mathbf{e}_1,\mathbf{a}_2\rangle &  \langle\mathbf{e}_1,\mathbf{a}_3\rangle  & \ldots \\
+% 0                & \langle\mathbf{e}_2,\mathbf{a}_2\rangle                        &  \langle\mathbf{e}_2,\mathbf{a}_3\rangle  & \ldots \\
+% 0                & 0                                       & \langle\mathbf{e}_3,\mathbf{a}_3\rangle                          & \ldots \\
+% \vdots           & \vdots                                  & \vdots                                    & \ddots \end{pmatrix}.</math>
