@@ -16,7 +16,7 @@ For general $\mA$ and $\mX$ (no special structure):
 \partial(\det(\mX))   &= \trace(\textrm{adj}(\mX)\partial\mX)  \\
 \partial(\det(\mX))   &= \det(\mX)\trace(\mX^{-1}\partial\mX)  \\
 \partial(\ln(\det(\mX))) &= \trace(\mX^{-1}\partial\mX)        \\
-\partial(\mX^T)       &= (\partial\mX)^T                       \\
+\partial(\mXT)       &= (\partial\mX)\T                       \\
 \partial(\mX^H)       &= (\partial\mX)^H
 \end{align}
 
@@ -43,10 +43,10 @@ Note that the size of the gradient is always the same size as the entity to whic
 
 In the following, $\mJ$ is the Single-Entry Matrix (\autoref{sec:rogue_single_entry}).
 \begin{align}
-\pd{\vx^T \va}{\vx}     &= \pd{\va^T \vx}{\vx} = \va          \\
-\pd{\va^T\mX\vb}{\mX}   &= \va\vb^T                           \\
-\pd{\va^T\mX^T\vb}{\mX} &= \vb\va^T                           \\
-\pd{\va^T\mX\va}{\mX}   &= \pd{\va^T\mX^T\va}{\mX} = \va\va^T \\
+\pd{\vx\T \va}{\vx}     &= \pd{\vaT \vx}{\vx} = \va          \\
+\pd{\va\T\mX\vb}{\mX}   &= \va\vbT                           \\
+\pd{\va\T\mXT\vb}{\mX}  &= \vb\vaT                           \\
+\pd{\va\T\mX\va}{\mX}   &= \pd{\vaT\mXT\va}{\mX} = \va\vaT \\
 \pd{\mX}{\mX_{ij}}      &= \mJ^{ij}                              %TODO: What is this? (MCB 73)
 %TODO: MCB 74, 75
 \end{align}
@@ -55,34 +55,34 @@ In the following, $\mJ$ is the Single-Entry Matrix (\autoref{sec:rogue_single_en
 
 \begin{align}
 \pd{}{\vx}\norm{\vx-\va}_2 &= \frac{\vx-\va}{\norm{\vx-\va}_2} \\
-\pd{}{\vx}\frac{\vx-\va}{\norm{\vx-\va}_2} &= \frac{\mI}{\norm{\vx-\va}_2}-\frac{(\vx-\va)(\vx-\va)^T}{\norm{\vx-\va}_2^3} \\
-\pd{\norm{\vx}_2^2}{\vx} &= \pd{\norm{\vx^T\vx}_2}{\vx} = 2\vx
+\pd{}{\vx}\frac{\vx-\va}{\norm{\vx-\va}_2} &= \frac{\mI}{\norm{\vx-\va}_2}-\frac{(\vx-\va)(\vx-\va)\T}{\norm{\vx-\va}_2^3} \\
+\pd{\norm{\vx}_2^2}{\vx} &= \pd{\norm{\vxT\vx}_2}{\vx} = 2\vx
 \end{align}
 
 \section{Scalar by Vector}
 \begin{center}
 \begin{tabular}{l|Sc|Sc|Sc}
 Qualifier                  & Expression                                    & Numerator layout                                   & Denominator layout                            \\
-                           & $\pd{a}{x}$                                   & $\vzero^T$                                         & $\vzero$                                      \\
+                           & $\pd{a}{x}$                                   & $\vzero\T$                                         & $\vzero$                                      \\
                            & $\pd{au(\vx)}{\vx}$                           & $a\pd{u}{\vx}$                                     & Same                                          \\
                            & $\pd{u(\vx)+v(\vx)}{\vx}$                     & $\pd{u}{\vx} + \pd{v}{\vx}$                        & Same                                          \\
                            & $\pd{u(\vx)v(\vx)}{\vx}$                      & $u\pd{v}{\vx} + v\pd{u}{\vx}$                      & Same                                          \\
                            & $\pd{g(u(\vx))}{\vx}$                         & $\pd{g(u)}{u}\pd{u}{\vx}$                          & Same                                          \\
                            & $\pd{f(g(u(\vx)))}{\vx}$                      & $\pd{f(g)}{g}\pd{g(u)}{u}\pd{u}{\vx}$              & Same                                          \\
-                           & $\pd{\vu(\vx)^T\vv(\vx)}{\vx}$                & $\vu^T\pd{\vv}{\vx}+\vv^T\pd{\vu}{\vx}$            & $\pd{\vu}{\vx}\vv+\pd{\vv}{\vx}\vu$           \\
-                           & $\pd{\vu(\vx)^T\mA\vv(\vx)}{\vx}$             & $\vu^T\mA\pd{\vv}{\vx}+\vv^T\mA^T\pd{\vu}{\vx}$    & $\pd{\vu}{\vx}\mA\vv+\pd{\vv}{\vx}\mA^T\vu$   \\
-                           & $\md{f}{2}{\vx}{}{{\vx^T}}{}$                 &                                                    & $\mH$, the Hessian matrix                     \\
-                           & $\pd{\va\cdot\vx}{\vx}=\pd{\vx\cdot\va}{\vx}$ & $\va^T$                                            & $\va$                                         \\
-                           & $\pd{\vb^T\mA\vx}{\vx}$                       & $\vb^T\mA$                                         & $\mA^T\vb$                                    \\
-                           & $\pd{\vx^T\mA\vx}{\vx}$                       & $\vx^T(\mA+\mA^T)$                                 & $(\mA+\mA^T)\vx$                              \\
-$\mA$ symmetric            & $\pd{\vx^T\mA\vx}{\vx}$                       & $2\vx^T\mA$                                        & $2\mA\vx$                                     \\
-                           & $\pd{\vx^T\mA\vx}{\vx}$                       & $\mA+\mA^T$                                        & Same                                          \\
-$\mA$ symmetric            & $\pd{\vx^T\mA\vx}{\vx}$                       & $\mA$                                              & Same                                          \\
-                           & $\pd{\vx^T\vx}{\vx}$                          & $2\vx^T$                                           & $2\vx$                                        \\
-                           & $\pd{\va^T\vu(\vx)}{\vx}$                     & $\va^T\pd{\vu}{\vx}$                               & $\pd{\vu}{\vx}\va$                            \\
-                           & $\pd{\va^T\vx\vx^T\vb}{\vx}$                  & $\vx^T(\va\vb^T+\vb\va^T)$                         & $(\va\vb^T+\vb\va^T)\vx$                      \\
-                           & $\pd{(\mA\vx+\vb)^T\mC(\mD\vx+\ve)}{\vx}$     & $(\mD\vx+\ve)^T\mC^T\mA+(\mA\vx+\vb)^T\mC\mD$      & $\mD^T\mC^T(\mA\vx+\vb)+\mA^T\mC(\mD\vx+\ve)$ \\
-                           & $\pd{\norm{\vx-\va}}{\vx}$                    & $\frac{(\vx-\va)^T}{\norm{\vx-\va}}$               & $\frac{\vx-\va}{\norm{\vx-\va}}$              \\                           
+                           & $\pd{\vu(\vx)\T\vv(\vx)}{\vx}$                & $\vuT\pd{\vv}{\vx}+\vvT\pd{\vu}{\vx}$              & $\pd{\vu}{\vx}\vv+\pd{\vv}{\vx}\vu$           \\
+                           & $\pd{\vu(\vx)\T\mA\vv(\vx)}{\vx}$             & $\vuT\mA\pd{\vv}{\vx}+\vvT\mAT\pd{\vu}{\vx}$       & $\pd{\vu}{\vx}\mA\vv+\pd{\vv}{\vx}\mAT\vu$    \\
+                           & $\md{f}{2}{\vx}{}{{\vxT}}{}$                  &                                                    & $\mH$, the Hessian matrix                     \\
+                           & $\pd{\va\cdot\vx}{\vx}=\pd{\vx\cdot\va}{\vx}$ & $\vaT$                                             & $\va$                                         \\
+                           & $\pd{\vbT\mA\vx}{\vx}$                        & $\vbT\mA$                                          & $\mAT\vb$                                     \\
+                           & $\pd{\vxT\mA\vx}{\vx}$                        & $\vxT(\mA+\mAT)$                                   & $(\mA+\mAT)\vx$                               \\
+$\mA$ symmetric            & $\pd{\vxT\mA\vx}{\vx}$                        & $2\vxT\mA$                                         & $2\mA\vx$                                     \\
+                           & $\pd{\vxT\mA\vx}{\vx}$                        & $\mA+\mAT$                                         & Same                                          \\
+$\mA$ symmetric            & $\pd{\vxT\mA\vx}{\vx}$                        & $\mA$                                              & Same                                          \\
+                           & $\pd{\vxT\vx}{\vx}$                           & $2\vxT$                                            & $2\vx$                                        \\
+                           & $\pd{\vaT\vu(\vx)}{\vx}$                      & $\vaT\pd{\vu}{\vx}$                                & $\pd{\vu}{\vx}\va$                            \\
+                           & $\pd{\vaT\vx\vxT\vb}{\vx}$                    & $\vxT(\va\vbT+\vb\vaT)$                            & $(\va\vbT+\vb\vaT)\vx$                        \\
+                           & $\pd{(\mA\vx+\vb)\T\mC(\mD\vx+\ve)}{\vx}$     & $(\mD\vx+\ve)\T\mCT\mA+(\mA\vx+\vb)\T\mC\mD$       & $\mDT\mCT(\mA\vx+\vb)+\mAT\mC(\mD\vx+\ve)$    \\
+                           & $\pd{\norm{\vx-\va}}{\vx}$                    & $\frac{(\vx-\va)\T}{\norm{\vx-\va}}$               & $\frac{\vx-\va}{\norm{\vx-\va}}$              \\
 \end{tabular}
 \end{center}
 
@@ -92,11 +92,11 @@ $\mA$ symmetric            & $\pd{\vx^T\mA\vx}{\vx}$                       & $\m
 Qualifier                  & Expression                                    & Numerator layout                                   & Denominator layout                            \\
                            & $\pd{\va}{\vx}$                               & $\vzero$                                           & Same                                          \\ %TODO: really the same? shouldn't be transposed?
                            & $\pd{\vx}{\vx}$                               & $\mI$                                              & Same                                          \\ %TODO: Really the identity matrix? Which one?
-                           & $\pd{\mA\vx}{\vx}$                            & $\mA$                                              & $\mA^T$                                       \\
-                           & $\pd{\vx^T\mA}{\vx}$                          & $\mA^T$                                            & $\mA$                                         \\
+                           & $\pd{\mA\vx}{\vx}$                            & $\mA$                                              & $\mAT$                                        \\
+                           & $\pd{\vxT\mA}{\vx}$                           & $\mAT$                                             & $\mA$                                         \\
                            & $\pd{a\vu(\vx)}{\vx}$                         & $a\pd{\vu}{\vx}$                                   & Same                                          \\
-                           & $\pd{a(\vx)\vu(\vx)}{\vx}$                    & $a\pd{\vu}{\vx}+\vu\pd{a}{\vx}$                    & $a\pd{\vu}{\vx}+\pd{a}{\vx}\vu^T$             \\
-                           & $\pd{\mA\vu(\vx)}{\vx}$                       & $\mA\pd{\vu}{\vx}$                                 & $\pd{\vu}{\vx}\mA^T$                          \\
+                           & $\pd{a(\vx)\vu(\vx)}{\vx}$                    & $a\pd{\vu}{\vx}+\vu\pd{a}{\vx}$                    & $a\pd{\vu}{\vx}+\pd{a}{\vx}\vuT$              \\
+                           & $\pd{\mA\vu(\vx)}{\vx}$                       & $\mA\pd{\vu}{\vx}$                                 & $\pd{\vu}{\vx}\mAT$                           \\
                            & $\pd{(\vu(\vx)+\vv(\vx))}{\vx}$               & $\pd{\vu}{\vx}+\pd{\vv}{\vx}$                      & Same                                          \\
                            & $\pd{\vg(\vu(\vx))}{\vx}$                     & $\pd{\vg(\vu)}{\vu}\pd{\vu}{\vx}$                  & $\pd{\vu}{\vx}\pd{\vg(\vu)}{\vu}$             \\
                            & $\pd{\vf(\vg(\vu(\vx)))}{\vx}$                & $\pd{\vf(\vg)}{\vg(\vu)}\pd{\vg(\vu)}{\vu}\pd{\vu}{\vx}$& $\pd{\vu}{\vx}\pd{\vg(\vu)}{\vu}\pd{\vf(\vg)}{\vg}$
@@ -124,16 +124,65 @@ Qualifier                  & Expression                                     & Nu
 \section{Traces}
 \begin{align}
 \pd{}{\mX}\trace(\mX)             &=\mI            \\
-\pd{}{\mX}\trace(\mX\mA)          &=\mA^T          \\
-\pd{}{\mX}\trace(\mA\mX)          &=\mA^T          \\
-\pd{}{\mX}\trace(\mA\mX\mB)       &=\mA^T\mB^T     \\
-\pd{}{\mX}\trace(\mA\mX^T\mB)     &=\mB\mA         \\
-\pd{}{\mX}\trace(\mX^T\mA)        &=\mA            \\
-\pd{}{\mX}\trace(\mA\mX^T)        &=\mA            \\
-\pd{}{\mX}\trace(\mA\kp\mX)       &=\trace(\mA)\mI 
+\pd{}{\mX}\trace(\mX\mA)          &=\mAT           \\
+\pd{}{\mX}\trace(\mA\mX)          &=\mAT           \\
+\pd{}{\mX}\trace(\mA\mX\mB)       &=\mAT\mBT       \\
+\pd{}{\mX}\trace(\mA\mXT\mB)      &=\mB\mA         \\
+\pd{}{\mX}\trace(\mXT\mA)         &=\mA            \\
+\pd{}{\mX}\trace(\mA\mXT)         &=\mA            \\
+\pd{}{\mX}\trace(\mA\kp\mX)       &=\trace(\mA)\mI
 \end{align}
 For traces with many instances of $\mX$ we can apply an analogue of the product rule. For example:
 \begin{equation}
-\pd{}{\mX}\trace(\mA\mX\mB\mX\mC^T)=\pd{}{\mX}\trace(\mA\mX\mD)+\pd{}{\mX}\trace(\mE\mX\mC^T)=\mA^T\mD^T+\mE^T\mC
+\pd{}{\mX}\trace(\mA\mX\mB\mX\mCT)=\pd{}{\mX}\trace(\mA\mX\mD)+\pd{}{\mX}\trace(\mE\mX\mCT)=\mAT\mDT+\mET\mC
 \end{equation}
-where $\mD=\mB\mX\mC^T$ and $\mE=\mA\mX\mB$.
+where $\mD=\mB\mX\mCT$ and $\mE=\mA\mX\mB$.
+
+\section{Determinants}
+
+\subsection{By Scalars}
+
+If $\mX$ and $\mY$ are matrices with no special structure and $x$ is a scalar, then:
+
+\begin{align}
+\pd{\det(\mY)}{x} &= \det(\mY) \trace\left(\mYi \pd{\mY}{x}\right) \\
+\sum_k \pd{\det(\mX)}{\mX_{ik}}\mX_{jk} &= \delta_{ij} \det(\mX)   \\
+\pd[2]{\mY}{x^2} &= \det(\mY) %TODO: Can this be simplified with squares?
+  \left(
+      \trace \left(\mYi \pd{\pd{\mY}{x}}{x}\right)
+    + \trace \left(\mYi\pd{\mY}{x}\right) \trace\left(\mYi\pd{\mY}{x}\right)
+    - \trace \left( \left(\mYi\pd{\mY}{x}\right) \left(\mYi\pd{\mY}{x}\right) \right)
+  \right)
+\end{align}
+
+\subsection{Linear forms}
+
+\begin{align}
+\pd{\det(\mX)}{\mX} &= \det(\mX)(\mXi)\T \\
+\sum_k \pd{\det(\mX)}{\mX_{ik}}\mX_{jk} &= \delta_{ij} \det(\mX)   \\
+\pd{\det(\mA\mX\mB)}{\mX} &= \det(\mA\mX\mB)(\mXi)\T \\
+                          &= \det(\mA\mX\mB)(\mXT)^{-1}
+\end{align}
+
+\subsection{Square forms}
+
+If $\mX$ is square and invertible:
+\begin{equation}
+\pd{\det(\mXT\mA\mX)}{\mX} = 2 \det(\mXT \mA \mX)\mXiT
+\end{equation}
+If $\mX$ is not square and $\mA$ is symmetric, then
+\begin{equation}
+\pd{\det(\mXT \mA \mX)}{\mX} = 2 \det(\mXT\mA\mX)\mA\mX(\mXT\mA\mX)^{-1}
+\end{equation}
+If $\mX$ is not square and $\mA$ is not symmetric, then
+\begin{equation}
+\pd{\det(\mXT\mA\mX)}{\mX} = \det(\mXT\mA\mX)\left(\mA\mX(\mXT\mA\mX)^{-1}+\mAT\mX(\mXT\mAT\mX)^{-1}\right)
+\end{equation}
+
+\subsection{Nonlinear Forms}
+\begin{align}
+\pd{\ln\det(\mXT\mX)}{\mX}         &= 2(\mXp)\T \\
+\pd{\ln\det(\mXT\mX)}{\mXp}        &= -2\mXT    \\
+\pd{\ln\lvert\det(\mX)\rvert}{\mX} &= \mXiT     \\
+\pd{\det(\mX^k)}{\mX}              &= k \det(\mX^k) \mXiT
+\end{align}

@@ -218,6 +218,17 @@ where $p_i>0.5$ and all $\va_i$ are independent normal random vectors with expec
 \end{mini!}
 where $\Phi^{-1}(p)$ is the inverse cumulative probability distribution of a standard normal variable.
 
+%https://stanford.edu/class/ee364a/lectures/chance_constr.pdf
+Likewise, the problem
+\begin{maxi!}{\vx}{\vc^T \vx}{}{}
+  \addConstraint{\textrm{Prob}\{\va_i^T\vx\le \vb_i\}}{\le p_i}{~~i=1,\ldots,m}
+\end{maxi!}
+transforms to
+\begin{maxi!}{\vx}{\vc^T \vx}{}{}
+  \addConstraint{\bar \va_i^T \vx \ge \Phi^{-1}(1-p_i)\norm{\Sigma_i^{1/2}\vx}_2}{~~i=1,\ldots,m}
+\end{maxi!}
+provided $p_i\le0.5$.
+
 \subsection{Robust LP with Box Uncertainty as LP}
 
 The problem
