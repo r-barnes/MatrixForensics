@@ -6,7 +6,7 @@
 \begin{tabular}{p{1.5cm}p{3cm}p{3cm}p{4cm}p{1cm}}
 \textbf{Operation}             & \textbf{Input}                   & \textbf{Output}    & \textbf{Algorithm}                     & \textbf{Time}   \\ \hline
 Matmult
-    & $A,B\in n\times n$
+    & $\mA,\mB\in n\times n$
     & $n \times n$
     & Schoolbook
     & $O(n^3)$
@@ -24,13 +24,13 @@ Matmult
     & $O(n^\omega)$
     \\ \hline
 Matmult
-    & $A\in n\times m, B\in m\times p$
+    & $\mA\in n\times m, \mB\in m\times p$
     & $n \times p$
     & Schoolbook
     & $O(nmp)$
     \\ \hline
 Inversion
-    & $A\in n\times n$
+    & $\mA\in n\times n$
     & $n \times n$
     & Gauss--Jordan elimination
     & $O(n^3)$
@@ -48,12 +48,12 @@ Inversion
     & $O(n^\omega)$
     \\ \hline
 SVD
-    & $A\in m\times n$
+    & $\mA\in m\times n$
     & $m\times m, m\times n, n\times n$ \newline $m\times r, r\times r, n\times r$
     &
     & $O(mn^2)$ \newline \hbox{$(m\ge n)$} \\ \hline
 Determinant
-    & $A\in n\times n$
+    & $\mA\in n\times n$
     & Scalar
     & Laplace expansion
     & $O(n!)$         \\ \hline
@@ -76,7 +76,7 @@ Determinant
     & $O(n^3)$
     \\ \hline
 Back \newline substitution
-    & $A$ triangular
+    & $\mA$ triangular
     & $n$ solutions
     & Back substitution
     & $O(n^2)$
@@ -85,7 +85,7 @@ Back \newline substitution
 }
 \end{center}
 
-\subsubsection{A comment on $\omega$}
+\section{The $\omega$ Exponent}
 
 The lower bound on matmult time complexity is $O(n^\omega)$, where $\omega$ is an unknown constant bounded by $2\le\omega\le2.3728596$ (\autoref{tbl:omega-vals} lists the known upper bound on $\omega$ over time). Algorithms achieving lower values of $\omega$ tend to be less efficient in practice for all but the largest matrices. Of the algorithms with times of less than $O(n^3)$, only the Strassen algorithm~\citep{Strassen1969} has seen serious attempts at optimized implementation. Most matmult implementations use highly optimized variants of the standard $O(n^3)$ algorithm. At this point, memory and bus speeds dominate the performance of implementations, so simple Big-O notation cannot be used to reliably compare matmult performances.
 
